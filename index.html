@@ -6,31 +6,37 @@
 <link rel="manifest" href="musica.webmanifest">
 <link rel="preconnect" href="https://bbdvflbykohleyctiinj.supabase.co" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&display=swap" rel="stylesheet">
+
 <style>
-:root{--bg:#f6f0e6;--sf:#fffdf8;--s2:#f1e8da;--ln:#e3d6c3;--ink:#2a1f2b;--mu:#76687a;--ac:#6b2c6e;--pk:#c4005a;--au:#a8822e;--ok:#2f7a4f;--wn:#9a6700;--er:#b42318;--sh:0 2px 10px rgba(60,35,30,.07);--hd:#3a1840;--serif:"Literata",Georgia,"Times New Roman",serif;--disp:"Fraunces",Georgia,serif}
+:root{--bg:#f6f0e6;--sf:#fffdf8;--s2:#f1e8da;--ln:#e3d6c3;--ink:#2a1f2b;--mu:#76687a;--ac:#6b2c6e;--pk:#c4005a;--au:#a8822e;--ok:#2f7a4f;--wn:#9a6700;--er:#b42318;--sh:0 2px 10px rgba(60,35,30,.07);--hd:#3a1840;--txt:"Alegreya",Georgia,serif;--dw:600;--ds:1.06}
 body.dark{--bg:#17121b;--sf:#211a26;--s2:#2b2331;--ln:#3b3044;--ink:#efe7dc;--mu:#b3a6b6;--ac:#d6a5dc;--pk:#ff5aa0;--au:#d8b25a;--ok:#5cc58e;--wn:#e0b04a;--er:#f08080;--sh:0 2px 12px rgba(0,0,0,.35);--hd:#241328}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 var(--serif)}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 var(--txt)}
+.f-literaria{--txt:"Alegreya",Georgia,serif;--ds:1.06}
+.f-clasica{--txt:"Lora",Georgia,serif;--ds:1}
+.f-amable{--txt:"Nunito",system-ui,sans-serif;--ds:1}
+.f-legible{--txt:"Atkinson Hyperlegible",system-ui,sans-serif;--ds:1}
+b,strong{font-weight:600}
 .staff{background-color:var(--hd);background-image:repeating-linear-gradient(180deg,rgba(255,255,255,.07) 0 1px,transparent 1px 10px);background-size:100% 41px;background-position:0 50%;background-repeat:no-repeat}
 header{color:#fff;padding:12px 20px;position:sticky;top:0;z-index:10;display:flex;gap:14px;align-items:center;flex-wrap:wrap;border-bottom:3px solid var(--au)}
 .logo{width:54px;height:54px;background:#fffdf8;border-radius:12px;display:flex;align-items:center;justify-content:center;flex:none;box-shadow:0 0 0 2px rgba(255,255,255,.15)}
-.tit b{font:600 20px/1.15 var(--disp);display:block;letter-spacing:.2px}
-.tit small{display:block;font:600 11px/1.4 var(--serif);letter-spacing:1.6px;opacity:.85}
-.tit i{display:block;font-size:12px;opacity:.6}
-header select{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:10px;padding:6px 10px}
+.tit{font-family:var(--txt)}
+.tit b{font-weight:700;font-size:calc(19px*var(--ds));line-height:1.15;display:block;letter-spacing:.2px}
+.tit small{display:block;font-weight:600;font-size:11px;line-height:1.5;letter-spacing:2.2px;opacity:.85}
+.tit i{display:block;font-style:normal;font-weight:600;font-size:12px;opacity:.55}
+header select{margin-left:18px;background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:10px;padding:6px 10px}
 header option{color:#000}
 nav{display:flex;gap:2px;flex-wrap:wrap;margin-left:auto}
 nav button{background:none;color:#f1e4ef;border:0;padding:7px 12px;border-radius:99px;cursor:pointer;font:inherit;font-size:15px}
 nav button:hover{background:rgba(255,255,255,.1)}
 nav button.on{background:#fffdf8;color:var(--hd)}
 body.dark nav button.on{background:var(--au);color:#1b1410}
-main{max-width:1100px;margin:auto;padding:22px 16px 60px}
+main{max-width:1320px;margin:auto;padding:20px 24px 60px}
 .card{background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:20px 22px;margin-bottom:16px;box-shadow:var(--sh)}
-h2{font:600 24px/1.25 var(--disp);margin:0 0 12px;color:var(--ac)}
+h2{font-family:var(--txt);font-weight:var(--dw);font-size:calc(24px*var(--ds));line-height:1.25;margin:0 0 12px;color:var(--ac)}
 h2::after{content:"";display:block;width:44px;height:2px;background:var(--au);margin-top:8px;border-radius:2px}
 .row>h2::after,h2[style*="margin:0"]::after{display:none}
-h3{font:600 18px/1.3 var(--disp);margin:0 0 8px;color:var(--ac)}
+h3{font-family:var(--txt);font-weight:var(--dw);font-size:calc(19px*var(--ds));line-height:1.3;margin:0 0 8px;color:var(--ac)}
 .mu{color:var(--mu)}.sm{font-size:14px}
 .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
 .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
@@ -39,7 +45,7 @@ input,select,textarea{padding:8px 11px;border:1px solid var(--ln);border-radius:
 textarea{width:100%;min-height:120px;resize:vertical;line-height:1.7;padding:10px 14px}
 textarea.big{min-height:280px;background-image:repeating-linear-gradient(180deg,transparent 0 calc(1.7em - 1px),var(--ln) calc(1.7em - 1px) 1.7em);background-attachment:local;background-position:0 10px}
 input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid var(--au);outline-offset:1px}
-label.f{display:block;font:600 12px/1.4 var(--serif);letter-spacing:.8px;text-transform:uppercase;margin:12px 0 5px;color:var(--mu)}
+label.f{display:block;font:600 12px/1.4 var(--txt);letter-spacing:.8px;text-transform:uppercase;margin:12px 0 5px;color:var(--mu)}
 .b{background:var(--ac);color:#fff;border:0;border-radius:10px;padding:8px 15px;cursor:pointer;display:inline-flex;gap:7px;align-items:center;text-decoration:none;font-size:15px}
 body.dark .b{color:#1b1410}
 .b:hover{filter:brightness(1.08)}
@@ -50,7 +56,7 @@ body.dark .b{color:#1b1410}
 .b.ia::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--c,#999)}
 .tw{overflow-x:auto}
 table{width:100%;border-collapse:collapse}
-th{color:var(--au);font:600 12px/1.4 var(--serif);letter-spacing:.8px;text-transform:uppercase;text-align:left;border-bottom:2px solid var(--ln)!important}
+th{color:var(--au);font:600 12px/1.4 var(--txt);letter-spacing:.8px;text-transform:uppercase;text-align:left;border-bottom:2px solid var(--ln)!important}
 td,th{padding:8px;border-bottom:1px solid var(--ln);vertical-align:top}
 tr[onclick]:hover td{background:var(--s2)}
 .pill{padding:1px 10px;border-radius:99px;font-size:13px;background:var(--s2);border:1px solid var(--ln);white-space:nowrap;font-style:italic}
@@ -61,14 +67,14 @@ tr[onclick]:hover td{background:var(--s2)}
 body.dark .steps button.on{color:#1b1410}
 .chk li{margin:4px 0}.chk .ok{color:var(--ok)}.chk .wn{color:var(--wn)}.chk .er{color:var(--er)}
 details.ap{border:1px solid var(--ln);border-left:3px solid var(--au);border-radius:10px;padding:9px 16px;margin:8px 0;background:var(--sf)}
-details.ap>summary{cursor:pointer;font:600 16px/1.4 var(--disp)}
+details.ap>summary{cursor:pointer;font-family:var(--txt);font-weight:var(--dw);font-size:calc(17px*var(--ds));line-height:1.4}
 .bar-r{display:flex;align-items:center;gap:8px;margin:6px 0}
 .bl{width:160px;font-size:14px;flex:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .bt{flex:1;background:var(--s2);border-radius:99px;height:12px;overflow:hidden}
 .bt i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--ac),var(--pk))}
 .bn{width:40px;text-align:right;font-size:14px}
 .k{display:flex;flex-direction:column;background:var(--s2);border:1px solid var(--ln);border-radius:12px;padding:12px 16px}
-.k strong{font:600 26px/1.3 var(--disp);color:var(--ac)}.k span{font-size:14px;color:var(--mu);font-style:italic}
+.k strong{font-family:var(--txt);font-weight:var(--dw);font-size:calc(24px*var(--ds));line-height:1.3;color:var(--ac)}.k span{font-size:14px;color:var(--mu);font-style:italic}
 .auth-shell{min-height:100vh;display:grid;place-items:center;padding:28px 16px}
 .auth{width:min(440px,100%);border:1px solid var(--ln);border-radius:20px;background:var(--sf);box-shadow:0 24px 70px rgba(60,35,30,.16);overflow:hidden}
 .auth-brand{padding:26px;color:#fff;display:flex;gap:14px;align-items:center;border-bottom:3px solid var(--au)}
@@ -145,6 +151,9 @@ const sub=n=>', en la subcarpeta del curso '+n;
 const nomF=m=>(m.trat?m.trat+' ':'')+m.nombre;
 const jefe=c=>miembros(c).find(m=>m.jefe);
 if(localStorage.getItem('dm_dark')=='1')document.body.classList.add('dark');
+const FUENTES={literaria:['Literaria','Alegreya: nacida para textos largos, con trazo de pluma','Alegreya:ital,wght@0,400;0,600;0,700;1,400'],clasica:['Clásica','Lora: serifa clásica y muy legible','Lora:ital,wght@0,400;0,600;0,700;1,400'],amable:['Amable','Nunito: redondeada, limpia y cercana','Nunito:ital,wght@0,400;0,600;0,700;1,400'],legible:['Máxima legibilidad','Atkinson Hyperlegible: pensada para leer sin esfuerzo','Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400']};
+function fuente(k){if(!FUENTES[k])k='literaria';Object.keys(FUENTES).forEach(x=>document.body.classList.remove('f-'+x));document.body.classList.add('f-'+k);localStorage.setItem('dm_font',k);let l=document.getElementById('gf');if(!l){l=document.createElement('link');l.id='gf';l.rel='stylesheet';document.head.appendChild(l)}l.href='https://fonts.googleapis.com/css2?family='+FUENTES[k][2]+'&display=swap'}
+fuente(localStorage.getItem('dm_font')||'literaria');
 function modo(){document.body.classList.toggle('dark');localStorage.setItem('dm_dark',document.body.classList.contains('dark')?'1':'0')}
 
 /* ---------- Acceso ---------- */
@@ -444,6 +453,9 @@ function vConfig(){const f=S.cfg,dias=[1,2,3,4,5].map(d=>[d,DIAS[d]]);
  h+=`<div class="card"><h2>Carpetas de Drive</h2><p class="mu sm">Se guardan una sola vez y sirven para todos los cursos. Dentro de cada carpeta, crea una subcarpeta por curso con su nombre (por ejemplo, «2026-27»). Para copiar un enlace: en Drive, botón derecho → Compartir → Copiar enlace.</p>
  ${G.map(([k,t])=>`<label class="f" for="g_${k}">${t}</label><div class="row" style="margin:0"><input id="g_${k}" style="flex:1" value="${esc(S.G[k]||'')}" placeholder="https://drive.google.com/…" oninput="S.G['${k}']=this.value.trim()">${S.G[k]?enl(S.G[k],'Abrir'):''}</div>`).join('')}
  <div class="row" style="margin-top:14px"><button class="b" onclick="guardaG()">Guardar carpetas</button></div></div>`;
+ const fa=localStorage.getItem('dm_font')||'literaria';
+ if(!document.getElementById('gfall')){const l=document.createElement('link');l.id='gfall';l.rel='stylesheet';l.href='https://fonts.googleapis.com/css2?'+Object.values(FUENTES).map(f=>'family='+f[2]).join('&')+'&display=swap';document.head.appendChild(l)}
+ h+=`<div class="card"><h2>Tipo de letra</h2><p class="mu sm">Cada opción es una sola familia para toda la app. El cambio es inmediato y se guarda en este navegador. El acta y la programación oficiales mantienen su letra; esto solo cambia la app.</p><div class="grid2">${Object.entries(FUENTES).map(([k,[n,d]])=>`<button class="b s f-${k}" style="flex-direction:column;align-items:flex-start;padding:12px 16px;${fa==k?'border:2px solid var(--au)':''}" onclick="fuente('${k}');render()"><span style="font-family:var(--txt);font-weight:var(--dw);font-size:calc(20px*var(--ds))">${n}</span><span style="font-family:var(--txt);font-size:15px">Acta nº 5 · Se procede a la lectura del acta anterior.</span><span class="mu" style="font-size:12px">${d}</span></button>`).join('')}</div></div>`;
  return h+`<div class="card" id="aut"><h2>Acceso</h2><p class="mu sm">Correos que pueden entrar en la app. Para que un compañero entre, añade aquí su correo; después crea su cuenta en «Crear cuenta» o la das de alta tú desde Supabase.</p><div id="autl" class="mu">Cargando…</div>
  <div class="row" style="margin-top:8px"><input id="au" type="email" style="flex:1" placeholder="correo@murciaeduca.es"><input id="an" style="flex:1" placeholder="Nombre"><button class="b s" onclick="addAut()">Autorizar</button></div></div>`}
 async function guardaG(){await q(sb.from('actas_ajustes').upsert({clave:'enlaces',valor:S.G,actualizado:new Date().toISOString()},{onConflict:'clave'}));toast('Carpetas guardadas');render()}
