@@ -8,14 +8,15 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
 <style>
-:root{--bg:#f6f0e6;--sf:#fffdf8;--s2:#f1e8da;--ln:#e3d6c3;--ink:#2a1f2b;--mu:#76687a;--ac:#6b2c6e;--pk:#c4005a;--au:#a8822e;--ok:#2f7a4f;--wn:#9a6700;--er:#b42318;--sh:0 2px 10px rgba(60,35,30,.07);--hd:#3a1840;--txt:"Alegreya",Georgia,serif;--dw:600;--ds:1.06}
+:root{--bg:#f6f0e6;--sf:#fffdf8;--s2:#f1e8da;--ln:#e3d6c3;--ink:#2a1f2b;--mu:#76687a;--ac:#6b2c6e;--pk:#c4005a;--au:#a8822e;--ok:#2f7a4f;--wn:#9a6700;--er:#b42318;--sh:0 2px 10px rgba(60,35,30,.07);--hd:#3a1840;--txt:Calibri,"Carlito",Arial,sans-serif;--dw:600;--ds:1.04}
 body.dark{--bg:#17121b;--sf:#211a26;--s2:#2b2331;--ln:#3b3044;--ink:#efe7dc;--mu:#b3a6b6;--ac:#d6a5dc;--pk:#ff5aa0;--au:#d8b25a;--ok:#5cc58e;--wn:#e0b04a;--er:#f08080;--sh:0 2px 12px rgba(0,0,0,.35);--hd:#241328}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 var(--txt)}
 .f-literaria{--txt:"Alegreya",Georgia,serif;--ds:1.06}
 .f-clasica{--txt:"Lora",Georgia,serif;--ds:1}
 .f-amable{--txt:"Nunito",system-ui,sans-serif;--ds:1}
-.f-legible{--txt:"Atkinson Hyperlegible",system-ui,sans-serif;--ds:1}
+.f-oficial{--txt:Calibri,"Carlito",Arial,sans-serif;--ds:1.04}
+.f-lectura{--txt:"Lexend",system-ui,sans-serif;--ds:1}
 b,strong{font-weight:600}
 .staff{background-color:var(--hd);background-image:repeating-linear-gradient(180deg,rgba(255,255,255,.07) 0 1px,transparent 1px 10px);background-size:100% 41px;background-position:0 50%;background-repeat:no-repeat}
 header{color:#fff;padding:12px 20px;position:sticky;top:0;z-index:10;display:flex;gap:14px;align-items:center;flex-wrap:wrap;border-bottom:3px solid var(--au)}
@@ -87,6 +88,13 @@ details.ap>summary{cursor:pointer;font-family:var(--txt);font-weight:var(--dw);f
 #modal>div{background:var(--sf);color:var(--ink);border-radius:16px;padding:20px;width:min(720px,100%)}
 #toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#2a1f2b;color:#fff;padding:10px 18px;border-radius:10px;display:none;z-index:40;max-width:90vw;border-left:3px solid var(--au)}
 #toast.e{background:var(--er)}
+.drop{display:flex;flex-direction:column;align-items:center;gap:4px;border:2px dashed var(--ln);border-radius:14px;padding:22px;cursor:pointer;background:var(--s2);text-align:center;margin:10px 0}
+.drop.on,.drop:hover{border-color:var(--au)}
+.opt{border:1px solid var(--ln);border-radius:12px;padding:14px 16px;background:var(--s2)}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid var(--ln);border-top-color:var(--ac);border-radius:50%;animation:g 1s linear infinite;vertical-align:-2px;margin-right:6px}
+@keyframes g{to{transform:rotate(360deg)}}
+.big-msg{font-size:20px;line-height:1.5}
+.big-msg kbd{background:var(--s2);border:1px solid var(--ln);border-radius:6px;padding:1px 8px;font-family:inherit}
 @media(max-width:640px){header{padding:10px 12px;position:static}nav{margin-left:0;width:100%}.bl{width:100px}.card{padding:16px}}
 @media print{header,nav,.noprint{display:none}}
 </style></head><body>
@@ -97,6 +105,8 @@ const SU='https://bbdvflbykohleyctiinj.supabase.co',SK='sb_publishable_URQ87m7Ti
 const sb=supabase.createClient(SU,SK,{auth:{lock:(n,w,f)=>f()}});
 const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const LOGO=`<svg width="40" height="34" viewBox="0 -8 50 43" aria-hidden="true"><rect x="3" y="3" width="7" height="7" fill="#E8006A"/><rect x="17" y="6" width="4" height="4" fill="#E8006A"/><rect x="27" y="6" width="4" height="4" fill="#E8006A"/><rect x="39" y="3" width="7" height="7" fill="#E8006A"/><path d="M4 12H21V18H17V34H4Z" fill="#737373"/><path d="M28 12H45V34H32V18H28Z" fill="#737373"/><rect x="21" y="22" width="7" height="8" fill="#E8006A"/><rect x="16.5" y="5.5" width="5" height="5" fill="#E8006A"/><rect x="26.5" y="5.5" width="5" height="5" fill="#E8006A"/><rect x="20" y="-5" width="1.5" height="13" fill="#E8006A"/><rect x="30" y="-5" width="1.5" height="13" fill="#E8006A"/><rect x="20" y="-6" width="11.5" height="3" fill="#E8006A"/></svg>`;
+const MAMMOTH='https://cdn.jsdelivr.net/npm/mammoth@1.8.0/mammoth.browser.min.js',PDFJS='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js',PDFJSW='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+const TIPOS_ACTA={ordinaria:'Ordinaria',primera:'Primera del curso (constitución del departamento)',ultima:'Última del curso (cierre)',extraordinaria:'Extraordinaria'};
 const DIAS=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
 const MESES=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
 const IAS={claude:{n:'Claude',u:'https://claude.ai/new',c:'#d97757'},chatgpt:{n:'ChatGPT',u:'https://chatgpt.com/',c:'#10a37f'},gemini:{n:'Gemini',u:'https://gemini.google.com/app',c:'#4285f4'}};
@@ -130,7 +140,7 @@ En cumplimiento de la normativa de organización y funcionamiento la Jefatura de
 A continuación, se abordan los asuntos específicos concernientes a la organización y funcionamiento interno del Departamento de Música, adoptándose los siguientes acuerdos:
 • Coordinación de materias pendientes: En estricto cumplimiento de lo dictaminado por la CCP, se aborda la situación del alumnado con la materia de Música pendiente de cursos anteriores. Se determina que la Jefatura del Departamento asumirá toda la responsabilidad de informar a este sector del alumnado acerca de las tareas, ejercicios y entregas preceptivas fijadas para el segundo trimestre. […]`;
 
-let S={G:{},view:'inicio',cursos:[],cid:localStorage.getItem('dm_cid'),D:null,user:null,paso:1,ed:null,cfg:null,prog:null};
+let S={G:{},IA:{},refs:[],progRef:null,view:'inicio',cursos:[],cid:localStorage.getItem('dm_cid'),D:null,user:null,paso:1,ed:null,cfg:null,prog:null};
 const C=()=>S.cursos.find(c=>c.id==S.cid),CF=()=>C()?.config||{};
 const pad=n=>String(n).padStart(2,'0');
 const iso=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
@@ -151,9 +161,9 @@ const sub=n=>', en la subcarpeta del curso '+n;
 const nomF=m=>(m.trat?m.trat+' ':'')+m.nombre;
 const jefe=c=>miembros(c).find(m=>m.jefe);
 if(localStorage.getItem('dm_dark')=='1')document.body.classList.add('dark');
-const FUENTES={literaria:['Literaria','Alegreya: nacida para textos largos, con trazo de pluma','Alegreya:ital,wght@0,400;0,600;0,700;1,400'],clasica:['Clásica','Lora: serifa clásica y muy legible','Lora:ital,wght@0,400;0,600;0,700;1,400'],amable:['Amable','Nunito: redondeada, limpia y cercana','Nunito:ital,wght@0,400;0,600;0,700;1,400'],legible:['Máxima legibilidad','Atkinson Hyperlegible: pensada para leer sin esfuerzo','Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400']};
-function fuente(k){if(!FUENTES[k])k='literaria';Object.keys(FUENTES).forEach(x=>document.body.classList.remove('f-'+x));document.body.classList.add('f-'+k);localStorage.setItem('dm_font',k);let l=document.getElementById('gf');if(!l){l=document.createElement('link');l.id='gf';l.rel='stylesheet';document.head.appendChild(l)}l.href='https://fonts.googleapis.com/css2?family='+FUENTES[k][2]+'&display=swap'}
-fuente(localStorage.getItem('dm_font')||'literaria');
+const FUENTES={oficial:['Oficial','Calibri, la letra del libro de actas (o Carlito, su gemela libre, si el equipo no tiene Calibri)','Carlito:ital,wght@0,400;0,700;1,400'],lectura:['Lectura cómoda','Lexend: diseñada para leer con más fluidez en pantalla','Lexend:wght@400;600;700'],literaria:['Literaria','Alegreya: nacida para textos largos, con trazo de pluma','Alegreya:ital,wght@0,400;0,600;0,700;1,400'],clasica:['Clásica','Lora: serifa clásica y muy legible','Lora:ital,wght@0,400;0,600;0,700;1,400'],amable:['Amable','Nunito: redondeada, limpia y cercana','Nunito:ital,wght@0,400;0,600;0,700;1,400']};
+function fuente(k){if(!FUENTES[k])k='oficial';Object.keys(FUENTES).forEach(x=>document.body.classList.remove('f-'+x));document.body.classList.add('f-'+k);localStorage.setItem('dm_font',k);let l=document.getElementById('gf');if(!l){l=document.createElement('link');l.id='gf';l.rel='stylesheet';document.head.appendChild(l)}l.href='https://fonts.googleapis.com/css2?family='+FUENTES[k][2]+'&display=swap'}
+fuente(localStorage.getItem('dm_font')||'oficial');
 function modo(){document.body.classList.toggle('dark');localStorage.setItem('dm_dark',document.body.classList.contains('dark')?'1':'0')}
 
 /* ---------- Acceso ---------- */
@@ -178,7 +188,7 @@ async function cargar(){
  const ok=await q(sb.from('actas_autorizados').select('email').limit(1));
  if(!ok.length)return $('#app').innerHTML=`<div class="auth-shell"><div class="auth"><div class="auth-brand staff"><div class="logo">${LOGO}</div><div class="tit"><b>Departamento de Música</b><small>IES INFANTA ELENA</small></div></div><div class="auth-main"><h3>Tu cuenta no tiene acceso</h3><p class="mu">${esc(S.user.email)} no está en la lista de correos autorizados. Pide al jefe de departamento que lo añada en Configuración.</p><button class="b s" onclick="salir()">Cerrar sesión</button></div></div></div>`;
  S.cursos=await q(sb.from('actas_cursos').select('*').order('nombre',{ascending:false}));
- {const r=await sb.from('actas_ajustes').select('valor').eq('clave','enlaces').maybeSingle();S.G=r.data?.valor||{}}
+ {const r=await sb.from('actas_ajustes').select('clave,valor');(r.data||[]).forEach(x=>{if(x.clave=='enlaces')S.G=x.valor||{};if(x.clave=='ia')S.IA=x.valor||{}})}
  if(!S.cursos.find(c=>c.id==S.cid))S.cid=S.cursos[0]?.id;
  if(!S.cursos.length){S.view='config';S.cfg=nuevoCfg();}
  await cargarCurso();render()}
@@ -196,12 +206,12 @@ async function cambiaCurso(id){S.cid=id;S.ed=null;await cargarCurso();render()}
 function ir(v){S.view=v;if(v!='actas')S.ed=null;render();scrollTo(0,0)}
 
 function render(){
- const v=S.view,nav=[['inicio','Inicio'],['actas','Actas'],['programacion','Programación'],['estadisticas','Estadísticas'],['config','Configuración']];
+ const v=S.view,nav=[['inicio','Inicio'],['actas','Actas'],['programacion','Programación'],['biblioteca','Biblioteca'],['estadisticas','Estadísticas'],['config','Configuración']];
  $('#app').innerHTML=`<header class="staff"><div class="logo">${LOGO}</div><div class="tit"><b>Departamento de Música</b><small>IES INFANTA ELENA</small><i>by Manuel Esteve</i></div>
  ${S.cursos.length?`<select aria-label="Curso" onchange="cambiaCurso(this.value)">${S.cursos.map(c=>`<option value="${c.id}" ${c.id==S.cid?'selected':''}>${esc(c.nombre)}</option>`).join('')}</select>`:''}
  <nav>${nav.map(([k,t])=>`<button class="${v==k?'on':''}" onclick="ir('${k}')">${t}</button>`).join('')}<button onclick="modo()" aria-label="Modo claro u oscuro" title="Modo claro u oscuro"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button><button onclick="salir()">Salir</button></nav></header>
- <main>${!S.cursos.length&&v!='config'?'':({inicio:vInicio,actas:vActas,programacion:vProg,estadisticas:vStats,config:vConfig}[v])()}</main>`;
- if(v=='estadisticas')cargaStats();if(v=='config'&&$('#autl'))listaAut()}
+ <main>${!S.cursos.length&&v!='config'?'':({inicio:vInicio,actas:vActas,programacion:vProg,biblioteca:vBib,estadisticas:vStats,config:vConfig}[v])()}</main>`;
+ if(v=='estadisticas')cargaStats();if(v=='biblioteca')cargaBib();if(v=='programacion'&&S.progRef===null)cargaProgRef();if(v=='config'&&$('#autl'))listaAut()}
 
 /* ---------- Inicio ---------- */
 function trimestreActual(){const m=new Date().getMonth()+1;return m>=9&&m<=12?1:m<=3?2:3}
@@ -221,41 +231,61 @@ function vActas(){if(S.ed)return vEditor();const D=S.D,c=CF();
  return `<div class="card"><div class="row"><h2 style="margin:0;flex:1">Actas · ${esc(C().nombre)}</h2><button class="b" onclick="nuevaActa()">Nueva acta</button>${enl(L('libro')||L('libros'),'Libro de actas en Drive')}</div>
  ${D.actas.length?`<div class="tw"><table><thead><tr><th>Nº</th><th>Fecha</th><th>CCP</th><th>Estado</th><th></th></tr></thead><tbody>${D.actas.map(a=>`<tr style="cursor:pointer" onclick="editActa('${a.id}')"><td><b>${a.numero}</b></td><td>${dmy(a.fecha)}</td><td>${a.ccp_numero?'nº '+a.ccp_numero+' · '+dmy(a.ccp_fecha):'—'}</td><td><span class="pill ${a.estado=='archivada'?'ok':a.estado=='redactada'?'wn':''}">${esc(a.estado)}</span></td><td><button class="b s">Abrir</button></td></tr>`).join('')}</tbody></table></div>`:'<p class="mu">Aún no hay actas este curso. Empieza con «Nueva acta».</p>'}</div>`}
 function claveBorr(){return 'dm_borr_'+S.cid+'_'+(S.ed.id||'nueva')}
-function nuevaActa(){const c=CF(),D=S.D,ult=D.actas[D.actas.length-1],fecha=c.dep?ultimo(c.dep.dia):iso(new Date());
- S.ed={id:null,numero:(ult?.numero||0)+1,fecha,hora:c.dep?.ini||'',asistentes:miembros().map(nomF),ccp_numero:(ult?.ccp_numero||0)+1,ccp_fecha:c.ccp?ultimo(c.ccp.dia,fecha):'',ccp_texto:'',notas:'',ruegos:'',para_prog:'',texto_final:'',estado:'borrador'};
+function enLectivo(f){const l=CF().lectivo;return !!(f&&l?.ini&&l?.fin&&f>=l.ini&&f<=l.fin)}
+function nuevaActa(){const c=CF(),D=S.D,ult=D.actas[D.actas.length-1],hoy=iso(new Date()),fecha=enLectivo(hoy)&&c.dep?ultimo(c.dep.dia):hoy,num=(ult?.numero||0)+1;
+ S.ed={id:null,numero:num,tipo:num==1?'primera':'ordinaria',fecha,hora:enLectivo(fecha)&&c.dep?c.dep.ini:'',asistentes:miembros().map(nomF),ccp_numero:(ult?.ccp_numero||0)+1,ccp_fecha:c.ccp?ultimo(c.ccp.dia,fecha):'',ccp_texto:'',notas:'',ruegos:'',para_prog:'',texto_final:'',estado:'borrador'};
  abrirEditor()}
 function editActa(id){S.ed=JSON.parse(JSON.stringify(S.D.actas.find(a=>a.id==id)));abrirEditor()}
 function abrirEditor(){const b=localStorage.getItem(claveBorr());if(b){try{const o=JSON.parse(b);if(!S.ed.actualizado||o._t>Date.parse(S.ed.actualizado)){Object.assign(S.ed,o);setTimeout(()=>toast('Borrador recuperado'),300)}}catch(e){}}S.paso=1;S.view='actas';render();scrollTo(0,0)}
-function edSet(k,v){S.ed[k]=v;localStorage.setItem(claveBorr(),JSON.stringify({...S.ed,_t:Date.now()}))}
+function edSet(k,v){const e=S.ed;e[k]=v;if(k=='ccp_fecha')e._ccpManual=true;
+ if(k=='fecha'||k=='tipo'){const c=CF();if(k=='fecha'&&c.ccp&&!e._ccpManual)e.ccp_fecha=ultimo(c.ccp.dia,v);if(enLectivo(e.fecha)&&e.tipo!='extraordinaria'&&c.dep)e.hora=c.dep.ini}
+ localStorage.setItem(claveBorr(),JSON.stringify({...e,_t:Date.now()}))}
 function asis(n,on){const a=new Set(S.ed.asistentes);on?a.add(n):a.delete(n);edSet('asistentes',miembros().map(nomF).filter(x=>a.has(x)))}
-function paso(n){S.paso=n;render()}
-function vEditor(){const e=S.ed,c=CF(),P=S.paso,pasos=['Datos','CCP','Departamento','Redactar y revisar'];
+function paso(n){S.paso=n;render();if(n==4)cargaRefs()}
+function vEditor(){const e=S.ed,c=CF(),P=S.paso,pasos=['Datos','CCP','Departamento','Redactar y revisar'],lec=enLectivo(e.fecha);
  const ta=(k,cls='',ph='')=>`<textarea class="${cls}" placeholder="${esc(ph)}" oninput="edSet('${k}',this.value)">${esc(e[k])}</textarea>`;
  let h=`<div class="card"><div class="row"><h2 style="margin:0;flex:1">Acta nº ${e.numero} · ${dmy(e.fecha)}</h2><button class="b" onclick="guardaActa()">Guardar</button><button class="b s" onclick="S.ed=null;render()">Volver</button></div>
  <div class="steps">${pasos.map((t,i)=>`<button class="${P==i+1?'on':''}" onclick="paso(${i+1})">${i+1}. ${t}</button>`).join('')}</div>`;
  if(P==1)h+=`<div class="grid2"><div><label class="f" for="en">Número de acta</label><input id="en" type="number" min="1" value="${e.numero}" oninput="edSet('numero',+this.value)"></div>
- <div><label class="f" for="ef">Fecha</label><input id="ef" type="date" value="${e.fecha||''}" oninput="edSet('fecha',this.value)"></div>
- <div><label class="f" for="eh">Hora</label><input id="eh" type="time" value="${e.hora||''}" oninput="edSet('hora',this.value)"></div>
+ <div><label class="f" for="et">Tipo de acta</label><select id="et" onchange="edSet('tipo',this.value);render()">${opt(TIPOS_ACTA,e.tipo||'ordinaria')}</select></div>
+ <div><label class="f" for="ef">Fecha</label><input id="ef" type="date" value="${e.fecha||''}" onchange="edSet('fecha',this.value);render()"></div>
+ <div><label class="f" for="eh">Hora</label><input id="eh" type="time" value="${e.hora||''}" ${lec&&e.tipo!='extraordinaria'?'readonly':''} oninput="edSet('hora',this.value)"></div>
  <div><label class="f">Estado</label><select onchange="edSet('estado',this.value)">${['borrador','redactada','archivada'].map(s=>`<option ${e.estado==s?'selected':''}>${s}</option>`).join('')}</select></div></div>
+ <p class="mu sm">${!c.lectivo?.ini?'Pon las fechas de inicio y fin de clases en Configuración para que la app controle el horario.':lec?(e.tipo=='extraordinaria'?'Reunión extraordinaria: fecha y hora libres.':`Periodo lectivo: la reunión es los ${DIAS[c.dep?.dia]} a las ${c.dep?.ini}. Si fue en otro momento, marca el acta como extraordinaria.`):'Fuera del periodo lectivo: fecha y hora libres.'}</p>
  <label class="f">Asistentes</label>${miembros().map(m=>{const n=nomF(m);return `<label style="display:block"><input type="checkbox" ${e.asistentes.includes(n)?'checked':''} onchange="asis(this.value,this.checked)" value="${esc(n)}"> ${esc(n)}${m.jefe?' (jefe de departamento)':''}</label>`}).join('')||'<p class="mu">Añade los integrantes del departamento en Configuración.</p>'}
  <div class="row" style="margin-top:14px"><button class="b" onclick="paso(2)">Siguiente: CCP</button>${e.id?`<button class="b r" style="margin-left:auto" onclick="borraActa()">Eliminar acta</button>`:''}</div>`;
- if(P==2)h+=`<div class="grid2"><div><label class="f" for="cn">Número de acta de la CCP</label><input id="cn" type="number" min="1" value="${e.ccp_numero||''}" oninput="edSet('ccp_numero',+this.value||null)"></div><div><label class="f" for="cf">Fecha de la CCP</label><input id="cf" type="date" value="${e.ccp_fecha||''}" oninput="edSet('ccp_fecha',this.value)"></div></div>
- <label class="f" for="ct">Texto del acta de la CCP</label><textarea id="ct" class="big" placeholder="Pega aquí el acta de la CCP o cárgala desde un .docx" oninput="edSet('ccp_texto',this.value)">${esc(e.ccp_texto)}</textarea>
- <div class="row"><label class="b s" style="cursor:pointer">Cargar .docx<input type="file" accept=".docx" hidden onchange="leeDocx(this.files[0])"></label><button class="b ia" style="--c:${IAS.gemini.c}" onclick="abrirIA('gemini',pGemCCP())">Traer el acta de la CCP con Gemini</button>${enl(L('ccp'),'Abrir actas de la CCP en Drive')}</div>
- <div class="row"><button class="b" onclick="paso(3)">Siguiente: departamento</button></div>`;
+ if(P==2)h+=`<label class="drop" ondragover="event.preventDefault();this.classList.add('on')" ondragleave="this.classList.remove('on')" ondrop="event.preventDefault();this.classList.remove('on');ccpArchivo(event.dataTransfer.files[0])"><b>Arrastra aquí el acta de la CCP</b><span class="mu sm">PDF o Word (.docx) · o pulsa para elegirla</span><input type="file" accept=".pdf,.docx" hidden onchange="ccpArchivo(this.files[0])"></label><div id="ccpest"></div>
+ <div class="grid2"><div><label class="f" for="cn">Número de acta de la CCP</label><input id="cn" type="number" min="1" value="${e.ccp_numero||''}" oninput="edSet('ccp_numero',+this.value||null)"></div><div><label class="f" for="cf">Fecha de la CCP</label><input id="cf" type="date" value="${e.ccp_fecha||''}" oninput="edSet('ccp_fecha',this.value)"></div></div>
+ <label class="f" for="ct">Texto del acta de la CCP</label><textarea id="ct" class="big" placeholder="Aparecerá aquí al arrastrar el archivo. Si no hubo CCP, déjalo vacío." oninput="edSet('ccp_texto',this.value)">${esc(e.ccp_texto)}</textarea>
+ <div class="row"><button class="b ia" style="--c:${IAS.gemini.c}" onclick="abrirIA('gemini',pGemCCP())">Buscar la CCP en Drive con Gemini</button>${enl(L('ccp'),'Abrir actas de la CCP en Drive')}<button class="b" onclick="paso(3)">Siguiente: departamento</button></div>`;
  if(P==3)h+=`<label class="f">Notas de la reunión de departamento</label>${ta('notas','big','Escribe o dicta lo tratado: acuerdos, actividades, material, programación…')}
  <label class="f">Ruegos y preguntas</label>${ta('ruegos','','Déjalo vacío si no los hubo')}
  <label class="f">Para la programación del próximo curso</label><p class="mu sm" style="margin:0 0 4px">Una línea por cosa: compras, bajas de material, cambios de horario… Se guardan en la lista de la programación del curso siguiente.</p>${ta('para_prog','','33 ukeleles nuevos\nPedir que la optativa de 1º Bach no caiga a 6ª hora')}
  <div class="row"><button class="b" onclick="paso(4)">Siguiente: redactar</button></div>`;
- if(P==4)h+=`<p class="mu sm">Copia las instrucciones y pégalas en la IA. Después pega aquí el acta que te devuelva y revísala.</p>
- <div class="row"><button class="b ia" style="--c:${IAS.claude.c}" onclick="abrirIA('claude',pActa())">Redactar con Claude</button><button class="b ia" style="--c:${IAS.chatgpt.c}" onclick="abrirIA('chatgpt',pActa())">Redactar con ChatGPT</button><button class="b ia" style="--c:${IAS.gemini.c}" onclick="abrirIA('gemini',pGemConsulta())">Consultar archivos con Gemini</button><button class="b s" onclick="copiar(pActa())">Solo copiar</button></div>
- <label class="f" for="tf">Acta redactada</label><textarea id="tf" class="big" style="min-height:380px" placeholder="Pega aquí el acta" oninput="edSet('texto_final',this.value)">${esc(e.texto_final)}</textarea>
- <div class="row"><button class="b" onclick="revisar()">Revisar el acta</button><button class="b s" onclick="copiar(S.ed.texto_final,'Acta copiada')">Copiar acta</button>${enl(L('carpeta'),'Abrir carpeta en Drive')}${enl(L('libro')||L('libros'),'Abrir libro de actas')}${docCopy(L('plantilla'))?`<a class="b s" href="${docCopy(L('plantilla'))}" target="_blank" rel="noopener">Nuevo documento con la plantilla</a>`:''}<button class="b ia" style="--c:${IAS.gemini.c}" onclick="abrirIA('gemini',pGemGuardar())">Guardar en Drive con Gemini</button></div>
+ if(P==4)h+=`<div class="grid2"><div class="opt"><h3>Redactar aquí</h3><p class="mu sm" style="margin-top:0">La app envía la CCP, tus notas y las actas de referencia a la IA, y el acta aparece abajo.</p><div class="row" style="margin:0"><button class="b" onclick="redactarAPI('claude')">Redactar con Claude</button><button class="b s" onclick="redactarAPI('gemini')">Con Gemini (gratis)</button></div></div>
+ <div class="opt"><h3>Copiar y pegar en tu chat</h3><p class="mu sm" style="margin-top:0">Se copia todo de una vez: instrucciones, CCP, notas y actas de referencia. Solo tienes que pegarlo.</p><button class="b s" onclick="copiarTodo()">Copiar todo</button></div></div>
+ <div id="iaest" class="sm" style="margin:10px 0" aria-live="polite">${S.refs.length?`<span class="mu">Se usarán ${S.refs.length} acta${S.refs.length>1?'s':''} de la biblioteca como modelo.</span>`:'<span class="mu">Sin actas en la Biblioteca: se usarán dos ejemplos del curso 2025-26.</span>'}</div>
+ <label class="f" for="tf">Acta redactada</label><textarea id="tf" class="big" style="min-height:420px" placeholder="Aquí aparecerá el acta" oninput="edSet('texto_final',this.value)">${esc(e.texto_final)}</textarea>
+ <div class="row"><button class="b" onclick="revisar()">Revisar el acta</button><button class="b s" onclick="pegarRespuesta()">Pegar respuesta</button><button class="b s" onclick="copiar(S.ed.texto_final,'Acta copiada. Pégala en el documento con membrete.')">Copiar acta</button>${docCopy(L('plantilla'))?`<a class="b s" href="${docCopy(L('plantilla'))}" target="_blank" rel="noopener">Nuevo documento con la plantilla</a>`:''}${enl(L('carpeta'),'Abrir carpeta en Drive')}${enl(L('libro')||L('libros'),'Abrir libro de actas')}</div>
+ <div class="row"><button class="b ia" style="--c:${IAS.gemini.c}" onclick="abrirIA('gemini',pGemGuardar())">Guardar en Drive con Gemini</button><button class="b ia" style="--c:${IAS.gemini.c}" onclick="abrirIA('gemini',pGemConsulta())">Consultar archivos con Gemini</button></div>
  <div id="chk"></div>`;
  return h+'</div>'}
-async function leeDocx(f){if(!f)return;try{if(!window.mammoth)await cargaScript('https://cdn.jsdelivr.net/npm/mammoth@1.8.0/mammoth.browser.min.js');const r=await mammoth.extractRawText({arrayBuffer:await f.arrayBuffer()});edSet('ccp_texto',r.value.replace(/\n{3,}/g,'\n\n').trim());const m=r.value.match(/Acta\s*:?\s*n[ºo°]\s*(\d+)/i),d=r.value.match(/Fecha:\s*(\d{1,2})\/(\d{1,2})\/(\d{2,4})/i);if(m)edSet('ccp_numero',+m[1]);if(d){const y=d[3].length==2?'20'+d[3]:d[3];edSet('ccp_fecha',y+'-'+pad(d[2])+'-'+pad(d[1]))}render();toast('Acta de la CCP cargada')}catch(x){toast('No se pudo leer el archivo',1)}}
+async function leeArchivo(f){const n=f.name.toLowerCase();
+ if(n.endsWith('.docx')){if(!window.mammoth)await cargaScript(MAMMOTH);return (await mammoth.extractRawText({arrayBuffer:await f.arrayBuffer()})).value}
+ if(n.endsWith('.pdf')){if(!window.pdfjsLib){await cargaScript(PDFJS);pdfjsLib.GlobalWorkerOptions.workerSrc=PDFJSW}const doc=await pdfjsLib.getDocument({data:await f.arrayBuffer()}).promise,out=[];for(let i=1;i<=doc.numPages;i++){const c=await (await doc.getPage(i)).getTextContent();let s='';c.items.forEach(it=>{s+=it.str+(it.hasEOL?'\n':'')});out.push(s)}return out.join('\n')}
+ if(n.endsWith('.txt'))return f.text();throw new Error('Formato no admitido: usa PDF o Word (.docx).')}
+const MEMB=/^\s*(Región de Murcia|Consejería de Educación.*|y Cultura|Centro de Promoción del Talento|Centro Digital Avanzado|Avda\. de la Libertad.*|30520 Jumilla.*|www\.iesinfantaelena\.net|I\. ?E\. ?S\.|Infanta Elena|Jumilla|\d{1,3})\s*$/gim;
+const limpia=t=>t.normalize('NFKC').replace(MEMB,'').replace(/[ \t]+/g,' ').replace(/ *\n */g,'\n').replace(/\n{3,}/g,'\n\n').trim();
+function fechaDe(t){let m=t.match(/(\d{1,2})\/(\d{1,2})\/(\d{4}|\d{2})\b/);if(m)return (m[3].length==2?'20'+m[3]:m[3])+'-'+pad(m[2])+'-'+pad(m[1]);const f=fechasEn(t).find(x=>x.y);return f?f.y+'-'+pad(f.m)+'-'+pad(f.d):''}
+function numDe(t,nombre){const m=t.match(/Acta\s*(?:n[ºo°.]?|n[úu]mero)\s*:?\s*(\d+)/i)||String(nombre||'').match(/^n\s*(\d+)/i);return m?+m[1]:null}
+async function ccpArchivo(f){if(!f)return;const st=$('#ccpest');if(st)st.innerHTML='<span class="spin"></span>Leyendo el archivo…';
+ try{const tx=limpia(await leeArchivo(f));if(tx.length<40)throw new Error('No se ha encontrado texto. Si es un PDF escaneado, pide la versión en Word.');edSet('ccp_texto',tx);const n=numDe(tx,f.name),d=fechaDe(tx);if(n)edSet('ccp_numero',n);if(d)edSet('ccp_fecha',d);render();toast('Acta de la CCP cargada'+(n?' (nº '+n+')':''))}
+ catch(x){if(st)st.innerHTML='';toast(x.message||'No se pudo leer el archivo',1)}}
 function cargaScript(u){return new Promise((ok,ko)=>{const s=document.createElement('script');s.src=u;s.onload=ok;s.onerror=ko;document.head.appendChild(s)})}
-async function guardaActa(){const e=S.ed,row={curso_id:S.cid,numero:e.numero,fecha:e.fecha||null,hora:e.hora,asistentes:e.asistentes,ccp_numero:e.ccp_numero||null,ccp_fecha:e.ccp_fecha||null,ccp_texto:e.ccp_texto,notas:e.notas,ruegos:e.ruegos,para_prog:e.para_prog,texto_final:e.texto_final,estado:e.estado,actualizado:new Date().toISOString()};
+async function guardaActa(){const e=S.ed,c=CF();
+ if(e.fecha&&enLectivo(e.fecha)&&e.tipo!='extraordinaria'&&c.dep){const d=new Date(e.fecha+'T12:00').getDay();if(d!=c.dep.dia||e.hora!=c.dep.ini)return modal(`<h3>Fuera del horario de reunión</h3><p>Dentro del periodo lectivo, la reunión de departamento es los <b>${DIAS[c.dep.dia]} a las ${c.dep.ini}</b>. Esta acta tiene fecha del ${larga(e.fecha)}${e.hora?' a las '+e.hora:''}.</p><p class="mu">Corrige la fecha en «1. Datos». Si fue una reunión extraordinaria, cámbiala allí en «Tipo de acta».</p><div class="row"><button class="b" onclick="cerrar();paso(1)">Ir a Datos</button><button class="b s" onclick="cerrar()">Cerrar</button></div>`)}
+ if(e.ccp_fecha&&e.fecha&&e.ccp_fecha>e.fecha&&!confirm('La fecha de la CCP ('+dmy(e.ccp_fecha)+') es posterior a la del acta. ¿Guardar igualmente?'))return;
+ const row={curso_id:S.cid,tipo:e.tipo||'ordinaria',numero:e.numero,fecha:e.fecha||null,hora:e.hora,asistentes:e.asistentes,ccp_numero:e.ccp_numero||null,ccp_fecha:e.ccp_fecha||null,ccp_texto:e.ccp_texto,notas:e.notas,ruegos:e.ruegos,para_prog:e.para_prog,texto_final:e.texto_final,estado:e.estado,actualizado:new Date().toISOString()};
  const otra=S.D.actas.find(a=>a.numero==e.numero&&a.id!=e.id);if(otra&&!confirm('Ya existe un acta nº '+e.numero+' en este curso. ¿Guardar igualmente?'))return;
  const r=e.id?await q(sb.from('actas_actas').update(row).eq('id',e.id).select().single()):await q(sb.from('actas_actas').insert(row).select().single());
  await q(sb.from('actas_pendientes').delete().eq('acta_id',r.id).eq('hecho',false));
@@ -263,16 +293,34 @@ async function guardaActa(){const e=S.ed,row={curso_id:S.cid,numero:e.numero,fec
  localStorage.removeItem(claveBorr());S.ed={...r};localStorage.removeItem(claveBorr());await cargarCurso();S.ed=JSON.parse(JSON.stringify(S.D.actas.find(a=>a.id==r.id)));toast('Acta guardada');render()}
 async function borraActa(){if(!confirm('¿Eliminar el acta nº '+S.ed.numero+'? No se puede deshacer.'))return;await q(sb.from('actas_actas').delete().eq('id',S.ed.id));localStorage.removeItem(claveBorr());S.ed=null;await cargarCurso();toast('Acta eliminada');render()}
 
-/* ---------- Instrucciones para las IA ---------- */
-function pActa(){const e=S.ed,c=CF(),j=jefe(),ant=S.D.actas.filter(a=>a.numero<e.numero).pop();
- return `Actúa como jefe del Departamento de Música del I.E.S. Infanta Elena (Jumilla, Región de Murcia) y redacta el acta oficial de la reunión de departamento con los datos de abajo.
+/* ---------- IA ---------- */
+async function cargaRefs(){const e=S.ed;if(!e)return;try{const{data}=await sb.from('actas_biblioteca').select('curso,numero,texto').eq('tipo','libro').order('curso',{ascending:false});const A=data||[],cursos=[...new Set(A.map(x=>x.curso))];let r=[];
+ const add=(x,m)=>{if(x&&!r.some(y=>y.k==x.curso+'-'+x.numero))r.push({k:x.curso+'-'+x.numero,t:'Acta nº '+x.numero+' del curso '+x.curso+' ('+m+')',x:x.texto.slice(0,7000)})};
+ if(e.tipo=='ultima')cursos.forEach(cu=>add(A.filter(x=>x.curso==cu).sort((a,b)=>b.numero-a.numero)[0],'última del curso'));
+ A.filter(x=>x.numero==e.numero).slice(0,2).forEach(x=>add(x,'mismo número de acta'));
+ A.filter(x=>x.curso==cursos[0]).sort((a,b)=>b.numero-a.numero).slice(0,2).forEach(x=>add(x,'de las más recientes'));
+ S.refs=r.slice(0,4)}catch(x){S.refs=[]}const st=$('#iaest');if(st&&!st.querySelector('.spin'))st.innerHTML=S.refs.length?`<span class="mu">Se usarán ${S.refs.length} acta${S.refs.length>1?'s':''} de la biblioteca como modelo.</span>`:'<span class="mu">Sin actas en la Biblioteca: se usarán dos ejemplos del curso 2025-26.</span>'}
+function errIA(m,prov){m=String(m||'');if(/credit balance|billing|insufficient/i.test(m))return 'Se ha agotado el saldo de la API de Claude. Recárgalo en console.anthropic.com → Billing.';if(/quota|429|RESOURCE_EXHAUSTED/i.test(m))return 'Se ha alcanzado el límite gratuito de Gemini por hoy o por minuto. Prueba más tarde o usa Claude.';if(/Failed to send|FunctionsFetchError|not found|404/i.test(m))return 'La función «actas-ia» no está instalada en Supabase. Sigue el tutorial de instalación.';if(/ANTHROPIC_API_KEY|GEMINI_API_KEY/.test(m))return m;return (prov=='gemini'?'Gemini':'Claude')+': '+m}
+async function llamaIA(prov,prompt){const{data,error}=await sb.functions.invoke('actas-ia',{body:{proveedor:prov,prompt,modelo:prov=='claude'?S.IA.claude:S.IA.gemini}});
+ if(error){let m=error.message;try{const j=await error.context.json();m=j.error||m}catch(x){}throw new Error(errIA(m,prov))}if(data?.error)throw new Error(errIA(data.error,prov));return (data?.texto||'').trim()}
+async function redactarAPI(prov){const e=S.ed;if((e.notas||'').trim().length<10&&!(e.ccp_texto||'').trim())return toast('Escribe primero las notas de la reunión (paso 3)',1);if((e.texto_final||'').trim()&&!confirm('Ya hay un acta escrita. ¿Sustituirla por una nueva redacción?'))return;
+ const st=$('#iaest');st.innerHTML='<span class="spin"></span>Redactando con '+(prov=='claude'?'Claude':'Gemini')+'… suele tardar menos de un minuto.';document.querySelectorAll('.opt button').forEach(b=>b.disabled=true);
+ try{if(!S.refs.length)await cargaRefs();const r=await llamaIA(prov,pActa());edSet('texto_final',r);$('#tf').value=r;st.innerHTML='<span style="color:var(--ok)">Acta redactada. Revísala y corrige lo que haga falta.</span>';revisar()}
+ catch(x){st.innerHTML='<span style="color:var(--er)">'+esc(x.message)+'</span>'}finally{document.querySelectorAll('.opt button').forEach(b=>b.disabled=false)}}
+async function copiarTodo(){const t=pActa();try{await navigator.clipboard.writeText(t)}catch(x){return modal(`<h3>Copia este texto</h3><p class="mu">Selecciónalo todo (Cmd+A) y cópialo (Cmd+C).</p><textarea class="big" readonly>${esc(t)}</textarea><div class="row"><button class="b" onclick="cerrar()">Cerrar</button></div>`)}
+ modal(`<div class="big-msg"><h2>Ya está todo copiado</h2><p>Abre la IA que prefieras, pulsa <kbd>Cmd</kbd> + <kbd>V</kbd> para pegar y después <kbd>Intro</kbd>. Ahí van las instrucciones, la CCP, tus notas y las actas de referencia.</p><p class="sm mu">Cuando te dé el acta, cópiala y vuelve aquí: pulsa «Pegar respuesta».</p></div>
+ <div class="row">${Object.entries(IAS).map(([k,v])=>`<a class="b ia" style="--c:${v.c}" href="${v.u}" target="_blank" rel="noopener" onclick="cerrar()">Abrir ${v.n}</a>`).join('')}<button class="b s" onclick="cerrar()">Cerrar</button></div>`)}
+async function pegarRespuesta(){try{const t=(await navigator.clipboard.readText()).trim();if(!t)return toast('El portapapeles está vacío',1);if((S.ed.texto_final||'').trim()&&!confirm('¿Sustituir el acta actual por lo que has copiado?'))return;edSet('texto_final',t);$('#tf').value=t;toast('Respuesta pegada');revisar()}catch(x){toast('Tu navegador no deja leer el portapapeles: haz clic en el cuadro del acta y pulsa Cmd+V',1);$('#tf').focus()}}
+function pActa(){const e=S.ed,c=CF(),j=jefe(),ant=S.D.actas.filter(a=>a.numero<e.numero).pop(),hayCCP=(e.ccp_texto||'').trim().length>20,tipo=e.tipo||'ordinaria';
+ return `Eres el jefe del Departamento de Música del I.E.S. Infanta Elena (Jumilla, Región de Murcia). Redacta el acta oficial de la reunión de departamento que se incorporará al Libro de Actas del departamento: un documento administrativo que pueden revisar la Dirección, la Jefatura de Estudios y la Inspección Educativa.
 
 REGLAS
 - No inventes acuerdos, fechas, nombres, materias, horas ni proyectos que no aparezcan en los datos. Si falta un dato imprescindible, pregúntamelo antes de redactar.
 - Estilo institucional, formal y administrativo: tercera persona y pasiva refleja («Se procede a», «Se acuerda», «Queda constancia»). Sin opiniones ni tono conversacional.
 - Extensión media-larga: desarrolla cada nota en prosa formal. Usa viñetas con un título breve en negrita cuando haya varios asuntos.
 - Escribe los nombres de las personas exactamente como aparecen en los datos, sin cambiar ni una letra.
-- El resumen de la CCP va en el punto 2, antes de los acuerdos del departamento. Resume solo lo que afecta al profesorado y al departamento.
+${hayCCP?'- El resumen de la CCP va en el punto 2, antes de los acuerdos del departamento. Resúmela de forma breve: solo lo que afecta al profesorado y al departamento, en uno a tres párrafos o en viñetas cortas.':'- No hubo CCP previa: omite ese punto y numera los demás de forma correlativa.'}
+${tipo=='primera'?'- Es la primera reunión del curso: el punto de acuerdos empieza con la constitución del departamento (integrantes y jefe de departamento), como en las actas nº 1 de referencia. La lectura del acta anterior se refiere a la última del curso anterior.':tipo=='ultima'?'- Es la última reunión del curso (cierre): sigue el modelo de las actas de cierre de referencia.':tipo=='extraordinaria'?'- Es una reunión extraordinaria: indícalo en el párrafo de apertura («sesión extraordinaria»).':''}
 - Numera los puntos de forma correlativa: 1, 2, 3 (y subapartados 3.1, 3.2… si hace falta).
 - ${(e.ruegos||'').trim()?'Hay ruegos y preguntas: añade el punto «4. Ruegos y preguntas.» y cierra con «Sin más asuntos que tratar, se levanta la sesión.»':'No hubo ruegos ni preguntas: cierra con «Sin más asuntos que tratar, y no habiendo ruegos ni preguntas se levanta la sesión.»'}
 - Devuelve solo el texto del acta, listo para pegar en el documento con membrete.
@@ -282,21 +330,18 @@ ACTA DE LA REUNIÓN DEL DEPARTAMENTO DE MÚSICA
 Acta nº${e.numero}     Fecha: ${dmy(e.fecha)}     Hora: ${e.hora}
 Párrafo de apertura («En Jumilla, siendo las ${e.hora} horas del día ${larga(e.fecha)}, se reúnen en el Departamento de Música […] con arreglo al siguiente orden del día:»)
 1. Lectura y aprobación del acta anterior.
-2. Información de la comisión de coordinación pedagógica.
-3. Acuerdos tomados en la reunión de departamento.
+${hayCCP?'2. Información de la comisión de coordinación pedagógica.\n3. Acuerdos tomados en la reunión de departamento.':'2. Acuerdos tomados en la reunión de departamento.'}
 Fórmula de cierre.
 Firmas: «Fdo. D./Dña. nombre completo» de cada asistente; bajo el del jefe, «(Jefe de Departamento)».
 
 DATOS
 Curso: ${C().nombre}
+Tipo de reunión: ${TIPOS_ACTA[tipo]}
 Acta nº ${e.numero} · ${larga(e.fecha)} · ${e.hora}
 Asistentes: ${e.asistentes.join('; ')}
 Jefe de departamento: ${j?nomF(j):'(sin indicar)'}
 Acta anterior: ${ant?'nº '+ant.numero+' del '+dmy(ant.fecha):e.numero==1?'última del curso anterior':'nº '+(e.numero-1)}
-CCP: acta nº ${e.ccp_numero||'(sin indicar)'}, celebrada el ${e.ccp_fecha?larga(e.ccp_fecha):'(sin indicar)'}
-
---- ACTA DE LA CCP ---
-${(e.ccp_texto||'').trim()||'(No hay texto de la CCP: pregúntamelo.)'}
+${hayCCP?`CCP: acta nº ${e.ccp_numero||'(sin indicar)'}, celebrada el ${e.ccp_fecha?larga(e.ccp_fecha):'(sin indicar)'}\n\n--- ACTA DE LA CCP ---\n${e.ccp_texto.trim()}`:'CCP: no hubo.'}
 
 --- NOTAS DE LA REUNIÓN DE DEPARTAMENTO ---
 ${(e.notas||'').trim()||'(Sin notas: pregúntame.)'}
@@ -304,8 +349,8 @@ ${(e.notas||'').trim()||'(Sin notas: pregúntame.)'}
 --- RUEGOS Y PREGUNTAS ---
 ${(e.ruegos||'').trim()||'Ninguno.'}
 
---- EJEMPLOS DE ESTILO (actas del curso 2025-26: imita el tono y el formato, no copies su contenido) ---
-${EJEMPLOS}`}
+--- ACTAS DE REFERENCIA (imita su tono, estructura y fórmulas; no copies su contenido) ---
+${S.refs.length?S.refs.map(r=>'['+r.t+']\n'+r.x).join('\n\n---\n\n'):EJEMPLOS}`}
 function pGemCCP(){const e=S.ed,c=CF();return `Busca en mi Google Drive el acta nº ${e.ccp_numero||'[número]'} de la Comisión de Coordinación Pedagógica (CCP) del IES Infanta Elena, celebrada el ${e.ccp_fecha?larga(e.ccp_fecha):'[fecha]'}${L('ccp')?'. Está en esta carpeta: '+L('ccp')+sub(C().nombre):''}.
 Devuélveme su texto íntegro, sin resumir ni cambiar nada, para copiarlo en otra aplicación.`}
 function linksCursos(k){return S.cursos.filter(x=>x.config?.enlaces?.[k]).map(x=>'- '+x.nombre+': '+x.config.enlaces[k]).join('\n')}
@@ -330,9 +375,9 @@ function revisar(){const e=S.ed,t=e.texto_final||'',L=[],add=(n,m)=>L.push([n,m]
  t.includes(dmy(e.fecha))?add('ok','La fecha '+dmy(e.fecha)+' aparece en el encabezado.'):add('er','No aparece la fecha '+dmy(e.fecha)+'.');
  e.hora&&t.includes(e.hora)?add('ok','La hora '+e.hora+' aparece.'):add('wn','No aparece la hora '+e.hora+'.');
  const pts=[...t.matchAll(/^\s*(\d+)\.\s+\S/gm)].map(m=>+m[1]);const seq=pts.every((p,i)=>p==i+1);pts.length&&seq?add('ok','Puntos numerados correctamente: '+pts.join(', ')+'.'):add('er','La numeración de los puntos no es correlativa desde 1: '+(pts.join(', ')||'no se encuentran puntos')+'.');
- const p2=t.search(/^\s*2\.\s/m),p3=t.search(/^\s*3\.\s/m);p2>=0&&p3>p2&&/coordinaci[oó]n pedag|CCP/i.test(t.slice(p2,p3))?add('ok','El resumen de la CCP está en el punto 2, antes de los acuerdos.'):add('wn','Comprueba que el resumen de la CCP esté en el punto 2 y antes de los acuerdos.');
+ const hayC=(e.ccp_texto||'').trim().length>20;if(hayC){const p2=t.search(/^\s*2\.\s/m),p3=t.search(/^\s*3\.\s/m);p2>=0&&p3>p2&&/coordinaci[oó]n pedag|CCP/i.test(t.slice(p2,p3))?add('ok','El resumen de la CCP está en el punto 2, antes de los acuerdos.'):add('wn','Comprueba que el resumen de la CCP esté en el punto 2 y antes de los acuerdos.');
  const cn=t.match(/(?:CCP|Coordinaci[oó]n Pedag[oó]gica)[^.]{0,60}?n[ºo°.]?\s*(\d+)|n[ºo°.]?\s*(\d+)\s*de la (?:CCP|Comisi[oó]n)|sesi[oó]n\s*n[úu]mero\s*(\d+)/i);if(e.ccp_numero){const v=cn&&(cn[1]||cn[2]||cn[3]);!v?add('wn','No se menciona el número de la CCP (nº '+e.ccp_numero+').'):+v==e.ccp_numero?add('ok','Número de la CCP correcto (nº '+e.ccp_numero+').'):add('er','El acta cita la CCP nº '+v+', pero la CCP es la nº '+e.ccp_numero+'.')}
- const dup=S.D.actas.find(a=>a.id!=e.id&&a.ccp_numero&&a.ccp_numero==e.ccp_numero);if(dup)add('wn','La CCP nº '+e.ccp_numero+' ya se usó en el acta nº '+dup.numero+'.');
+ }const dup=hayC&&S.D.actas.find(a=>a.id!=e.id&&a.ccp_numero&&a.ccp_numero==e.ccp_numero);if(dup)add('wn','La CCP nº '+e.ccp_numero+' ya se usó en el acta nº '+dup.numero+'.');
  if(e.ccp_fecha&&e.fecha&&e.ccp_fecha>e.fecha)add('er','La fecha de la CCP ('+dmy(e.ccp_fecha)+') es posterior a la del acta.');
  const fa=new Date(e.fecha+'T12:00');fechasEn(t).forEach(f=>{const y=f.y||fa.getFullYear(),d=new Date(y,f.m-1,f.d,12);if(!f.y&&d>fa)d.setFullYear(y-1);if(d>fa&&/celebrad|pasad|sesi[oó]n/i.test(t.slice(Math.max(0,t.indexOf(f.txt)-80),t.indexOf(f.txt))))add('er','Se cita una sesión del '+f.txt+', posterior a la fecha del acta.')});
  e.asistentes.forEach(a=>{const nom=a.replace(/^(D\.|Dña\.|Dª\.?)\s*/,'');t.includes(nom)?add('ok','Firma correcta: '+a+'.'):add('er','No aparece el nombre completo «'+nom+'».')});
@@ -360,6 +405,9 @@ function vProg(){const p=pg(),c=CF(),D=S.D,prev=cursoPrev(),d=p.datos;
  <div><label class="f">Desglose de la teoría</label><input style="width:100%" value="${esc(d.pond_eso_detalle)}" placeholder="30 % contenidos · 30 % audiciones y trabajos" oninput="pgSet('datos.pond_eso_detalle',this.value)"></div><div><label class="f">Bachillerato</label><input style="width:100%" value="${esc(d.pond_bach)}" placeholder="100 % proyectos teórico-prácticos" oninput="pgSet('datos.pond_bach',this.value)"></div>
  <div><label class="f">Nombre del plan lector</label><input style="width:100%" value="${esc(d.plan_lector)}" oninput="pgSet('datos.plan_lector',this.value)"></div></div>
  <label class="f">Materias y situaciones de aprendizaje</label>${d.materias.map((m,i)=>`<div class="row"><input style="flex:2" placeholder="Materia y curso" value="${esc(m.nombre)}" oninput="pgSet('datos.materias.${i}.nombre',this.value)"><input type="number" style="width:90px" min="0" placeholder="Nº SA" value="${m.sa??''}" oninput="pgSet('datos.materias.${i}.sa',+this.value)"><button class="b s" aria-label="Quitar" onclick="pg().datos.materias.splice(${i},1);pgSet('x',0);render()">✕</button></div>`).join('')}<button class="b s" onclick="pg().datos.materias.push({nombre:'',sa:null});render()">Añadir materia</button></div>
+ <div class="card"><h3>Preguntar a la programación</h3>${S.progRef?`<p class="mu sm">Se consulta la programación guardada en la Biblioteca (curso ${esc(S.progRef.curso)}).</p>`:S.progRef===false?'<p class="mu sm">Sube la programación en la Biblioteca para poder consultarla.</p>':'<p class="mu sm">Cargando…</p>'}
+ <textarea id="pq" placeholder="¿Qué porcentaje tiene la práctica en 3º ESO? ¿Qué actividades complementarias hay en el segundo trimestre?"></textarea>
+ <div class="row"><button class="b" onclick="preguntaProg('claude')">Preguntar a Claude</button><button class="b s" onclick="preguntaProg('gemini')">A Gemini (gratis)</button><button class="b s" onclick="copiarPregunta()">Copiar todo para tu chat</button></div><div id="pqr"></div></div>
  <div class="card"><div class="row"><h3 style="margin:0;flex:1">Apartados</h3><button class="b ia" style="--c:${IAS.claude.c}" onclick="abrirIA('claude',pProg())">Revisión completa con Claude</button><button class="b ia" style="--c:${IAS.chatgpt.c}" onclick="abrirIA('chatgpt',pProg())">Con ChatGPT</button><button class="b ia" style="--c:${IAS.gemini.c}" onclick="abrirIA('gemini',pGemProg())">Consultar con Gemini</button></div>
  <p class="mu sm">Pega en cada apartado el texto que estés elaborando (o el del curso pasado, que te trae Gemini) y tus notas. Después pide la revisión de ese apartado.</p>
  ${APARTADOS.map(([k,t])=>{const a=p.apartados[k]||{};return `<details class="ap"><summary>${k=='anexos'?'':k+'. '}${esc(t)} ${a.texto?'<span class="pill ok">con texto</span>':''}</summary>
@@ -367,10 +415,17 @@ function vProg(){const p=pg(),c=CF(),D=S.D,prev=cursoPrev(),d=p.datos;
  <label class="f">Notas y cambios de este apartado</label><textarea oninput="pgSet('apartados.${k}.notas',this.value)">${esc(a.notas||'')}</textarea>
  <div class="row"><button class="b ia" style="--c:${IAS.claude.c}" onclick="abrirIA('claude',pProg('${k}'))">Revisar con Claude</button><button class="b ia" style="--c:${IAS.chatgpt.c}" onclick="abrirIA('chatgpt',pProg('${k}'))">Con ChatGPT</button><button class="b ia" style="--c:${IAS.gemini.c}" onclick="abrirIA('gemini',pGemProg('${k}'))">Traer del curso pasado con Gemini</button>${enl(L('programaciones'),'Abrir carpeta en Drive')}</div></details>`}).join('')}</div>
  ${vActividades()}${vMaterial()}`}
+function pPregunta(){return `Eres el jefe del Departamento de Música del IES Infanta Elena. Responde a la pregunta usando solo la programación de abajo; cita el apartado del que sale cada dato y, si no aparece, dilo.\n\nPREGUNTA: ${($('#pq')?.value||'').trim()}\n\n--- PROGRAMACIÓN (curso ${S.progRef?.curso}) ---\n${S.progRef?.texto||''}`}
+async function preguntaProg(prov){if(!S.progRef)return toast('Primero sube la programación en la Biblioteca',1);if(!$('#pq').value.trim())return toast('Escribe la pregunta',1);const o=$('#pqr');o.innerHTML='<p><span class="spin"></span>Consultando…</p>';try{const r=await llamaIA(prov,pPregunta());o.innerHTML=`<div class="opt" style="margin-top:10px;white-space:pre-wrap">${esc(r)}</div>`}catch(x){o.innerHTML='<p style="color:var(--er)">'+esc(x.message)+'</p>'}}
+function copiarPregunta(){if(!S.progRef)return toast('Primero sube la programación en la Biblioteca',1);copiar(pPregunta(),'Copiado: pégalo en tu chat con Cmd+V')}
 async function guardaProg(){const p=pg();await q(sb.from('actas_programacion').upsert({curso_id:S.cid,cambios:p.cambios,normativa:p.normativa,apartados:p.apartados,datos:p.datos,estado:p.estado,actualizado:new Date().toISOString()},{onConflict:'curso_id'}));localStorage.removeItem('dm_prog_'+S.cid);await cargarCurso();toast('Programación guardada');render()}
 async function pendHecho(id,v){await q(sb.from('actas_pendientes').update({hecho:v}).eq('id',id));const x=S.D.pendPrev.find(p=>p.id==id);if(x)x.hecho=v}
+async function cargaProgRef(){try{const{data}=await sb.from('actas_biblioteca').select('curso,texto').eq('tipo','programacion').order('creado',{ascending:false}).limit(1);S.progRef=data?.[0]||false}catch(x){S.progRef=false}}
+const PROG_RE={'1':'Referente','2':'Organizaci','3':'Decisiones','4':'Medidas de atenci','5':'Materiales','6':'Relaci[oó]n de actividades','7':'Concreci[oó]n','8':'Estrategias e instrumentos para la evaluaci[oó]n del aprendizaje','9':'Estrategias e instrumentos para la evaluaci[oó]n del proceso','10':'Medidas previstas','11':'Competencias digitales'};
+function inicioSec(t,k){if(k=='anexos'){const m=[...t.matchAll(/\n\s*ANEXO I\s*\n/g)];return m.length?m[m.length-1].index:-1}const m=[...t.matchAll(new RegExp('\\n\\s*'+k+'\\.\\s+'+PROG_RE[k],'gi'))];return m.length?m[m.length-1].index:-1}
+function seccionProg(k){const r=S.progRef;if(!r)return '';const t='\n'+r.texto,i=inicioSec(t,k);if(i<0)return '';const sig=APARTADOS.map(a=>inicioSec(t,a[0])).filter(x=>x>i).sort((a,b)=>a-b)[0];return t.slice(i,sig||i+15000).trim().slice(0,20000)}
 function pProg(k){const p=pg(),prev=cursoPrev(),d=p.datos,ap=k?APARTADOS.find(a=>a[0]==k):null,pend=S.D.pendPrev.filter(x=>!x.hecho).map(x=>'- '+x.texto).join('\n');
- const bloq=k?[[k,ap[1],p.apartados[k]||{}]]:APARTADOS.map(([kk,t])=>[kk,t,p.apartados[kk]||{}]).filter(x=>x[2].texto||x[2].notas);
+ const bloq=k?[[k,ap[1],p.apartados[k]||{}]]:APARTADOS.map(([kk,t])=>[kk,t,p.apartados[kk]||{}]).filter(x=>x[2].texto||x[2].notas||seccionProg(x[0]));
  return `Actúa como jefe del Departamento de Música del IES Infanta Elena (Jumilla, Región de Murcia) y ayúdame a revisar ${k?'el apartado «'+(k=='anexos'?'':k+'. ')+ap[1]+'»':'la programación docente'} del curso ${C().nombre}. La programación es un único documento del departamento (ESO y Bachillerato) y sigue los apartados del artículo 37 del Decreto 235/2022 (ESO) y del artículo 30 del Decreto 251/2022 (Bachillerato), más «Competencias digitales del alumnado».
 
 QUÉ NECESITO
@@ -393,7 +448,7 @@ DATOS CLAVE
 - Profesorado: ${miembros().map(nomF).join('; ')||'(sin indicar)'}
 ${d.materias.length?'- Materias: '+d.materias.map(m=>m.nombre+(m.sa?' ('+m.sa+' SA)':'')).join('; '):''}
 
-${bloq.map(([kk,t,a])=>`--- ${kk=='anexos'?'':kk+'. '}${t} ---\n${a.notas?'Notas: '+a.notas+'\n':''}${a.texto||'(sin texto: pídemelo)'}`).join('\n\n')||'(Aún no hay texto en ningún apartado: pídeme el que quieras revisar.)'}`}
+${bloq.map(([kk,t,a])=>{const ref=seccionProg(kk);return `--- ${kk=='anexos'?'':kk+'. '}${t} ---\n${a.notas?'Notas: '+a.notas+'\n':''}${a.texto||'(sin texto nuevo todavía)'}${ref?'\n\n[Mismo apartado en la programación guardada, curso '+S.progRef.curso+']\n'+ref:''}`}).join('\n\n')||'(Aún no hay texto en ningún apartado: pídeme el que quieras revisar.)'}`}
 function pGemProg(k){const c=CF(),prev=cursoPrev(),ap=k?APARTADOS.find(a=>a[0]==k):null;return `Abre en mi Google Drive la programación del Departamento de Música del IES Infanta Elena del curso ${prev?.nombre||'anterior'}${prev?.config?.enlaces?.programacion?' ('+prev.config.enlaces.programacion+')':L('programaciones')?' (está en '+L('programaciones')+sub(prev?.nombre||'anterior')+')':''}.
 ${k?'Copia el texto íntegro del apartado «'+(k=='anexos'?'':k+'. ')+ap[1]+'», sin resumir ni cambiar nada.':'Dime qué apartados tiene y en qué página empieza cada uno.'}${L('normativa')?'\nTen en cuenta también la normativa de esta carpeta: '+L('normativa')+sub(C().nombre):''}`}
 
@@ -410,6 +465,34 @@ function vMaterial(){const M=S.D.mat;return `<div class="card"><h3>Material del 
  <div class="tw"><table><thead><tr><th>Fecha</th><th>Movimiento</th><th>Descripción</th><th>Cant.</th><th></th></tr></thead><tbody>${M.map(m=>`<tr><td>${dmy(m.fecha)}</td><td>${TIPOS_MAT[m.tipo]||m.tipo}</td><td>${esc(m.descripcion)}${m.nota?'<br><span class="mu sm">'+esc(m.nota)+'</span>':''}</td><td>${m.cantidad}</td><td><button class="b s" aria-label="Eliminar" onclick="delRow('actas_material','${m.id}')">✕</button></td></tr>`).join('')}</tbody></table></div>
  <div class="row" style="margin-top:8px"><input id="mf" type="date" value="${iso(new Date())}"><select id="mt">${opt(TIPOS_MAT,'alta')}</select><input id="md" style="flex:1;min-width:160px" placeholder="Descripción (33 ukeleles)"><input id="mc" type="number" min="1" value="1" style="width:80px" aria-label="Cantidad"><button class="b s" onclick="addMat()">Añadir</button></div></div>`}
 async function addMat(){const d=$('#md').value.trim();if(!d)return toast('Escribe la descripción',1);await q(sb.from('actas_material').insert({curso_id:S.cid,fecha:$('#mf').value,tipo:$('#mt').value,descripcion:d,cantidad:+$('#mc').value||1}));await cargarCurso();render()}
+
+/* ---------- Biblioteca ---------- */
+const TIPOS_BIB={libro:'Libro de actas del departamento',ccp:'Actas de la CCP',programacion:'Programación'};
+function vBib(){const pr=cursoPrev()?.nombre||'';return `<div class="card"><h2>Biblioteca de referencia</h2><p class="mu sm">Arrastra aquí los libros de actas, las actas de la CCP y la programación. La app guarda solo el texto, no el archivo: los libros se separan por actas numeradas y la IA los usa como modelo; la programación se usa para consultarla y revisar la nueva.</p>
+ <div class="grid2"><div><label class="f" for="bt">Qué vas a subir</label><select id="bt">${opt(TIPOS_BIB,'libro')}</select></div><div><label class="f" for="bc">Curso</label><input id="bc" placeholder="2025-26" value="${esc(pr)}"></div></div>
+ <label class="drop" ondragover="event.preventDefault();this.classList.add('on')" ondragleave="this.classList.remove('on')" ondrop="event.preventDefault();this.classList.remove('on');bibArchivos(event.dataTransfer.files)"><b>Arrastra aquí uno o varios archivos</b><span class="mu sm">PDF o Word (.docx) · o pulsa para elegirlos</span><input type="file" multiple accept=".pdf,.docx" hidden onchange="bibArchivos(this.files)"></label><div id="bibest" aria-live="polite"></div></div>
+ <div class="card"><h3>Guardado</h3><div id="bibl"><p class="mu">Cargando…</p></div></div>`}
+function partirLibro(t){const ms=[...t.matchAll(/(?:ACTA\s+DE\s+(?:LA\s+)?REUNI[ÓO]N\s+DEL\s+DEPARTAMENTO\s+DE\s+M[ÚU]SICA\s*)?Acta\s*n[ºo°.]?\s*(\d+)\s*Fecha\s*:/gi)];return ms.map((m,i)=>({numero:+m[1],texto:t.slice(m.index,i+1<ms.length?ms[i+1].index:undefined).trim()}))}
+async function bibArchivos(files){files=[...(files||[])];if(!files.length)return;const tipo=$('#bt').value,curso=$('#bc').value.trim(),st=$('#bibest');if(!/^\d{4}-\d{2}$/.test(curso))return toast('Escribe el curso con el formato 2025-26',1);
+ try{const{data:ex}=await sb.from('actas_biblioteca').select('id,curso').eq('tipo',tipo);
+  if(tipo=='programacion'&&ex.length&&!confirm('Ya hay una programación guardada ('+[...new Set(ex.map(x=>x.curso))].join(', ')+'). Se borrará y se guardará la nueva, para no repetir texto. ¿Continuar?'))return;
+  if(tipo=='libro'&&ex.some(x=>x.curso==curso)&&!confirm('Ya hay un libro de actas del curso '+curso+'. Se sustituirá por el nuevo. ¿Continuar?'))return;
+  let filas=[];for(const f of files){st.innerHTML='<span class="spin"></span>Leyendo '+esc(f.name)+'…';const tx=limpia(await leeArchivo(f));if(tx.length<100){toast(f.name+': no se encontró texto (¿PDF escaneado?)',1);continue}
+   if(tipo=='libro'){const a=partirLibro(tx);if(!a.length){toast(f.name+': no se encontraron actas numeradas',1);continue}a.forEach(x=>filas.push({curso,tipo,numero:x.numero,titulo:'Acta nº '+x.numero,texto:x.texto}))}
+   else if(tipo=='ccp'){const n=numDe(tx,f.name);filas.push({curso,tipo,numero:n,titulo:'CCP'+(n?' nº '+n:'')+' · '+f.name,texto:tx})}
+   else filas=[{curso,tipo,numero:null,titulo:'Programación '+curso,texto:tx}]}
+  if(!filas.length){st.innerHTML='';return}
+  if(tipo=='programacion')await q(sb.from('actas_biblioteca').delete().eq('tipo','programacion'));
+  if(tipo=='libro')await q(sb.from('actas_biblioteca').delete().eq('tipo','libro').eq('curso',curso));
+  for(let i=0;i<filas.length;i+=20)await q(sb.from('actas_biblioteca').insert(filas.slice(i,i+20)));
+  st.innerHTML=`<p style="color:var(--ok)">Guardado: ${filas.length} ${tipo=='libro'?'actas':tipo=='ccp'?'actas de la CCP':'programación'} del curso ${esc(curso)}.</p>`;if(tipo=='programacion')S.progRef=null;cargaBib()}
+ catch(x){st.innerHTML='<p style="color:var(--er)">'+esc(x.message||'Error al leer el archivo')+'</p>'}}
+const kb=n=>n>1e6?(n/1e6).toFixed(1)+' MB':Math.max(1,Math.round(n/1e3))+' KB';
+async function cargaBib(){const el=$('#bibl');if(!el)return;try{const{data}=await sb.from('actas_biblioteca').select('id,curso,tipo,numero,titulo,texto').order('curso',{ascending:false}).order('numero');S.bib=data||[];
+ if(!S.bib.length)return el.innerHTML='<p class="mu">Todavía no hay nada guardado.</p>';const tot=S.bib.reduce((n,x)=>n+x.texto.length,0),grupos={};S.bib.forEach(x=>{(grupos[x.curso+'|'+x.tipo]=grupos[x.curso+'|'+x.tipo]||[]).push(x)});
+ el.innerHTML=`<p class="mu sm">Ocupa en total unos ${kb(tot)}.</p><div class="tw"><table><thead><tr><th>Curso</th><th>Tipo</th><th>Contenido</th><th>Tamaño</th><th></th></tr></thead><tbody>${Object.entries(grupos).map(([g,L])=>{const[cu,ti]=g.split('|'),ns=L.map(x=>x.numero).filter(n=>n!=null);return `<tr><td>${esc(cu)}</td><td>${TIPOS_BIB[ti]}</td><td>${ti=='programacion'?'Texto completo':L.length+(ti=='libro'?' actas':' actas de la CCP')+(ns.length?' (nº '+Math.min(...ns)+'–'+Math.max(...ns)+')':'')}</td><td>${kb(L.reduce((n,x)=>n+x.texto.length,0))}</td><td style="white-space:nowrap"><button class="b s" onclick="verBib('${esc(g)}')">Ver</button> <button class="b s" onclick="borraBib('${esc(g)}')">Borrar</button></td></tr>`}).join('')}</tbody></table></div>`}catch(x){el.innerHTML='<p style="color:var(--er)">No se pudo cargar. ¿Has ejecutado el SQL nuevo en Supabase?</p>'}}
+function verBib(g){const[cu,ti]=g.split('|'),L=S.bib.filter(x=>x.curso==cu&&x.tipo==ti);modal(`<h3>${TIPOS_BIB[ti]} · ${esc(cu)}</h3>${L.map(x=>`<details class="ap"><summary>${esc(x.titulo||'')}</summary><textarea class="big" readonly>${esc(x.texto)}</textarea></details>`).join('')}<div class="row"><button class="b" onclick="cerrar()">Cerrar</button></div>`)}
+async function borraBib(g){const[cu,ti]=g.split('|');if(!confirm('¿Borrar '+TIPOS_BIB[ti].toLowerCase()+' del curso '+cu+' de la Biblioteca?'))return;if(!confirm('Se borrará el texto guardado. Los archivos de Drive no se tocan. ¿Seguro?'))return;if(prompt('Para confirmar, escribe BORRAR')!=='BORRAR')return toast('No se ha borrado nada');await q(sb.from('actas_biblioteca').delete().eq('curso',cu).eq('tipo',ti));if(ti=='programacion')S.progRef=null;toast('Borrado');cargaBib()}
 
 /* ---------- Estadísticas ---------- */
 const barras=(arr,max)=>arr.map(([l,n])=>`<div class="bar-r"><span class="bl" title="${esc(l)}">${esc(l)}</span><span class="bt"><i style="width:${max?Math.round(n/max*100):0}%"></i></span><span class="bn">${n}</span></div>`).join('');
@@ -444,6 +527,7 @@ function vConfig(){const f=S.cfg,dias=[1,2,3,4,5].map(d=>[d,DIAS[d]]);
  if(f)h+=`<div class="card"><h2>${f.id?'Editar curso '+esc(f.nombre):'Nuevo curso'}</h2><label class="f" for="cn">Curso escolar</label><input id="cn" value="${esc(f.nombre)}" placeholder="2026-27" oninput="S.cfg.nombre=this.value">
  <div class="grid2"><div><h3 style="margin-top:14px">CCP</h3><div class="row">${selD('config.ccp.dia',f.config.ccp?.dia)}<input type="time" value="${f.config.ccp?.ini||''}" oninput="cfgSet('config.ccp.ini',this.value)" aria-label="Inicio CCP"><input type="time" value="${f.config.ccp?.fin||''}" oninput="cfgSet('config.ccp.fin',this.value)" aria-label="Fin CCP"></div></div>
  <div><h3 style="margin-top:14px">Reunión de departamento</h3><div class="row">${selD('config.dep.dia',f.config.dep?.dia)}<input type="time" value="${f.config.dep?.ini||''}" oninput="cfgSet('config.dep.ini',this.value)" aria-label="Inicio reunión"><input type="time" value="${f.config.dep?.fin||''}" oninput="cfgSet('config.dep.fin',this.value)" aria-label="Fin reunión"></div></div></div>
+ <h3 style="margin-top:14px">Periodo lectivo</h3><p class="mu sm">Dentro de estas fechas, las actas van siempre en el día y la hora de la reunión de departamento. Fuera, la fecha y la hora son libres.</p><div class="row"><label class="sm">Inicio de clases <input type="date" value="${f.config.lectivo?.ini||''}" onchange="cfgSet('config.lectivo.ini',this.value)"></label><label class="sm">Fin de clases <input type="date" value="${f.config.lectivo?.fin||''}" onchange="cfgSet('config.lectivo.fin',this.value)"></label></div>
  <h3 style="margin-top:14px">Integrantes del Departamento de Música</h3><p class="mu sm">Nombre y apellidos tal como deben ir en las firmas. Marca quién es el jefe de departamento.</p>
  ${f.config.miembros.map((m,i)=>`<div class="row"><select onchange="cfgSet('config.miembros.${i}.trat',this.value)">${['D.','Dña.'].map(t=>`<option ${m.trat==t?'selected':''}>${t}</option>`).join('')}</select><input style="flex:1;min-width:200px" value="${esc(m.nombre)}" placeholder="Nombre y apellidos" oninput="cfgSet('config.miembros.${i}.nombre',this.value)"><label class="sm"><input type="radio" name="jefe" ${m.jefe?'checked':''} onchange="S.cfg.config.miembros.forEach((x,j)=>x.jefe=j==${i})"> Jefe de departamento</label><button class="b s" aria-label="Quitar" onclick="S.cfg.config.miembros.splice(${i},1);render()">✕</button></div>`).join('')}
  <button class="b s" onclick="S.cfg.config.miembros.push({trat:'D.',nombre:'',jefe:false});render()">Añadir integrante</button>
@@ -453,11 +537,16 @@ function vConfig(){const f=S.cfg,dias=[1,2,3,4,5].map(d=>[d,DIAS[d]]);
  h+=`<div class="card"><h2>Carpetas de Drive</h2><p class="mu sm">Se guardan una sola vez y sirven para todos los cursos. Dentro de cada carpeta, crea una subcarpeta por curso con su nombre (por ejemplo, «2026-27»). Para copiar un enlace: en Drive, botón derecho → Compartir → Copiar enlace.</p>
  ${G.map(([k,t])=>`<label class="f" for="g_${k}">${t}</label><div class="row" style="margin:0"><input id="g_${k}" style="flex:1" value="${esc(S.G[k]||'')}" placeholder="https://drive.google.com/…" oninput="S.G['${k}']=this.value.trim()">${S.G[k]?enl(S.G[k],'Abrir'):''}</div>`).join('')}
  <div class="row" style="margin-top:14px"><button class="b" onclick="guardaG()">Guardar carpetas</button></div></div>`;
- const fa=localStorage.getItem('dm_font')||'literaria';
+ h+=`<div class="card"><h2>Inteligencia artificial</h2><p class="mu sm">Para redactar dentro de la app hace falta la función «actas-ia» en Supabase (ver tutorial). Aquí puedes cambiar el modelo sin tocar el código.</p>
+ <div class="grid2"><div><label class="f" for="iac">Modelo de Claude</label><input id="iac" style="width:100%" value="${esc(S.IA.claude||'claude-sonnet-5-5')}"></div><div><label class="f" for="iag">Modelo de Gemini</label><input id="iag" style="width:100%" value="${esc(S.IA.gemini||'gemini-flash-latest')}"></div></div>
+ <div class="row" style="margin-top:12px"><button class="b" onclick="guardaIA()">Guardar</button><button class="b s" onclick="pruebaIA('claude')">Probar Claude</button><button class="b s" onclick="pruebaIA('gemini')">Probar Gemini</button><span id="iapr" class="sm"></span></div></div>`;
+ const fa=localStorage.getItem('dm_font')||'oficial';
  if(!document.getElementById('gfall')){const l=document.createElement('link');l.id='gfall';l.rel='stylesheet';l.href='https://fonts.googleapis.com/css2?'+Object.values(FUENTES).map(f=>'family='+f[2]).join('&')+'&display=swap';document.head.appendChild(l)}
  h+=`<div class="card"><h2>Tipo de letra</h2><p class="mu sm">Cada opción es una sola familia para toda la app. El cambio es inmediato y se guarda en este navegador. El acta y la programación oficiales mantienen su letra; esto solo cambia la app.</p><div class="grid2">${Object.entries(FUENTES).map(([k,[n,d]])=>`<button class="b s f-${k}" style="flex-direction:column;align-items:flex-start;padding:12px 16px;${fa==k?'border:2px solid var(--au)':''}" onclick="fuente('${k}');render()"><span style="font-family:var(--txt);font-weight:var(--dw);font-size:calc(20px*var(--ds))">${n}</span><span style="font-family:var(--txt);font-size:15px">Acta nº 5 · Se procede a la lectura del acta anterior.</span><span class="mu" style="font-size:12px">${d}</span></button>`).join('')}</div></div>`;
  return h+`<div class="card" id="aut"><h2>Acceso</h2><p class="mu sm">Correos que pueden entrar en la app. Para que un compañero entre, añade aquí su correo; después crea su cuenta en «Crear cuenta» o la das de alta tú desde Supabase.</p><div id="autl" class="mu">Cargando…</div>
  <div class="row" style="margin-top:8px"><input id="au" type="email" style="flex:1" placeholder="correo@murciaeduca.es"><input id="an" style="flex:1" placeholder="Nombre"><button class="b s" onclick="addAut()">Autorizar</button></div></div>`}
+async function guardaIA(){S.IA={claude:$('#iac').value.trim(),gemini:$('#iag').value.trim()};await q(sb.from('actas_ajustes').upsert({clave:'ia',valor:S.IA,actualizado:new Date().toISOString()},{onConflict:'clave'}));toast('Guardado')}
+async function pruebaIA(p){const o=$('#iapr');o.innerHTML='<span class="spin"></span>Probando…';try{const r=await llamaIA(p,'Responde solo con la palabra: Conectado');o.innerHTML='<span style="color:var(--ok)">'+esc(r.slice(0,60))+'</span>'}catch(x){o.innerHTML='<span style="color:var(--er)">'+esc(x.message)+'</span>'}}
 async function guardaG(){await q(sb.from('actas_ajustes').upsert({clave:'enlaces',valor:S.G,actualizado:new Date().toISOString()},{onConflict:'clave'}));toast('Carpetas guardadas');render()}
 async function listaAut(){const L=await q(sb.from('actas_autorizados').select('*').order('creado'));$('#autl').innerHTML=L.map(a=>`<div class="row"><span style="flex:1">${esc(a.email)} <span class="mu sm">${esc(a.nombre||'')}</span></span>${a.email.toLowerCase()==S.user.email.toLowerCase()?'<span class="pill">tú</span>':`<button class="b s" onclick="delAut('${esc(a.email)}')">Quitar acceso</button>`}</div>`).join('')}
 async function addAut(){const e=$('#au').value.trim().toLowerCase();if(!/^\S+@\S+\.\S+$/.test(e))return toast('Escribe un correo válido',1);await q(sb.from('actas_autorizados').insert({email:e,nombre:$('#an').value.trim()}));toast('Acceso concedido');listaAut()}
@@ -466,7 +555,7 @@ async function guardaCurso(){const f=S.cfg;f.nombre=f.nombre.trim();if(!/^\d{4}-
  if(f.config.miembros.length&&!f.config.miembros.some(m=>m.jefe))return toast('Marca quién es el jefe de departamento',1);
  const r=f.id?await q(sb.from('actas_cursos').update({nombre:f.nombre,config:f.config}).eq('id',f.id).select().single()):await q(sb.from('actas_cursos').insert({nombre:f.nombre,config:f.config}).select().single());
  S.cfg=null;S.cid=r.id;S.cursos=await q(sb.from('actas_cursos').select('*').order('nombre',{ascending:false}));await cargarCurso();toast('Curso guardado');render()}
-async function borraCurso(){if(!confirm('¿Eliminar el curso '+S.cfg.nombre+' con todas sus actas, actividades y material? No se puede deshacer.'))return;await q(sb.from('actas_cursos').delete().eq('id',S.cfg.id));S.cfg=null;S.cid=null;cargar()}
+async function borraCurso(){if(!confirm('¿Eliminar el curso '+S.cfg.nombre+' con todas sus actas, actividades, material y programación de la app? No se puede deshacer.'))return;if(!confirm('Los documentos de Drive no se tocan, pero lo guardado en la app se perderá. ¿Seguro?'))return;if(prompt('Para confirmar, escribe BORRAR')!=='BORRAR')return toast('No se ha borrado nada');await q(sb.from('actas_cursos').delete().eq('id',S.cfg.id));S.cfg=null;S.cid=null;cargar()}
 
 cargar();
 </script>
