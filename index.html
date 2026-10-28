@@ -1,0 +1,456 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Departamento de Música · IES Infanta Elena</title>
+<meta name="theme-color" content="#51205d">
+<link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAE8ElEQVR4nO2XS2xUZRTHf+f77r3TziB9CMgjPgJGI0ogMZLohpfBrSYOaowxMQZ5GCPpwmhCprMwsNCQqFgkQcKCRNtE3cpCcKVhoRIFghoeUaBQLB2g05n7+I6LO9OW6ZTSstSzud/r/M85/3Pu+e4VZibSbFHTDZ0h5n9UmlLZTJSCEYruIm88INjDCrMMOAdGUFVIOmlNBqnuWMDu3UqvFTYkU+F60/XYIh0JVBV6hdG8iyBxjFsm6H3pyeO3FZyXRpe3sFSOAKtHt4pJs4JyuBaQ7xbS807j3jk2rs9gn25cVxAoWIAxGydU6Es8AKFvSqrGxKhDckrBg0ELnUn92c+lzmYaaSDFuNmeB3CezevbCBYOEzqHGIAM8ded7C0pSApwQpSCd5l+K6gTirGSV+HjRCk0dbWuO8jGtirecwAGdTkCUyK8sIieQ166SHeOlidBsLW6vEpyFChBQaCodZbO8fqQj2mIMI3uAptKgo7LfapbQRZ1kNkPkKDkyHCd8AfgUL0IS2Uq8TBRrKiXUuPVKDshAANsXSjIeh9ZMkydzQ4DJJfZ+lAW76kI90SVqDSRZi8uUYlTZyWW1EZpNAXjKGvSxlIjCfGjneT2+xgqJPsAzlK1QBShq3IEex2OAZLtk6SjqdSKkI6s5DxDxaunoN+rZPLP5u3ZowtsfmXeRV+JZ50FLA46ULhIWVJ9FUQwBCgjbfnn8/aPnzvttbbjkl+cl8o3ZObHWa+WAq+FFq5r2FGzDQNseXkO/j1lqk5qRdjKlU+EvnAsglfuTpj9qsVQITreyp5vD7PKW8P38d9sWTEf/xmLi6B6RNj7083R54MR5ryZjtVlyZgrRJfm8ulBqfOw5vNty32CUaWHT4btQWisM0aNczKcNdHvS7TUeleLRKEOHnrp/b8QUKciIpr7s2ve6mOtC+adGmnp/IdcAtgaVhi45NQjwVAdOyLk8Gu7jhHXGHh301uP2fZZv473OsbdlCsBxEE2m2WoVPryg10fvlgoFNIaKuJG3r7xxez2tvyN8jCYiU3Qa3hzkqEby3bs+eg3D6CckciGFQcgIqqqk7XRiNB4ahgev1ik6Lps1/VyWEnCOIoBv1ExbMBOMhLVyK9FKFJ3UUVkMgcy1lpUdYIBVfWttVZEbDPFybCncxklqjronPNE5Frjpohcc85dVdVYRDoZK4FbypQOqKrzfd9EUXQmCIKVSZIwqz9MlIJHMT3TTcHr7h98r3qvvz0IAsIwPOr7/oNRFLlxzM7MgbqISLxz586r9Xmx8cBBRlnp6upqevHckQOqKr35vM339rrzsnnFXLLLhxhxAO20mgHKxxZpzy99GzaYHycv4glyS3oaZXFfhxER9TAvBLTszxIcyBIcCGjZ72FeEBFd3NcxLcxpfxEBOLRcZSQeJowBfIzn0PJMsGbkgIARxNPRuXgyTTbvyAFFVFEHabtU1Ckyo/+BGTKgQYbAZIgCgAwBQiWYSq+ZjNKmqk41jao+Hj8H3ON8FgOEsK9CdV2VZG2VZG2F6roQ9gHUztwSqzYeY8BaK77vN82hqhrf94miKCs1mu+n5zRwujk7ott0W7aGZybv6ulF6AGEYVgFTkHTy8iJiBGRM/WFAgXTXftUq0s3S7VIsX6hnYzjuBLHsRvP8njsms3/5aZ/w6na53Rfs9vC+xeXBjryKgJZBgAAAABJRU5ErkJggg==">
+<link rel="apple-touch-icon" href="musica-apple-touch-icon.png">
+<link rel="manifest" href="musica.webmanifest">
+<link rel="preconnect" href="https://bbdvflbykohleyctiinj.supabase.co" crossorigin>
+<style>
+:root{--bg:#f5eff7;--sf:#fff;--s2:#f1e7f4;--ln:#e5d9e9;--ink:#211927;--mu:#6e6374;--ac:#743a83;--pk:#c4005a;--ok:#16794b;--wn:#9a6700;--er:#b42318;--sh:0 4px 14px rgba(58,28,66,.09)}
+body.dark{--bg:#12141c;--sf:#1b1e29;--s2:#232736;--ln:#2f3447;--ink:#e8eaf2;--mu:#9aa3b8;--ac:#c9a6d6;--pk:#ff5aa0;--ok:#4cc38a;--wn:#e0b04a;--er:#f08080;--sh:0 4px 14px rgba(0,0,0,.35)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{background:#51205d;color:#fff;padding:12px 20px;position:sticky;top:0;z-index:10;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+body.dark header{background:#2a2145}
+.logo{width:52px;height:52px;background:#fff;border-radius:12px;display:flex;align-items:center;justify-content:center;flex:none}
+.tit b{font-size:17px;display:block;line-height:1.2}
+.tit small{display:block;font-size:11px;letter-spacing:.6px;opacity:.85}
+.tit i{display:block;font-size:11px;opacity:.6}
+header select{background:rgba(255,255,255,.15);color:#fff;border:0;border-radius:10px;padding:7px 10px}
+header option{color:#000}
+nav{display:flex;gap:4px;flex-wrap:wrap;margin-left:auto}
+nav button{background:none;color:#ead9f0;border:0;padding:8px 12px;border-radius:99px;cursor:pointer;font:inherit}
+nav button.on{background:rgba(255,255,255,.2);color:#fff}
+main{max-width:1100px;margin:auto;padding:18px 16px 60px}
+.card{background:var(--sf);border:1px solid var(--ln);border-radius:16px;padding:18px;margin-bottom:14px;box-shadow:var(--sh)}
+h2{font-size:20px;margin:0 0 10px}h3{font-size:16px;margin:0 0 8px}
+.mu{color:var(--mu)}.sm{font-size:13px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+button,input,select,textarea{font:inherit}
+input,select,textarea{padding:8px 10px;border:1px solid var(--ln);border-radius:10px;background:var(--s2);color:var(--ink);max-width:100%}
+textarea{width:100%;min-height:110px;resize:vertical;line-height:1.45}
+textarea.big{min-height:260px}
+input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid var(--ac);outline-offset:1px}
+label.f{display:block;font-size:12px;font-weight:700;margin:10px 0 4px;color:var(--mu)}
+.b{background:#51205d;color:#fff;border:0;border-radius:10px;padding:8px 14px;cursor:pointer;display:inline-flex;gap:6px;align-items:center;text-decoration:none}
+body.dark .b{background:#7c5ce0}
+.b.s{background:var(--s2);color:var(--ink);border:1px solid var(--ln)}
+.b.r{background:var(--er);color:#fff}
+.b.ia{background:var(--sf);color:var(--ink);border:1px solid var(--ln)}
+.b.ia::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--c,#999)}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+th{background:var(--s2);color:var(--ac);font-size:12px;text-align:left}
+td,th{padding:7px;border-bottom:1px solid var(--ln);vertical-align:top}
+.pill{padding:2px 10px;border-radius:99px;font-size:12px;background:var(--s2);white-space:nowrap}
+.pill.ok{color:var(--ok)}.pill.wn{color:var(--wn)}.pill.er{color:var(--er)}
+.steps{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.steps button{border:1px solid var(--ln);background:var(--sf);color:var(--ink);border-radius:99px;padding:6px 14px;cursor:pointer}
+.steps button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+body.dark .steps button.on{color:#12141c}
+.chk li{margin:4px 0}.chk .ok{color:var(--ok)}.chk .wn{color:var(--wn)}.chk .er{color:var(--er)}
+details.ap{border:1px solid var(--ln);border-radius:12px;padding:8px 14px;margin:8px 0;background:var(--sf)}
+details.ap>summary{cursor:pointer;font-weight:600}
+.bar-r{display:flex;align-items:center;gap:8px;margin:5px 0}
+.bl{width:150px;font-size:13px;flex:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bt{flex:1;background:var(--s2);border-radius:99px;height:14px;overflow:hidden}
+.bt i{display:block;height:100%;border-radius:99px;background:var(--pk)}
+.bn{width:34px;text-align:right;font-size:13px}
+.k{display:flex;flex-direction:column;background:var(--s2);border-radius:12px;padding:12px 14px}
+.k strong{font-size:24px}.k span{font-size:13px;color:var(--mu)}
+.auth-shell{min-height:100vh;display:grid;place-items:center;padding:28px 16px}
+.auth{width:min(440px,100%);border:1px solid var(--ln);border-radius:24px;background:var(--sf);box-shadow:0 24px 70px rgba(58,28,66,.16);overflow:hidden}
+.auth-brand{padding:24px 26px;background:#51205d;color:#fff;display:flex;gap:14px;align-items:center}
+.auth-main{padding:22px 26px 26px}
+.auth-main input{width:100%}
+.tabs{display:grid;grid-template-columns:1fr 1fr;background:var(--s2);padding:4px;border-radius:12px;margin-bottom:6px}
+.tabs button{border:0;border-radius:9px;padding:8px;background:none;color:var(--ink);cursor:pointer}
+.tabs button.on{background:var(--sf);box-shadow:var(--sh)}
+#modal{position:fixed;inset:0;background:#0009;display:none;justify-content:center;align-items:flex-start;overflow:auto;padding:16px;z-index:30}
+#modal>div{background:var(--sf);color:var(--ink);border-radius:16px;padding:18px;width:min(720px,100%)}
+#toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#222;color:#fff;padding:10px 16px;border-radius:10px;display:none;z-index:40;max-width:90vw}
+#toast.e{background:var(--er)}
+@media(max-width:640px){header{padding:10px 12px;position:static}nav{margin-left:0;width:100%}.bl{width:96px}}
+@media print{header,nav,.noprint{display:none}}
+</style></head><body>
+<div id="app"><div style="padding:40px;color:#51205d">Cargando…<span id="bootmsg" style="font-size:13px;opacity:.7"></span></div></div>
+<div id="modal" onclick="if(event.target===this)cerrar()"></div><div id="toast" role="status"></div>
+<script type="text/plain" id="app-main">
+const SU='https://bbdvflbykohleyctiinj.supabase.co',SK='sb_publishable_URQ87m7Tiq96RUHGtvX29Q_lYroaqM4';
+const sb=supabase.createClient(SU,SK,{auth:{lock:(n,w,f)=>f()}});
+const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const LOGO=`<svg width="40" height="32" viewBox="0 -6 50 40" aria-hidden="true"><rect x="3" y="3" width="7" height="7" fill="#E8006A"/><rect x="17" y="6" width="4" height="4" fill="#E8006A"/><rect x="27" y="6" width="4" height="4" fill="#E8006A"/><rect x="39" y="3" width="7" height="7" fill="#E8006A"/><path d="M4 12H21V18H17V34H4Z" fill="#737373"/><path d="M28 12H45V34H32V18H28Z" fill="#737373"/><rect x="21" y="22" width="7" height="8" fill="#E8006A"/><rect x="20.1" y="-3" width="0.9" height="10.5" fill="#E8006A"/><rect x="30.1" y="-3" width="0.9" height="10.5" fill="#E8006A"/><rect x="20.1" y="-3.6" width="10.9" height="2" fill="#E8006A"/></svg>`;
+const DIAS=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+const MESES=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+const IAS={claude:{n:'Claude',u:'https://claude.ai/new',c:'#d97757'},chatgpt:{n:'ChatGPT',u:'https://chatgpt.com/',c:'#10a37f'},gemini:{n:'Gemini',u:'https://gemini.google.com/app',c:'#4285f4'}};
+const APARTADOS=[['1','Referente legal'],['2','Organización y secuenciación de saberes, criterios y competencias'],['3','Decisiones metodológicas y didácticas. Situaciones de aprendizaje'],['4','Medidas de atención a la diversidad'],['5','Materiales y recursos didácticos'],['6','Actividades complementarias y extraescolares'],['7','Concreción de los elementos transversales'],['8','Evaluación del aprendizaje: instrumentos, calificación y pendientes'],['9','Evaluación del proceso de enseñanza y la práctica docente'],['10','Fomento de la lectura y de la expresión oral y escrita'],['11','Competencias digitales del alumnado'],['anexos','Anexos I, II y III (aNota)']];
+const TEMAS={'Santa Cecilia':/santa cecilia|recreos musicales/i,'Musical':/musical|teatro vico/i,'Aspajunide':/aspajunide/i,'Coro':/\bcoro\b/i,'Orquesta':/orquesta/i,'Material e instrumentos':/material|ukelel|xil[oó]fono|instrumento/i,'Programación':/programaci[oó]n/i,'Pendientes':/pendiente/i,'Evaluación y resultados':/evaluaci[oó]n|calificaci|resultados/i,'Carnaval':/carnaval/i,'Halloween':/halloween/i,'FIDEMUS':/fidemus/i,'Plan lector':/plan lector|lectura/i,'Digital (LIBRE, BYOD, Classroom)':/byod|estrategia libre|senda|classroom|digital/i,'Jornadas de puertas abiertas':/puertas abiertas|colegios de primaria/i};
+const EJEMPLOS=`ACTA DE LA REUNIÓN DEL DEPARTAMENTO DE MÚSICA
+Acta nº5     Fecha: 29/10/2025     Hora: 09:25
+En Jumilla, siendo las 09:25 horas del día miércoles 29 de octubre de 2025, se reúnen en el Departamento de Música, Amadeo Molina y Manuel Esteve, convocados con objeto de sesión ordinaria y con arreglo al siguiente orden del día:
+1. Lectura y aprobación del acta anterior.
+Se procede a la lectura del acta de la sesión anterior. Tras comprobar que recoge fielmente lo acontecido, es aprobada por unanimidad de los asistentes sin que se formulen enmiendas, modificaciones ni objeciones a su contenido.
+2. Información de la comisión de coordinación pedagógica.
+Se traslada al departamento el resumen de los asuntos abordados en el Acta nº 5 de la Comisión de Coordinación Pedagógica (CCP), celebrada con fecha 27 de octubre de 2025. Se hace constar la presentación del documento anexo relativo a la propuesta pedagógica para el simulacro de la PAU, formulada por el Jefe del Departamento de Artes Plásticas, D. Andrés Carlos López Herrero. Asimismo, se informa a los miembros sobre los criterios establecidos para la titulación en 4º de la ESO y se comparten las valoraciones correspondientes a dicho simulacro de la PAU.
+Por otra parte, se dan a conocer las directrices referentes al Programa PRE y al desarrollo de las comunidades de innovación. Finalmente, se transmiten las instrucciones dictadas por la Jefatura de Estudios y la Dirección del centro relativas al calendario y organización de exámenes, así como a la obligatoriedad de cumplimentar la firma de horarios, concluyendo con la mención a los ruegos formulados en el seno de la comisión en relación con el viaje a la nieve.
+3. Acuerdos tomados en la reunión de departamento.
+Se abren las deliberaciones en torno a la actividad propia del departamento, alcanzándose por consenso los siguientes acuerdos:
+• Organización de las presentaciones y gratificación al alumnado colaborador: Se detalla la preparación de las introducciones y presentaciones que tendrán lugar cada día antes de las actuaciones musicales. Estas labores de presentación serán llevadas a cabo por el alumnado del centro. El Departamento aprueba y deja constancia de que, como reconocimiento institucional a su implicación, tanto los alumnos presentadores como los alumnos músicos que intervengan en las actuaciones tendrán derecho a un desayuno gratuito en la cantina del instituto en su respectivo día de participación.
+• Situación del Coro del Centro: Se analiza la viabilidad de la actuación del coro escolar en los eventos próximos. Se constata que la agrupación cuenta con una participación de alumnado inferior a la esperada. Por consiguiente, se toma la decisión técnica de posponer su debut, quedando suspendido su estreno en los recreos musicales de Santa Cecilia a la espera de consolidar un mayor número de voces y horas de ensayo.
+Sin más asuntos que tratar, y no habiendo ruegos ni preguntas se levanta la sesión.
+Fdo. D. Manuel Esteve Martínez          Fdo. D. Amadeo Molina Bañón
+(Jefe de Departamento)
+
+---
+
+ACTA DE LA REUNIÓN DEL DEPARTAMENTO DE MÚSICA
+Acta nº8     Fecha: 14/01/2026     Hora: 09:25
+[…]
+2. Información de la comisión de coordinación pedagógica.
+En cumplimiento de la normativa de organización y funcionamiento la Jefatura del Departamento procede a informar exhaustivamente sobre los acuerdos, directrices y líneas de actuación emanadas de la última sesión de la CCP (Acta nº 8, de 12 de enero de 2026). Se detallan a continuación los ejes temáticos abordados:
+• Plan de Evaluación de Materias Pendientes: Se traslada al profesorado la necesidad de articular de manera rigurosa los mecanismos de evaluación, recuperación y seguimiento del alumnado que promocionó con materias no superadas en cursos precedentes. […]
+3. Acuerdos tomados en la reunión de departamento.
+A continuación, se abordan los asuntos específicos concernientes a la organización y funcionamiento interno del Departamento de Música, adoptándose los siguientes acuerdos:
+• Coordinación de materias pendientes: En estricto cumplimiento de lo dictaminado por la CCP, se aborda la situación del alumnado con la materia de Música pendiente de cursos anteriores. Se determina que la Jefatura del Departamento asumirá toda la responsabilidad de informar a este sector del alumnado acerca de las tareas, ejercicios y entregas preceptivas fijadas para el segundo trimestre. […]`;
+
+let S={G:{},view:'inicio',cursos:[],cid:localStorage.getItem('dm_cid'),D:null,user:null,paso:1,ed:null,cfg:null,prog:null};
+const C=()=>S.cursos.find(c=>c.id==S.cid),CF=()=>C()?.config||{};
+const pad=n=>String(n).padStart(2,'0');
+const iso=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const dmy=s=>s?s.split('-').reverse().join('/'):'';
+const larga=s=>{if(!s)return'';const d=new Date(s+'T12:00');return DIAS[d.getDay()]+' '+d.getDate()+' de '+MESES[d.getMonth()]+' de '+d.getFullYear()};
+function ultimo(dia,hasta){const d=hasta?new Date(hasta+'T12:00'):new Date();for(let i=0;i<7;i++){if(d.getDay()==dia)return iso(d);d.setDate(d.getDate()-1)}return iso(new Date())}
+function toast(m,e){const t=$('#toast');t.textContent=m;t.className=e?'e':'';t.style.display='block';clearTimeout(t._t);t._t=setTimeout(()=>t.style.display='none',e?6000:2600)}
+async function q(p){const r=await p;if(r.error){toast(r.error.message,1);throw r.error}return r.data}
+function modal(h){const m=$('#modal');m.innerHTML='<div>'+h+'</div>';m.style.display='flex'}
+function cerrar(){$('#modal').style.display='none'}
+async function copiar(t,msg){try{await navigator.clipboard.writeText(t);toast(msg||'Copiado')}catch(e){modal(`<h3>Copia este texto</h3><textarea class="big" readonly>${esc(t)}</textarea><div class="row"><button class="b" onclick="cerrar()">Cerrar</button></div>`)}}
+async function abrirIA(k,texto){await copiar(texto,'Instrucciones copiadas. Pégalas en '+IAS[k].n+'.');window.open(IAS[k].u,'_blank','noopener')}
+const docCopy=u=>{const m=String(u||'').match(/\/document\/d\/([\w-]+)/);return m?'https://docs.google.com/document/d/'+m[1]+'/copy':''};
+const enl=(u,t)=>u?`<a class="b s" href="${esc(u)}" target="_blank" rel="noopener">${esc(t)}</a>`:'';
+const miembros=c=>(c||CF()).miembros||[];
+const L=(k,cu)=>((cu||C())?.config?.enlaces||{})[k]||S.G[k]||'';
+const sub=n=>', en la subcarpeta del curso '+n;
+const nomF=m=>(m.trat?m.trat+' ':'')+m.nombre;
+const jefe=c=>miembros(c).find(m=>m.jefe);
+if(localStorage.getItem('dm_dark')=='1')document.body.classList.add('dark');
+function modo(){document.body.classList.toggle('dark');localStorage.setItem('dm_dark',document.body.classList.contains('dark')?'1':'0')}
+
+/* ---------- Acceso ---------- */
+function authView(m='in',msg='',err=false){
+ $('#app').innerHTML=`<div class="auth-shell"><section class="auth"><div class="auth-brand"><div class="logo">${LOGO}</div><div class="tit"><b>Departamento de Música</b><small>IES INFANTA ELENA</small><i>by Manuel Esteve</i></div></div>
+ <div class="auth-main"><div class="tabs"><button class="${m=='in'?'on':''}" onclick="authView('in')">Iniciar sesión</button><button class="${m=='up'?'on':''}" onclick="authView('up')">Crear cuenta</button></div>
+ <form onsubmit="event.preventDefault();auth('${m}')"><label class="f" for="ae">Correo electrónico</label><input id="ae" type="email" autocomplete="email" required>
+ ${m=='rs'?'':`<label class="f" for="ap">Contraseña</label><input id="ap" type="password" autocomplete="${m=='up'?'new-password':'current-password'}">`}
+ <div class="row" style="margin-top:14px"><button class="b" id="as" type="submit">${m=='in'?'Entrar':m=='up'?'Crear cuenta':'Enviar enlace de recuperación'}</button>${m=='in'?`<a href="#" class="sm" onclick="authView('rs');return false">He olvidado mi contraseña</a>`:''}</div></form>
+ <p class="sm ${err?'':'mu'}" style="${err?'color:var(--er)':''}">${esc(msg)}</p>
+ <p class="sm mu">Usa la misma cuenta que en GIM y Audiciones Musicales. Solo entran los correos autorizados por el jefe de departamento.</p></div></section></div>`}
+async function auth(m){const e=$('#ae').value.trim(),p=$('#ap')?.value;try{
+ if(m=='in'){const{error}=await sb.auth.signInWithPassword({email:e,password:p});if(error)return authView('in',error.message=='Invalid login credentials'?'El correo o la contraseña no son correctos.':error.message,1);return cargar()}
+ if(m=='up'){if(!p||p.length<6)return authView('up','La contraseña debe tener al menos 6 caracteres.',1);const{data,error}=await sb.auth.signUp({email:e,password:p,options:{emailRedirectTo:location.origin+location.pathname}});if(error)return authView('up',error.message,1);return data.session?cargar():authView('in','Te hemos enviado un correo de confirmación. Confírmalo y vuelve a entrar.')}
+ const{error}=await sb.auth.resetPasswordForEmail(e,{redirectTo:location.origin+location.pathname});authView('in',error?error.message:'Si la cuenta existe, recibirás un enlace para cambiar la contraseña.',!!error)}catch(x){authView(m,'No se ha podido conectar con Supabase.',1)}}
+sb.auth.onAuthStateChange(async ev=>{if(ev=='PASSWORD_RECOVERY'){const p=prompt('Nueva contraseña (mínimo 6 caracteres):');if(p){const{error}=await sb.auth.updateUser({password:p});toast(error?error.message:'Contraseña actualizada',!!error)}}});
+async function salir(){await sb.auth.signOut();authView()}
+
+/* ---------- Carga ---------- */
+async function cargar(){
+ const{data:{session}}=await sb.auth.getSession();if(!session)return authView();S.user=session.user;
+ const ok=await q(sb.from('actas_autorizados').select('email').limit(1));
+ if(!ok.length)return $('#app').innerHTML=`<div class="auth-shell"><div class="auth"><div class="auth-brand"><div class="logo">${LOGO}</div><div class="tit"><b>Departamento de Música</b><small>IES INFANTA ELENA</small></div></div><div class="auth-main"><h3>Tu cuenta no tiene acceso</h3><p class="mu">${esc(S.user.email)} no está en la lista de correos autorizados. Pide al jefe de departamento que lo añada en Configuración.</p><button class="b s" onclick="salir()">Cerrar sesión</button></div></div></div>`;
+ S.cursos=await q(sb.from('actas_cursos').select('*').order('nombre',{ascending:false}));
+ {const r=await sb.from('actas_ajustes').select('valor').eq('clave','enlaces').maybeSingle();S.G=r.data?.valor||{}}
+ if(!S.cursos.find(c=>c.id==S.cid))S.cid=S.cursos[0]?.id;
+ if(!S.cursos.length){S.view='config';S.cfg=nuevoCfg();}
+ await cargarCurso();render()}
+async function cargarCurso(){if(!S.cid){S.D=null;return}localStorage.setItem('dm_cid',S.cid);const id=S.cid,prev=cursoPrev();
+ const[actas,act,mat,pend,prog,pendPrev]=await Promise.all([
+  q(sb.from('actas_actas').select('*').eq('curso_id',id).order('numero')),
+  q(sb.from('actas_actividades').select('*').eq('curso_id',id).order('trimestre').order('creado')),
+  q(sb.from('actas_material').select('*').eq('curso_id',id).order('fecha')),
+  q(sb.from('actas_pendientes').select('*').eq('curso_id',id).order('creado')),
+  q(sb.from('actas_programacion').select('*').eq('curso_id',id).maybeSingle()),
+  prev?q(sb.from('actas_pendientes').select('*').eq('curso_id',prev.id).order('creado')):[]]);
+ S.D={actas,act,mat,pend,prog,pendPrev};S.prog=null}
+function cursoPrev(){const i=S.cursos.findIndex(c=>c.id==S.cid);return i>=0?S.cursos[i+1]:null}
+async function cambiaCurso(id){S.cid=id;S.ed=null;await cargarCurso();render()}
+function ir(v){S.view=v;if(v!='actas')S.ed=null;render();scrollTo(0,0)}
+
+function render(){
+ const v=S.view,nav=[['inicio','Inicio'],['actas','Actas'],['programacion','Programación'],['estadisticas','Estadísticas'],['config','Configuración']];
+ $('#app').innerHTML=`<header><div class="logo">${LOGO}</div><div class="tit"><b>Departamento de Música</b><small>IES INFANTA ELENA</small><i>by Manuel Esteve</i></div>
+ ${S.cursos.length?`<select aria-label="Curso" onchange="cambiaCurso(this.value)">${S.cursos.map(c=>`<option value="${c.id}" ${c.id==S.cid?'selected':''}>${esc(c.nombre)}</option>`).join('')}</select>`:''}
+ <nav>${nav.map(([k,t])=>`<button class="${v==k?'on':''}" onclick="ir('${k}')">${t}</button>`).join('')}<button onclick="modo()" aria-label="Modo claro u oscuro">◐</button><button onclick="salir()">Salir</button></nav></header>
+ <main>${!S.cursos.length&&v!='config'?'':({inicio:vInicio,actas:vActas,programacion:vProg,estadisticas:vStats,config:vConfig}[v])()}</main>`;
+ if(v=='estadisticas')cargaStats();if(v=='config'&&$('#autl'))listaAut()}
+
+/* ---------- Inicio ---------- */
+function trimestreActual(){const m=new Date().getMonth()+1;return m>=9&&m<=12?1:m<=3?2:3}
+function vInicio(){const c=CF(),D=S.D,ult=D.actas[D.actas.length-1],t=trimestreActual(),porConf=D.act.filter(a=>a.estado=='prevista'&&a.trimestre<t);
+ return `<div class="card"><h2>Curso ${esc(C().nombre)}</h2><div class="grid2">
+ <div class="k"><span>CCP</span><strong style="font-size:18px">${c.ccp?esc(DIAS[c.ccp.dia]+' · '+c.ccp.ini+'–'+c.ccp.fin):'Sin configurar'}</strong></div>
+ <div class="k"><span>Reunión de departamento</span><strong style="font-size:18px">${c.dep?esc(DIAS[c.dep.dia]+' · '+c.dep.ini+'–'+c.dep.fin):'Sin configurar'}</strong></div>
+ <div class="k"><span>Actas del curso</span><strong>${D.actas.length}</strong></div>
+ <div class="k"><span>Para la programación del próximo curso</span><strong>${D.pend.filter(p=>!p.hecho).length}</strong></div></div>
+ <div class="row" style="margin-top:14px"><button class="b" onclick="nuevaActa()">Nueva acta nº ${(ult?.numero||0)+1}</button>${ult?`<button class="b s" onclick="editActa('${ult.id}')">Abrir la última (nº ${ult.numero})</button>`:''}${enl(L('carpeta'),'Carpeta del departamento')}${enl(L('libro')||L('libros'),'Libro de actas')}</div></div>
+ <div class="card"><h3>Departamento</h3><p>${miembros().map(m=>esc(nomF(m))+(m.jefe?' <span class="pill">jefe de departamento</span>':'')).join('<br>')||'<span class="mu">Añade los integrantes en Configuración.</span>'}</p></div>
+ ${porConf.length?`<div class="card"><h3>¿Se realizaron estas actividades?</h3><p class="mu sm">Son de trimestres ya pasados y siguen como previstas.</p>${porConf.map(a=>`<div class="row"><span style="flex:1">${esc(a.nombre)} <span class="pill">${a.trimestre}º trimestre</span></span><button class="b s" onclick="estadoAct('${a.id}','realizada')">Realizada</button><button class="b s" onclick="estadoAct('${a.id}','no_realizada')">No realizada</button></div>`).join('')}</div>`:''}`}
+async function estadoAct(id,e){await q(sb.from('actas_actividades').update({estado:e}).eq('id',id));S.D.act.find(a=>a.id==id).estado=e;render()}
+
+/* ---------- Actas ---------- */
+function vActas(){if(S.ed)return vEditor();const D=S.D,c=CF();
+ return `<div class="card"><div class="row"><h2 style="margin:0;flex:1">Actas · ${esc(C().nombre)}</h2><button class="b" onclick="nuevaActa()">Nueva acta</button>${enl(L('libro')||L('libros'),'Libro de actas en Drive')}</div>
+ ${D.actas.length?`<div class="tw"><table><thead><tr><th>Nº</th><th>Fecha</th><th>CCP</th><th>Estado</th><th></th></tr></thead><tbody>${D.actas.map(a=>`<tr style="cursor:pointer" onclick="editActa('${a.id}')"><td><b>${a.numero}</b></td><td>${dmy(a.fecha)}</td><td>${a.ccp_numero?'nº '+a.ccp_numero+' · '+dmy(a.ccp_fecha):'—'}</td><td><span class="pill ${a.estado=='archivada'?'ok':a.estado=='redactada'?'wn':''}">${esc(a.estado)}</span></td><td><button class="b s">Abrir</button></td></tr>`).join('')}</tbody></table></div>`:'<p class="mu">Aún no hay actas este curso. Empieza con «Nueva acta».</p>'}</div>`}
+function claveBorr(){return 'dm_borr_'+S.cid+'_'+(S.ed.id||'nueva')}
+function nuevaActa(){const c=CF(),D=S.D,ult=D.actas[D.actas.length-1],fecha=c.dep?ultimo(c.dep.dia):iso(new Date());
+ S.ed={id:null,numero:(ult?.numero||0)+1,fecha,hora:c.dep?.ini||'',asistentes:miembros().map(nomF),ccp_numero:(ult?.ccp_numero||0)+1,ccp_fecha:c.ccp?ultimo(c.ccp.dia,fecha):'',ccp_texto:'',notas:'',ruegos:'',para_prog:'',texto_final:'',estado:'borrador'};
+ abrirEditor()}
+function editActa(id){S.ed=JSON.parse(JSON.stringify(S.D.actas.find(a=>a.id==id)));abrirEditor()}
+function abrirEditor(){const b=localStorage.getItem(claveBorr());if(b){try{const o=JSON.parse(b);if(!S.ed.actualizado||o._t>Date.parse(S.ed.actualizado)){Object.assign(S.ed,o);setTimeout(()=>toast('Borrador recuperado'),300)}}catch(e){}}S.paso=1;S.view='actas';render();scrollTo(0,0)}
+function edSet(k,v){S.ed[k]=v;localStorage.setItem(claveBorr(),JSON.stringify({...S.ed,_t:Date.now()}))}
+function asis(n,on){const a=new Set(S.ed.asistentes);on?a.add(n):a.delete(n);edSet('asistentes',miembros().map(nomF).filter(x=>a.has(x)))}
+function paso(n){S.paso=n;render()}
+function vEditor(){const e=S.ed,c=CF(),P=S.paso,pasos=['Datos','CCP','Departamento','Redactar y revisar'];
+ const ta=(k,cls='',ph='')=>`<textarea class="${cls}" placeholder="${esc(ph)}" oninput="edSet('${k}',this.value)">${esc(e[k])}</textarea>`;
+ let h=`<div class="card"><div class="row"><h2 style="margin:0;flex:1">Acta nº ${e.numero} · ${dmy(e.fecha)}</h2><button class="b" onclick="guardaActa()">Guardar</button><button class="b s" onclick="S.ed=null;render()">Volver</button></div>
+ <div class="steps">${pasos.map((t,i)=>`<button class="${P==i+1?'on':''}" onclick="paso(${i+1})">${i+1}. ${t}</button>`).join('')}</div>`;
+ if(P==1)h+=`<div class="grid2"><div><label class="f" for="en">Número de acta</label><input id="en" type="number" min="1" value="${e.numero}" oninput="edSet('numero',+this.value)"></div>
+ <div><label class="f" for="ef">Fecha</label><input id="ef" type="date" value="${e.fecha||''}" oninput="edSet('fecha',this.value)"></div>
+ <div><label class="f" for="eh">Hora</label><input id="eh" type="time" value="${e.hora||''}" oninput="edSet('hora',this.value)"></div>
+ <div><label class="f">Estado</label><select onchange="edSet('estado',this.value)">${['borrador','redactada','archivada'].map(s=>`<option ${e.estado==s?'selected':''}>${s}</option>`).join('')}</select></div></div>
+ <label class="f">Asistentes</label>${miembros().map(m=>{const n=nomF(m);return `<label style="display:block"><input type="checkbox" ${e.asistentes.includes(n)?'checked':''} onchange="asis(this.value,this.checked)" value="${esc(n)}"> ${esc(n)}${m.jefe?' (jefe de departamento)':''}</label>`}).join('')||'<p class="mu">Añade los integrantes del departamento en Configuración.</p>'}
+ <div class="row" style="margin-top:14px"><button class="b" onclick="paso(2)">Siguiente: CCP</button>${e.id?`<button class="b r" style="margin-left:auto" onclick="borraActa()">Eliminar acta</button>`:''}</div>`;
+ if(P==2)h+=`<div class="grid2"><div><label class="f" for="cn">Número de acta de la CCP</label><input id="cn" type="number" min="1" value="${e.ccp_numero||''}" oninput="edSet('ccp_numero',+this.value||null)"></div><div><label class="f" for="cf">Fecha de la CCP</label><input id="cf" type="date" value="${e.ccp_fecha||''}" oninput="edSet('ccp_fecha',this.value)"></div></div>
+ <label class="f" for="ct">Texto del acta de la CCP</label><textarea id="ct" class="big" placeholder="Pega aquí el acta de la CCP o cárgala desde un .docx" oninput="edSet('ccp_texto',this.value)">${esc(e.ccp_texto)}</textarea>
+ <div class="row"><label class="b s" style="cursor:pointer">Cargar .docx<input type="file" accept=".docx" hidden onchange="leeDocx(this.files[0])"></label><button class="b ia" style="--c:${IAS.gemini.c}" onclick="abrirIA('gemini',pGemCCP())">Traer el acta de la CCP con Gemini</button>${enl(L('ccp'),'Abrir actas de la CCP en Drive')}</div>
+ <div class="row"><button class="b" onclick="paso(3)">Siguiente: departamento</button></div>`;
+ if(P==3)h+=`<label class="f">Notas de la reunión de departamento</label>${ta('notas','big','Escribe o dicta lo tratado: acuerdos, actividades, material, programación…')}
+ <label class="f">Ruegos y preguntas</label>${ta('ruegos','','Déjalo vacío si no los hubo')}
+ <label class="f">Para la programación del próximo curso</label><p class="mu sm" style="margin:0 0 4px">Una línea por cosa: compras, bajas de material, cambios de horario… Se guardan en la lista de la programación del curso siguiente.</p>${ta('para_prog','','33 ukeleles nuevos\nPedir que la optativa de 1º Bach no caiga a 6ª hora')}
+ <div class="row"><button class="b" onclick="paso(4)">Siguiente: redactar</button></div>`;
+ if(P==4)h+=`<p class="mu sm">Copia las instrucciones y pégalas en la IA. Después pega aquí el acta que te devuelva y revísala.</p>
+ <div class="row"><button class="b ia" style="--c:${IAS.claude.c}" onclick="abrirIA('claude',pActa())">Redactar con Claude</button><button class="b ia" style="--c:${IAS.chatgpt.c}" onclick="abrirIA('chatgpt',pActa())">Redactar con ChatGPT</button><button class="b ia" style="--c:${IAS.gemini.c}" onclick="abrirIA('gemini',pGemConsulta())">Consultar archivos con Gemini</button><button class="b s" onclick="copiar(pActa())">Solo copiar</button></div>
+ <label class="f" for="tf">Acta redactada</label><textarea id="tf" class="big" style="min-height:380px" placeholder="Pega aquí el acta" oninput="edSet('texto_final',this.value)">${esc(e.texto_final)}</textarea>
+ <div class="row"><button class="b" onclick="revisar()">Revisar el acta</button><button class="b s" onclick="copiar(S.ed.texto_final,'Acta copiada')">Copiar acta</button>${enl(L('carpeta'),'Abrir carpeta en Drive')}${enl(L('libro')||L('libros'),'Abrir libro de actas')}${docCopy(L('plantilla'))?`<a class="b s" href="${docCopy(L('plantilla'))}" target="_blank" rel="noopener">Nuevo documento con la plantilla</a>`:''}<button class="b ia" style="--c:${IAS.gemini.c}" onclick="abrirIA('gemini',pGemGuardar())">Guardar en Drive con Gemini</button></div>
+ <div id="chk"></div>`;
+ return h+'</div>'}
+async function leeDocx(f){if(!f)return;try{if(!window.mammoth)await cargaScript('https://cdn.jsdelivr.net/npm/mammoth@1.8.0/mammoth.browser.min.js');const r=await mammoth.extractRawText({arrayBuffer:await f.arrayBuffer()});edSet('ccp_texto',r.value.replace(/\n{3,}/g,'\n\n').trim());const m=r.value.match(/Acta\s*:?\s*n[ºo°]\s*(\d+)/i),d=r.value.match(/Fecha:\s*(\d{1,2})\/(\d{1,2})\/(\d{2,4})/i);if(m)edSet('ccp_numero',+m[1]);if(d){const y=d[3].length==2?'20'+d[3]:d[3];edSet('ccp_fecha',y+'-'+pad(d[2])+'-'+pad(d[1]))}render();toast('Acta de la CCP cargada')}catch(x){toast('No se pudo leer el archivo',1)}}
+function cargaScript(u){return new Promise((ok,ko)=>{const s=document.createElement('script');s.src=u;s.onload=ok;s.onerror=ko;document.head.appendChild(s)})}
+async function guardaActa(){const e=S.ed,row={curso_id:S.cid,numero:e.numero,fecha:e.fecha||null,hora:e.hora,asistentes:e.asistentes,ccp_numero:e.ccp_numero||null,ccp_fecha:e.ccp_fecha||null,ccp_texto:e.ccp_texto,notas:e.notas,ruegos:e.ruegos,para_prog:e.para_prog,texto_final:e.texto_final,estado:e.estado,actualizado:new Date().toISOString()};
+ const otra=S.D.actas.find(a=>a.numero==e.numero&&a.id!=e.id);if(otra&&!confirm('Ya existe un acta nº '+e.numero+' en este curso. ¿Guardar igualmente?'))return;
+ const r=e.id?await q(sb.from('actas_actas').update(row).eq('id',e.id).select().single()):await q(sb.from('actas_actas').insert(row).select().single());
+ await q(sb.from('actas_pendientes').delete().eq('acta_id',r.id).eq('hecho',false));
+ const lin=(e.para_prog||'').split('\n').map(s=>s.trim()).filter(Boolean);if(lin.length)await q(sb.from('actas_pendientes').insert(lin.map(t=>({curso_id:S.cid,acta_id:r.id,texto:t}))));
+ localStorage.removeItem(claveBorr());S.ed={...r};localStorage.removeItem(claveBorr());await cargarCurso();S.ed=JSON.parse(JSON.stringify(S.D.actas.find(a=>a.id==r.id)));toast('Acta guardada');render()}
+async function borraActa(){if(!confirm('¿Eliminar el acta nº '+S.ed.numero+'? No se puede deshacer.'))return;await q(sb.from('actas_actas').delete().eq('id',S.ed.id));localStorage.removeItem(claveBorr());S.ed=null;await cargarCurso();toast('Acta eliminada');render()}
+
+/* ---------- Instrucciones para las IA ---------- */
+function pActa(){const e=S.ed,c=CF(),j=jefe(),ant=S.D.actas.filter(a=>a.numero<e.numero).pop();
+ return `Actúa como jefe del Departamento de Música del I.E.S. Infanta Elena (Jumilla, Región de Murcia) y redacta el acta oficial de la reunión de departamento con los datos de abajo.
+
+REGLAS
+- No inventes acuerdos, fechas, nombres, materias, horas ni proyectos que no aparezcan en los datos. Si falta un dato imprescindible, pregúntamelo antes de redactar.
+- Estilo institucional, formal y administrativo: tercera persona y pasiva refleja («Se procede a», «Se acuerda», «Queda constancia»). Sin opiniones ni tono conversacional.
+- Extensión media-larga: desarrolla cada nota en prosa formal. Usa viñetas con un título breve en negrita cuando haya varios asuntos.
+- Escribe los nombres de las personas exactamente como aparecen en los datos, sin cambiar ni una letra.
+- El resumen de la CCP va en el punto 2, antes de los acuerdos del departamento. Resume solo lo que afecta al profesorado y al departamento.
+- Numera los puntos de forma correlativa: 1, 2, 3 (y subapartados 3.1, 3.2… si hace falta).
+- ${(e.ruegos||'').trim()?'Hay ruegos y preguntas: añade el punto «4. Ruegos y preguntas.» y cierra con «Sin más asuntos que tratar, se levanta la sesión.»':'No hubo ruegos ni preguntas: cierra con «Sin más asuntos que tratar, y no habiendo ruegos ni preguntas se levanta la sesión.»'}
+- Devuelve solo el texto del acta, listo para pegar en el documento con membrete.
+
+ESTRUCTURA
+ACTA DE LA REUNIÓN DEL DEPARTAMENTO DE MÚSICA
+Acta nº${e.numero}     Fecha: ${dmy(e.fecha)}     Hora: ${e.hora}
+Párrafo de apertura («En Jumilla, siendo las ${e.hora} horas del día ${larga(e.fecha)}, se reúnen en el Departamento de Música […] con arreglo al siguiente orden del día:»)
+1. Lectura y aprobación del acta anterior.
+2. Información de la comisión de coordinación pedagógica.
+3. Acuerdos tomados en la reunión de departamento.
+Fórmula de cierre.
+Firmas: «Fdo. D./Dña. nombre completo» de cada asistente; bajo el del jefe, «(Jefe de Departamento)».
+
+DATOS
+Curso: ${C().nombre}
+Acta nº ${e.numero} · ${larga(e.fecha)} · ${e.hora}
+Asistentes: ${e.asistentes.join('; ')}
+Jefe de departamento: ${j?nomF(j):'(sin indicar)'}
+Acta anterior: ${ant?'nº '+ant.numero+' del '+dmy(ant.fecha):e.numero==1?'última del curso anterior':'nº '+(e.numero-1)}
+CCP: acta nº ${e.ccp_numero||'(sin indicar)'}, celebrada el ${e.ccp_fecha?larga(e.ccp_fecha):'(sin indicar)'}
+
+--- ACTA DE LA CCP ---
+${(e.ccp_texto||'').trim()||'(No hay texto de la CCP: pregúntamelo.)'}
+
+--- NOTAS DE LA REUNIÓN DE DEPARTAMENTO ---
+${(e.notas||'').trim()||'(Sin notas: pregúntame.)'}
+
+--- RUEGOS Y PREGUNTAS ---
+${(e.ruegos||'').trim()||'Ninguno.'}
+
+--- EJEMPLOS DE ESTILO (actas del curso 2025-26: imita el tono y el formato, no copies su contenido) ---
+${EJEMPLOS}`}
+function pGemCCP(){const e=S.ed,c=CF();return `Busca en mi Google Drive el acta nº ${e.ccp_numero||'[número]'} de la Comisión de Coordinación Pedagógica (CCP) del IES Infanta Elena, celebrada el ${e.ccp_fecha?larga(e.ccp_fecha):'[fecha]'}${L('ccp')?'. Está en esta carpeta: '+L('ccp')+sub(C().nombre):''}.
+Devuélveme su texto íntegro, sin resumir ni cambiar nada, para copiarlo en otra aplicación.`}
+function linksCursos(k){return S.cursos.filter(x=>x.config?.enlaces?.[k]).map(x=>'- '+x.nombre+': '+x.config.enlaces[k]).join('\n')}
+function carpetas(){return [['carpeta','Carpeta del departamento'],['libros','Libros de actas'],['ccp','Actas de la CCP'],['programaciones','Programaciones'],['normativa','Normativa']].filter(([k])=>S.G[k]).map(([k,t])=>'- '+t+': '+S.G[k]).join('\n')}
+function pGemConsulta(){const c=CF();return `Necesito consultar documentos de mi Google Drive del Departamento de Música del IES Infanta Elena.
+Carpetas (cada una tiene una subcarpeta por curso, con el nombre del curso, por ejemplo «${C().nombre}»):
+${carpetas()||'- (sin enlaces)'}
+${linksCursos('libro')?'Libros de actas concretos:\n'+linksCursos('libro'):''}
+
+Mi pregunta: [escribe aquí lo que necesitas; por ejemplo, «copia el texto íntegro del acta nº 5 del curso pasado» o «qué se acordó sobre el musical en 2025-26»]
+Responde citando de qué documento sale cada dato.`}
+function pGemGuardar(){const c=CF();return `Añade el siguiente texto, tal cual y sin cambiar nada, al final de mi documento de Google Docs del libro de actas del curso ${C().nombre}${L('libro')?' ('+L('libro')+')':L('libros')?' (está en '+L('libros')+sub(C().nombre)+')':''}, empezando en una página nueva. Si no puedes editar ese documento, crea uno nuevo en mi Drive titulado «Acta nº ${S.ed.numero} Departamento de Música ${dmy(S.ed.fecha)}».
+
+${S.ed.texto_final}`}
+
+/* ---------- Revisión automática ---------- */
+function lev(a,b){if(Math.abs(a.length-b.length)>1)return 9;const m=[...Array(b.length+1).keys()];for(let i=1;i<=a.length;i++){let p=m[0];m[0]=i;for(let j=1;j<=b.length;j++){const t=m[j];m[j]=Math.min(m[j]+1,m[j-1]+1,p+(a[i-1]==b[j-1]?0:1));p=t}}return m[b.length]}
+function fechasEn(t){const r=[];for(const m of t.matchAll(/(\d{1,2})\s+de\s+(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre)(?:\s+de\s+(\d{4}))?/gi))r.push({txt:m[0],d:+m[1],m:MESES.indexOf(m[2].toLowerCase())+1,y:m[3]?+m[3]:null});return r}
+function revisar(){const e=S.ed,t=e.texto_final||'',L=[],add=(n,m)=>L.push([n,m]);
+ if(!t.trim())return $('#chk').innerHTML='<p class="mu">Pega primero el acta redactada.</p>';
+ const n=t.match(/Acta\s*n[ºo°.]?\s*(\d+)/i);n&&+n[1]==e.numero?add('ok','Número de acta correcto (nº '+e.numero+').'):add('er','El número de acta del encabezado '+(n?'es '+n[1]:'no aparece')+'; debería ser '+e.numero+'.');
+ t.includes(dmy(e.fecha))?add('ok','La fecha '+dmy(e.fecha)+' aparece en el encabezado.'):add('er','No aparece la fecha '+dmy(e.fecha)+'.');
+ e.hora&&t.includes(e.hora)?add('ok','La hora '+e.hora+' aparece.'):add('wn','No aparece la hora '+e.hora+'.');
+ const pts=[...t.matchAll(/^\s*(\d+)\.\s+\S/gm)].map(m=>+m[1]);const seq=pts.every((p,i)=>p==i+1);pts.length&&seq?add('ok','Puntos numerados correctamente: '+pts.join(', ')+'.'):add('er','La numeración de los puntos no es correlativa desde 1: '+(pts.join(', ')||'no se encuentran puntos')+'.');
+ const p2=t.search(/^\s*2\.\s/m),p3=t.search(/^\s*3\.\s/m);p2>=0&&p3>p2&&/coordinaci[oó]n pedag|CCP/i.test(t.slice(p2,p3))?add('ok','El resumen de la CCP está en el punto 2, antes de los acuerdos.'):add('wn','Comprueba que el resumen de la CCP esté en el punto 2 y antes de los acuerdos.');
+ const cn=t.match(/(?:CCP|Coordinaci[oó]n Pedag[oó]gica)[^.]{0,60}?n[ºo°.]?\s*(\d+)|n[ºo°.]?\s*(\d+)\s*de la (?:CCP|Comisi[oó]n)|sesi[oó]n\s*n[úu]mero\s*(\d+)/i);if(e.ccp_numero){const v=cn&&(cn[1]||cn[2]||cn[3]);!v?add('wn','No se menciona el número de la CCP (nº '+e.ccp_numero+').'):+v==e.ccp_numero?add('ok','Número de la CCP correcto (nº '+e.ccp_numero+').'):add('er','El acta cita la CCP nº '+v+', pero la CCP es la nº '+e.ccp_numero+'.')}
+ const dup=S.D.actas.find(a=>a.id!=e.id&&a.ccp_numero&&a.ccp_numero==e.ccp_numero);if(dup)add('wn','La CCP nº '+e.ccp_numero+' ya se usó en el acta nº '+dup.numero+'.');
+ if(e.ccp_fecha&&e.fecha&&e.ccp_fecha>e.fecha)add('er','La fecha de la CCP ('+dmy(e.ccp_fecha)+') es posterior a la del acta.');
+ const fa=new Date(e.fecha+'T12:00');fechasEn(t).forEach(f=>{const y=f.y||fa.getFullYear(),d=new Date(y,f.m-1,f.d,12);if(!f.y&&d>fa)d.setFullYear(y-1);if(d>fa&&/celebrad|pasad|sesi[oó]n/i.test(t.slice(Math.max(0,t.indexOf(f.txt)-80),t.indexOf(f.txt))))add('er','Se cita una sesión del '+f.txt+', posterior a la fecha del acta.')});
+ e.asistentes.forEach(a=>{const nom=a.replace(/^(D\.|Dña\.|Dª\.?)\s*/,'');t.includes(nom)?add('ok','Firma correcta: '+a+'.'):add('er','No aparece el nombre completo «'+nom+'».')});
+ const pal=new Set(t.match(/[A-Za-zÁÉÍÓÚÑáéíóúñü]{4,}/g)||[]),ref=new Set(e.asistentes.flatMap(a=>a.split(/\s+/)).filter(w=>w.length>=4&&!/^(D\.|Dña)/.test(w)));
+ ref.forEach(r=>pal.forEach(w=>{if(w!=r&&w[0]==r[0]&&lev(w.toLowerCase(),r.toLowerCase())==1)add('er','¿Errata? «'+w+'» se parece a «'+r+'».')}));
+ /sin m[áa]s asuntos que tratar/i.test(t)?add('ok','Incluye la fórmula de cierre.'):add('er','Falta la fórmula de cierre («Sin más asuntos que tratar…»).');
+ const sinR=/no habiendo ruegos ni preguntas/i.test(t);(e.ruegos||'').trim()&&sinR?add('er','Dice «no habiendo ruegos ni preguntas», pero hay ruegos anotados.'):!(e.ruegos||'').trim()&&!sinR&&add('wn','No hubo ruegos: el cierre suele decir «no habiendo ruegos ni preguntas».');
+ /jefe de departamento/i.test(t)?add('ok','Aparece «(Jefe de Departamento)» en las firmas.'):add('wn','No aparece «(Jefe de Departamento)» en las firmas.');
+ const nE=L.filter(x=>x[0]=='er').length,nW=L.filter(x=>x[0]=='wn').length;
+ $('#chk').innerHTML=`<div class="card" style="margin-top:12px"><h3>${nE?nE+' error'+(nE>1?'es':''):'Sin errores'}${nW?' · '+nW+' aviso'+(nW>1?'s':''):''}</h3><ul class="chk">${L.sort((a,b)=>'erwnok'.indexOf(a[0])-'erwnok'.indexOf(b[0])).map(([k,m])=>`<li class="${k}">${k=='ok'?'✓':k=='wn'?'△':'✕'} ${esc(m)}</li>`).join('')}</ul></div>`}
+
+/* ---------- Programación ---------- */
+function progBase(){const p=S.D.prog||{};return{cambios:p.cambios||'',normativa:p.normativa||[],apartados:p.apartados||{},datos:Object.assign({pond_eso_teoria:60,pond_eso_practica:40,pond_eso_detalle:'',pond_bach:'',plan_lector:'',materias:[]},p.datos||{}),estado:p.estado||'en elaboración'}}
+function pg(){if(!S.prog){const b=localStorage.getItem('dm_prog_'+S.cid);S.prog=b?JSON.parse(b):progBase()}return S.prog}
+function pgSet(path,v){const p=pg(),k=path.split('.');let o=p;for(let i=0;i<k.length-1;i++)o=o[k[i]]=o[k[i]]??{};o[k[k.length-1]]=v;localStorage.setItem('dm_prog_'+S.cid,JSON.stringify(p))}
+function vProg(){const p=pg(),c=CF(),D=S.D,prev=cursoPrev(),d=p.datos;
+ return `<div class="card"><div class="row"><h2 style="margin:0;flex:1">Programación · ${esc(C().nombre)}</h2><select onchange="pgSet('estado',this.value)">${['en elaboración','entregada'].map(s=>`<option ${p.estado==s?'selected':''}>${s}</option>`).join('')}</select><button class="b" onclick="guardaProg()">Guardar</button></div>
+ <div class="row">${enl(L('programaciones'),'Abrir carpeta de programaciones')}${enl(prev?.config?.enlaces?.programacion,'Programación '+(prev?.nombre||''))}${enl(c.enlaces?.programacion,'Programación de este curso')}${enl(L('plantilla_prog'),'Plantilla de programación')}${enl(L('normativa'),'Carpeta de normativa')}</div></div>
+ <div class="card"><h3>¿Qué cambios hay este año?</h3><p class="mu sm">Explica los cambios indicando el apartado (por ejemplo, «apartado 3: SENDA pasa a Estrategia LIBRE»; «anexos: añadir Música 4º optativa en aNota»).</p>
+ <textarea class="big" oninput="pgSet('cambios',this.value)">${esc(p.cambios)}</textarea>
+ <label class="f">Normativa y documentos con cambios (enlaces de Drive)</label>${p.normativa.map((n,i)=>`<div class="row"><input style="flex:1;min-width:160px" placeholder="Título" value="${esc(n.titulo)}" oninput="pgSet('normativa.${i}.titulo',this.value)"><input style="flex:1;min-width:160px" placeholder="Enlace de Drive" value="${esc(n.url)}" oninput="pgSet('normativa.${i}.url',this.value)"><input style="flex:2;min-width:200px" placeholder="Qué cambia" value="${esc(n.nota)}" oninput="pgSet('normativa.${i}.nota',this.value)"><button class="b s" aria-label="Quitar" onclick="pg().normativa.splice(${i},1);pgSet('x',0);render()">✕</button></div>`).join('')}
+ <button class="b s" onclick="pg().normativa.push({titulo:'',url:'',nota:''});render()">Añadir documento</button></div>
+ ${prev?`<div class="card"><h3>Pendiente desde las actas de ${esc(prev.nombre)}</h3>${D.pendPrev.length?D.pendPrev.map(x=>`<label style="display:block"><input type="checkbox" ${x.hecho?'checked':''} onchange="pendHecho('${x.id}',this.checked)"> ${esc(x.texto)}</label>`).join(''):'<p class="mu">Nada pendiente.</p>'}</div>`:''}
+ <div class="card"><h3>Datos clave</h3><div class="grid2"><div><label class="f">ESO · teoría (%)</label><input type="number" value="${d.pond_eso_teoria}" oninput="pgSet('datos.pond_eso_teoria',+this.value)"></div><div><label class="f">ESO · práctica (%)</label><input type="number" value="${d.pond_eso_practica}" oninput="pgSet('datos.pond_eso_practica',+this.value)"></div>
+ <div><label class="f">Desglose de la teoría</label><input style="width:100%" value="${esc(d.pond_eso_detalle)}" placeholder="30 % contenidos · 30 % audiciones y trabajos" oninput="pgSet('datos.pond_eso_detalle',this.value)"></div><div><label class="f">Bachillerato</label><input style="width:100%" value="${esc(d.pond_bach)}" placeholder="100 % proyectos teórico-prácticos" oninput="pgSet('datos.pond_bach',this.value)"></div>
+ <div><label class="f">Nombre del plan lector</label><input style="width:100%" value="${esc(d.plan_lector)}" oninput="pgSet('datos.plan_lector',this.value)"></div></div>
+ <label class="f">Materias y situaciones de aprendizaje</label>${d.materias.map((m,i)=>`<div class="row"><input style="flex:2" placeholder="Materia y curso" value="${esc(m.nombre)}" oninput="pgSet('datos.materias.${i}.nombre',this.value)"><input type="number" style="width:90px" min="0" placeholder="Nº SA" value="${m.sa??''}" oninput="pgSet('datos.materias.${i}.sa',+this.value)"><button class="b s" aria-label="Quitar" onclick="pg().datos.materias.splice(${i},1);pgSet('x',0);render()">✕</button></div>`).join('')}<button class="b s" onclick="pg().datos.materias.push({nombre:'',sa:null});render()">Añadir materia</button></div>
+ <div class="card"><div class="row"><h3 style="margin:0;flex:1">Apartados</h3><button class="b ia" style="--c:${IAS.claude.c}" onclick="abrirIA('claude',pProg())">Revisión completa con Claude</button><button class="b ia" style="--c:${IAS.chatgpt.c}" onclick="abrirIA('chatgpt',pProg())">Con ChatGPT</button><button class="b ia" style="--c:${IAS.gemini.c}" onclick="abrirIA('gemini',pGemProg())">Consultar con Gemini</button></div>
+ <p class="mu sm">Pega en cada apartado el texto que estés elaborando (o el del curso pasado, que te trae Gemini) y tus notas. Después pide la revisión de ese apartado.</p>
+ ${APARTADOS.map(([k,t])=>{const a=p.apartados[k]||{};return `<details class="ap"><summary>${k=='anexos'?'':k+'. '}${esc(t)} ${a.texto?'<span class="pill ok">con texto</span>':''}</summary>
+ <label class="f">Texto del apartado</label><textarea class="big" oninput="pgSet('apartados.${k}.texto',this.value)">${esc(a.texto||'')}</textarea>
+ <label class="f">Notas y cambios de este apartado</label><textarea oninput="pgSet('apartados.${k}.notas',this.value)">${esc(a.notas||'')}</textarea>
+ <div class="row"><button class="b ia" style="--c:${IAS.claude.c}" onclick="abrirIA('claude',pProg('${k}'))">Revisar con Claude</button><button class="b ia" style="--c:${IAS.chatgpt.c}" onclick="abrirIA('chatgpt',pProg('${k}'))">Con ChatGPT</button><button class="b ia" style="--c:${IAS.gemini.c}" onclick="abrirIA('gemini',pGemProg('${k}'))">Traer del curso pasado con Gemini</button>${enl(L('programaciones'),'Abrir carpeta en Drive')}</div></details>`}).join('')}</div>
+ ${vActividades()}${vMaterial()}`}
+async function guardaProg(){const p=pg();await q(sb.from('actas_programacion').upsert({curso_id:S.cid,cambios:p.cambios,normativa:p.normativa,apartados:p.apartados,datos:p.datos,estado:p.estado,actualizado:new Date().toISOString()},{onConflict:'curso_id'}));localStorage.removeItem('dm_prog_'+S.cid);await cargarCurso();toast('Programación guardada');render()}
+async function pendHecho(id,v){await q(sb.from('actas_pendientes').update({hecho:v}).eq('id',id));const x=S.D.pendPrev.find(p=>p.id==id);if(x)x.hecho=v}
+function pProg(k){const p=pg(),prev=cursoPrev(),d=p.datos,ap=k?APARTADOS.find(a=>a[0]==k):null,pend=S.D.pendPrev.filter(x=>!x.hecho).map(x=>'- '+x.texto).join('\n');
+ const bloq=k?[[k,ap[1],p.apartados[k]||{}]]:APARTADOS.map(([kk,t])=>[kk,t,p.apartados[kk]||{}]).filter(x=>x[2].texto||x[2].notas);
+ return `Actúa como jefe del Departamento de Música del IES Infanta Elena (Jumilla, Región de Murcia) y ayúdame a revisar ${k?'el apartado «'+(k=='anexos'?'':k+'. ')+ap[1]+'»':'la programación docente'} del curso ${C().nombre}. La programación es un único documento del departamento (ESO y Bachillerato) y sigue los apartados del artículo 37 del Decreto 235/2022 (ESO) y del artículo 30 del Decreto 251/2022 (Bachillerato), más «Competencias digitales del alumnado».
+
+QUÉ NECESITO
+1. Errores, incoherencias o datos desactualizados (normativa, programas del centro, nombres, porcentajes).
+2. Qué hay que cambiar según los cambios de este año y la normativa indicada.
+3. Ideas concretas de mejora comparando con el curso anterior.
+4. La redacción propuesta del apartado, con el mismo estilo formal, lista para pegar.
+No inventes normativa, datos ni actividades: si algo no está en lo que te doy, pregúntamelo.
+
+CAMBIOS DE ESTE AÑO
+${p.cambios.trim()||'(sin indicar)'}
+
+NORMATIVA Y DOCUMENTOS
+${p.normativa.filter(n=>n.titulo||n.url).map(n=>'- '+n.titulo+(n.nota?': '+n.nota:'')).join('\n')||'(ninguno)'}
+${pend?'\nPENDIENTE DESDE LAS ACTAS DEL CURSO '+(prev?.nombre||'ANTERIOR')+'\n'+pend+'\n':''}
+DATOS CLAVE
+- ESO: ${d.pond_eso_teoria} % teoría (${d.pond_eso_detalle||'sin desglose'}) y ${d.pond_eso_practica} % práctica.
+- Bachillerato: ${d.pond_bach||'(sin indicar)'}
+- Plan lector: ${d.plan_lector||'(sin indicar)'}
+- Profesorado: ${miembros().map(nomF).join('; ')||'(sin indicar)'}
+${d.materias.length?'- Materias: '+d.materias.map(m=>m.nombre+(m.sa?' ('+m.sa+' SA)':'')).join('; '):''}
+
+${bloq.map(([kk,t,a])=>`--- ${kk=='anexos'?'':kk+'. '}${t} ---\n${a.notas?'Notas: '+a.notas+'\n':''}${a.texto||'(sin texto: pídemelo)'}`).join('\n\n')||'(Aún no hay texto en ningún apartado: pídeme el que quieras revisar.)'}`}
+function pGemProg(k){const c=CF(),prev=cursoPrev(),ap=k?APARTADOS.find(a=>a[0]==k):null;return `Abre en mi Google Drive la programación del Departamento de Música del IES Infanta Elena del curso ${prev?.nombre||'anterior'}${prev?.config?.enlaces?.programacion?' ('+prev.config.enlaces.programacion+')':L('programaciones')?' (está en '+L('programaciones')+sub(prev?.nombre||'anterior')+')':''}.
+${k?'Copia el texto íntegro del apartado «'+(k=='anexos'?'':k+'. ')+ap[1]+'», sin resumir ni cambiar nada.':'Dime qué apartados tiene y en qué página empieza cada uno.'}${L('normativa')?'\nTen en cuenta también la normativa de esta carpeta: '+L('normativa')+sub(C().nombre):''}`}
+
+/* ---------- Actividades y material ---------- */
+const TIPOS_ACT={centro:'En el centro',localidad:'En la localidad',fuera:'Fuera de la localidad'},EST_ACT={prevista:'Prevista',realizada:'Realizada',no_realizada:'No realizada'},TIPOS_MAT={alta:'Alta (compra o donación)',baja:'Baja',rotura:'Rotura'};
+const opt=(o,v)=>Object.entries(o).map(([k,t])=>`<option value="${k}" ${k==v?'selected':''}>${t}</option>`).join('');
+function vActividades(){const A=S.D.act;return `<div class="card"><h3>Actividades complementarias y extraescolares</h3><p class="mu sm">Las de la programación, con su estado. Al acabar cada trimestre, Inicio te preguntará cuáles se realizaron.</p>
+ <div class="tw"><table><thead><tr><th>Actividad</th><th>Trim.</th><th>Tipo</th><th>Estado</th><th></th></tr></thead><tbody>${A.map(a=>`<tr><td><input style="width:100%" value="${esc(a.nombre)}" onchange="updAct('${a.id}','nombre',this.value)"></td><td><select onchange="updAct('${a.id}','trimestre',+this.value)">${[1,2,3].map(n=>`<option ${a.trimestre==n?'selected':''}>${n}</option>`).join('')}</select></td><td><select onchange="updAct('${a.id}','tipo',this.value)">${opt(TIPOS_ACT,a.tipo)}</select></td><td><select onchange="updAct('${a.id}','estado',this.value)">${opt(EST_ACT,a.estado)}</select></td><td><button class="b s" aria-label="Eliminar" onclick="delRow('actas_actividades','${a.id}')">✕</button></td></tr>`).join('')}</tbody></table></div>
+ <div class="row" style="margin-top:8px"><input id="na" style="flex:1" placeholder="Nueva actividad"><button class="b s" onclick="addAct()">Añadir</button></div></div>`}
+async function updAct(id,k,v){await q(sb.from('actas_actividades').update({[k]:v}).eq('id',id));S.D.act.find(a=>a.id==id)[k]=v}
+async function addAct(){const n=$('#na').value.trim();if(!n)return toast('Escribe el nombre de la actividad',1);await q(sb.from('actas_actividades').insert({curso_id:S.cid,nombre:n,trimestre:trimestreActual()}));await cargarCurso();render()}
+async function delRow(t,id){if(!confirm('¿Eliminar?'))return;await q(sb.from(t).delete().eq('id',id));await cargarCurso();render()}
+function vMaterial(){const M=S.D.mat;return `<div class="card"><h3>Material del departamento</h3><p class="mu sm">Altas, bajas y roturas del curso. Se incorporan a la programación del curso siguiente.</p>
+ <div class="tw"><table><thead><tr><th>Fecha</th><th>Movimiento</th><th>Descripción</th><th>Cant.</th><th></th></tr></thead><tbody>${M.map(m=>`<tr><td>${dmy(m.fecha)}</td><td>${TIPOS_MAT[m.tipo]||m.tipo}</td><td>${esc(m.descripcion)}${m.nota?'<br><span class="mu sm">'+esc(m.nota)+'</span>':''}</td><td>${m.cantidad}</td><td><button class="b s" aria-label="Eliminar" onclick="delRow('actas_material','${m.id}')">✕</button></td></tr>`).join('')}</tbody></table></div>
+ <div class="row" style="margin-top:8px"><input id="mf" type="date" value="${iso(new Date())}"><select id="mt">${opt(TIPOS_MAT,'alta')}</select><input id="md" style="flex:1;min-width:160px" placeholder="Descripción (33 ukeleles)"><input id="mc" type="number" min="1" value="1" style="width:80px" aria-label="Cantidad"><button class="b s" onclick="addMat()">Añadir</button></div></div>`}
+async function addMat(){const d=$('#md').value.trim();if(!d)return toast('Escribe la descripción',1);await q(sb.from('actas_material').insert({curso_id:S.cid,fecha:$('#mf').value,tipo:$('#mt').value,descripcion:d,cantidad:+$('#mc').value||1}));await cargarCurso();render()}
+
+/* ---------- Estadísticas ---------- */
+const barras=(arr,max)=>arr.map(([l,n])=>`<div class="bar-r"><span class="bl" title="${esc(l)}">${esc(l)}</span><span class="bt"><i style="width:${max?Math.round(n/max*100):0}%"></i></span><span class="bn">${n}</span></div>`).join('');
+function vStats(){return '<div id="stats"><div class="card"><p class="mu">Cargando estadísticas…</p></div></div>'}
+async function cargaStats(){const ids=S.cursos.map(c=>c.id);
+ const[A,AC,M,P]=await Promise.all([q(sb.from('actas_actas').select('curso_id,numero,notas,texto_final,ccp_texto').in('curso_id',ids)),q(sb.from('actas_actividades').select('curso_id,estado').in('curso_id',ids)),q(sb.from('actas_material').select('curso_id,tipo,cantidad').in('curso_id',ids)),q(sb.from('actas_programacion').select('curso_id,datos,apartados').in('curso_id',ids))]);
+ const cs=[...S.cursos].reverse(),nom=id=>S.cursos.find(c=>c.id==id)?.nombre;
+ const porCurso=cs.map(c=>[c.nombre,A.filter(a=>a.curso_id==c.id).length]),mx=Math.max(1,...porCurso.map(x=>x[1]));
+ const actC=A.filter(a=>a.curso_id==S.cid),temas=Object.entries(TEMAS).map(([t,r])=>[t,actC.filter(a=>r.test((a.notas||'')+' '+(a.texto_final||''))).length]).filter(x=>x[1]).sort((a,b)=>b[1]-a[1]),mt=Math.max(1,...temas.map(x=>x[1]));
+ const acts=cs.map(c=>{const x=AC.filter(a=>a.curso_id==c.id);return[c.nombre,x.filter(a=>a.estado=='realizada').length,x.filter(a=>a.estado=='no_realizada').length,x.filter(a=>a.estado=='prevista').length]});
+ const mat=cs.map(c=>{const x=M.filter(a=>a.curso_id==c.id),s=t=>x.filter(a=>a.tipo==t).reduce((n,a)=>n+(a.cantidad||0),0);return[c.nombre,s('alta'),s('baja'),s('rotura')]});
+ const pond=cs.map(c=>{const d=P.find(p=>p.curso_id==c.id)?.datos;return[c.nombre,d]}).filter(x=>x[1]);
+ const sim=cs.map((c,i)=>{if(!i)return null;const a=P.find(p=>p.curso_id==cs[i-1].id)?.apartados,b=P.find(p=>p.curso_id==c.id)?.apartados;if(!a||!b)return null;const r=parecido(Object.values(a).map(x=>x.texto||'').join(' '),Object.values(b).map(x=>x.texto||'').join(' '));return r==null?null:[cs[i-1].nombre+' → '+c.nombre,r]}).filter(Boolean);
+ $('#stats').innerHTML=`<div class="grid2"><div class="card"><h3>Actas por curso</h3>${barras(porCurso,mx)}</div>
+ <div class="card"><h3>Temas más tratados · ${esc(C().nombre)}</h3><p class="mu sm">Nº de actas que tratan cada tema.</p>${temas.length?barras(temas,mt):'<p class="mu">Aún no hay actas con texto.</p>'}</div></div>
+ <div class="card"><h3>Actividades complementarias y extraescolares</h3><div class="tw"><table><thead><tr><th>Curso</th><th>Realizadas</th><th>No realizadas</th><th>Sin confirmar</th><th>% realizadas</th></tr></thead><tbody>${acts.map(([c,r,n,p])=>`<tr><td>${esc(c)}</td><td>${r}</td><td>${n}</td><td>${p}</td><td>${r+n?Math.round(r/(r+n)*100)+' %':'—'}</td></tr>`).join('')}</tbody></table></div></div>
+ <div class="grid2"><div class="card"><h3>Material</h3><div class="tw"><table><thead><tr><th>Curso</th><th>Altas</th><th>Bajas</th><th>Roturas</th></tr></thead><tbody>${mat.map(([c,a,b,r])=>`<tr><td>${esc(c)}</td><td>${a}</td><td>${b}</td><td>${r}</td></tr>`).join('')}</tbody></table></div></div>
+ <div class="card"><h3>Profesorado por curso</h3>${cs.map(c=>`<p><b>${esc(c.nombre)}</b><br>${miembros(c.config).map(m=>esc(nomF(m))).join('<br>')||'<span class="mu">Sin datos</span>'}</p>`).join('')}</div></div>
+ <div class="card"><h3>Programación</h3>${pond.length?`<div class="tw"><table><thead><tr><th>Curso</th><th>ESO teoría</th><th>ESO práctica</th><th>Desglose</th><th>Bachillerato</th><th>Plan lector</th><th>SA</th></tr></thead><tbody>${pond.map(([c,d])=>`<tr><td>${esc(c)}</td><td>${d.pond_eso_teoria??'—'} %</td><td>${d.pond_eso_practica??'—'} %</td><td>${esc(d.pond_eso_detalle||'—')}</td><td>${esc(d.pond_bach||'—')}</td><td>${esc(d.plan_lector||'—')}</td><td>${(d.materias||[]).reduce((n,m)=>n+(+m.sa||0),0)||'—'}</td></tr>`).join('')}</tbody></table></div>`:'<p class="mu">Guarda los datos clave de la programación para comparar cursos.</p>'}
+ ${sim.length?'<h3 style="margin-top:14px">Texto que se mantiene de un curso a otro</h3>'+barras(sim.map(([l,r])=>[l,Math.round(r*100)]),100).replace(/<span class="bn">(\d+)<\/span>/g,'<span class="bn">$1 %</span>'):''}</div>`}
+function parecido(a,b){const w=s=>s.toLowerCase().match(/[a-záéíóúñü]{3,}/g)||[];const A=w(a),B=w(b);if(A.length<50||B.length<50)return null;const tri=x=>{const s=new Set;for(let i=0;i<x.length-2;i++)s.add(x[i]+' '+x[i+1]+' '+x[i+2]);return s};const ta=tri(A),tb=tri(B);let n=0;tb.forEach(t=>ta.has(t)&&n++);return n/Math.max(ta.size,tb.size)}
+
+/* ---------- Configuración ---------- */
+function nuevoCfg(base){const y=new Date().getMonth()>=7?new Date().getFullYear():new Date().getFullYear()-1;const c=base?JSON.parse(JSON.stringify(base.config||{})):{};delete c.enlaces;return{id:null,nombre:base?'':y+'-'+String(y+1).slice(2),config:Object.assign({ccp:{dia:1,ini:'11:45',fin:'12:40'},dep:{dia:1,ini:'12:40',fin:'13:35'},miembros:[{trat:'D.',nombre:'Manuel Esteve Martínez',jefe:true}],enlaces:{}},c)}}
+function editCurso(id){const c=S.cursos.find(x=>x.id==id);S.cfg=JSON.parse(JSON.stringify(c));render()}
+function cfgSet(path,v){const k=path.split('.');let o=S.cfg;for(let i=0;i<k.length-1;i++)o=o[k[i]]=o[k[i]]??{};o[k[k.length-1]]=v}
+function vConfig(){const f=S.cfg,dias=[1,2,3,4,5].map(d=>[d,DIAS[d]]);
+ const selD=(p,v)=>`<select onchange="cfgSet('${p}',+this.value)">${dias.map(([d,t])=>`<option value="${d}" ${d==v?'selected':''}>${t}</option>`).join('')}</select>`;
+ const EN=[['libro','Libro de actas de este curso (Google Docs)'],['programacion','Programación de este curso']];
+ let h=`<div class="card"><h2>Cursos</h2>${S.cursos.length?`<div class="tw"><table><tbody>${S.cursos.map(c=>`<tr><td><b>${esc(c.nombre)}</b></td><td class="mu sm">${miembros(c.config).length} integrantes</td><td><button class="b s" onclick="editCurso('${c.id}')">Editar</button></td></tr>`).join('')}</tbody></table></div>`:'<p>Crea el primer curso para empezar. Puedes crear también los cursos anteriores para tener sus enlaces a mano.</p>'}
+ <div class="row" style="margin-top:10px"><button class="b" onclick="S.cfg=nuevoCfg();render()">Nuevo curso</button>${C()?`<button class="b s" onclick="S.cfg=nuevoCfg(C());render()">Nuevo curso a partir de ${esc(C().nombre)}</button>`:''}</div></div>`;
+ if(f)h+=`<div class="card"><h2>${f.id?'Editar curso '+esc(f.nombre):'Nuevo curso'}</h2><label class="f" for="cn">Curso escolar</label><input id="cn" value="${esc(f.nombre)}" placeholder="2026-27" oninput="S.cfg.nombre=this.value">
+ <div class="grid2"><div><h3 style="margin-top:14px">CCP</h3><div class="row">${selD('config.ccp.dia',f.config.ccp?.dia)}<input type="time" value="${f.config.ccp?.ini||''}" oninput="cfgSet('config.ccp.ini',this.value)" aria-label="Inicio CCP"><input type="time" value="${f.config.ccp?.fin||''}" oninput="cfgSet('config.ccp.fin',this.value)" aria-label="Fin CCP"></div></div>
+ <div><h3 style="margin-top:14px">Reunión de departamento</h3><div class="row">${selD('config.dep.dia',f.config.dep?.dia)}<input type="time" value="${f.config.dep?.ini||''}" oninput="cfgSet('config.dep.ini',this.value)" aria-label="Inicio reunión"><input type="time" value="${f.config.dep?.fin||''}" oninput="cfgSet('config.dep.fin',this.value)" aria-label="Fin reunión"></div></div></div>
+ <h3 style="margin-top:14px">Integrantes del Departamento de Música</h3><p class="mu sm">Nombre y apellidos tal como deben ir en las firmas. Marca quién es el jefe de departamento.</p>
+ ${f.config.miembros.map((m,i)=>`<div class="row"><select onchange="cfgSet('config.miembros.${i}.trat',this.value)">${['D.','Dña.'].map(t=>`<option ${m.trat==t?'selected':''}>${t}</option>`).join('')}</select><input style="flex:1;min-width:200px" value="${esc(m.nombre)}" placeholder="Nombre y apellidos" oninput="cfgSet('config.miembros.${i}.nombre',this.value)"><label class="sm"><input type="radio" name="jefe" ${m.jefe?'checked':''} onchange="S.cfg.config.miembros.forEach((x,j)=>x.jefe=j==${i})"> Jefe de departamento</label><button class="b s" aria-label="Quitar" onclick="S.cfg.config.miembros.splice(${i},1);render()">✕</button></div>`).join('')}
+ <button class="b s" onclick="S.cfg.config.miembros.push({trat:'D.',nombre:'',jefe:false});render()">Añadir integrante</button>
+ <h3 style="margin-top:16px">Archivos de este curso (opcional)</h3><p class="mu sm">Solo si quieres un acceso directo al documento concreto. Las carpetas se configuran una vez más abajo.</p>${EN.map(([k,t])=>`<label class="f">${t}</label><input style="width:100%" value="${esc(f.config.enlaces?.[k]||'')}" placeholder="https://drive.google.com/…" oninput="cfgSet('config.enlaces.${k}',this.value.trim())">`).join('')}
+ <div class="row" style="margin-top:16px"><button class="b" onclick="guardaCurso()">Guardar curso</button><button class="b s" onclick="S.cfg=null;render()">Cancelar</button>${f.id?`<button class="b r" style="margin-left:auto" onclick="borraCurso()">Eliminar curso</button>`:''}</div></div>`;
+ const G=[['carpeta','Carpeta del departamento'],['libros','Carpeta de libros de actas'],['ccp','Carpeta de actas de la CCP'],['programaciones','Carpeta de programaciones'],['normativa','Carpeta de normativa'],['plantilla','Plantilla del acta con membrete (Google Docs)'],['plantilla_prog','Plantilla de la programación']];
+ h+=`<div class="card"><h2>Carpetas de Drive</h2><p class="mu sm">Se guardan una sola vez y sirven para todos los cursos. Dentro de cada carpeta, crea una subcarpeta por curso con su nombre (por ejemplo, «2026-27»). Para copiar un enlace: en Drive, botón derecho → Compartir → Copiar enlace.</p>
+ ${G.map(([k,t])=>`<label class="f" for="g_${k}">${t}</label><div class="row" style="margin:0"><input id="g_${k}" style="flex:1" value="${esc(S.G[k]||'')}" placeholder="https://drive.google.com/…" oninput="S.G['${k}']=this.value.trim()">${S.G[k]?enl(S.G[k],'Abrir'):''}</div>`).join('')}
+ <div class="row" style="margin-top:14px"><button class="b" onclick="guardaG()">Guardar carpetas</button></div></div>`;
+ return h+`<div class="card" id="aut"><h2>Acceso</h2><p class="mu sm">Correos que pueden entrar en la app. Para que un compañero entre, añade aquí su correo; después crea su cuenta en «Crear cuenta» o la das de alta tú desde Supabase.</p><div id="autl" class="mu">Cargando…</div>
+ <div class="row" style="margin-top:8px"><input id="au" type="email" style="flex:1" placeholder="correo@murciaeduca.es"><input id="an" style="flex:1" placeholder="Nombre"><button class="b s" onclick="addAut()">Autorizar</button></div></div>`}
+async function guardaG(){await q(sb.from('actas_ajustes').upsert({clave:'enlaces',valor:S.G,actualizado:new Date().toISOString()},{onConflict:'clave'}));toast('Carpetas guardadas');render()}
+async function listaAut(){const L=await q(sb.from('actas_autorizados').select('*').order('creado'));$('#autl').innerHTML=L.map(a=>`<div class="row"><span style="flex:1">${esc(a.email)} <span class="mu sm">${esc(a.nombre||'')}</span></span>${a.email.toLowerCase()==S.user.email.toLowerCase()?'<span class="pill">tú</span>':`<button class="b s" onclick="delAut('${esc(a.email)}')">Quitar acceso</button>`}</div>`).join('')}
+async function addAut(){const e=$('#au').value.trim().toLowerCase();if(!/^\S+@\S+\.\S+$/.test(e))return toast('Escribe un correo válido',1);await q(sb.from('actas_autorizados').insert({email:e,nombre:$('#an').value.trim()}));toast('Acceso concedido');listaAut()}
+async function delAut(e){if(!confirm('¿Quitar el acceso a '+e+'?'))return;await q(sb.from('actas_autorizados').delete().eq('email',e));listaAut()}
+async function guardaCurso(){const f=S.cfg;f.nombre=f.nombre.trim();if(!/^\d{4}-\d{2}$/.test(f.nombre))return toast('El curso debe tener el formato 2026-27',1);f.config.miembros=f.config.miembros.filter(m=>m.nombre.trim()).map(m=>({...m,nombre:m.nombre.trim()}));
+ if(f.config.miembros.length&&!f.config.miembros.some(m=>m.jefe))return toast('Marca quién es el jefe de departamento',1);
+ const r=f.id?await q(sb.from('actas_cursos').update({nombre:f.nombre,config:f.config}).eq('id',f.id).select().single()):await q(sb.from('actas_cursos').insert({nombre:f.nombre,config:f.config}).select().single());
+ S.cfg=null;S.cid=r.id;S.cursos=await q(sb.from('actas_cursos').select('*').order('nombre',{ascending:false}));await cargarCurso();toast('Curso guardado');render()}
+async function borraCurso(){if(!confirm('¿Eliminar el curso '+S.cfg.nombre+' con todas sus actas, actividades y material? No se puede deshacer.'))return;await q(sb.from('actas_cursos').delete().eq('id',S.cfg.id));S.cfg=null;S.cid=null;cargar()}
+
+cargar();
+</script>
+<script>(function(){var U=['supabase.min.js','https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js','https://unpkg.com/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js'];
+function arranca(){var s=document.createElement('script');s.text=document.getElementById('app-main').textContent;document.body.appendChild(s)}
+function carga(i){if(window.supabase)return arranca();if(i>=U.length){document.getElementById('app').innerHTML='<div style="padding:28px;font:15px system-ui">No se pudo cargar la librería de Supabase. Comprueba la conexión y recarga.</div>';return}
+var s=document.createElement('script');s.src=U[i];s.onload=function(){window.supabase?arranca():carga(i+1)};s.onerror=function(){carga(i+1)};document.head.appendChild(s)}
+carga(0)})();</script>
+</body></html>
