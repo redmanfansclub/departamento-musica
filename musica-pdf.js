@@ -26,7 +26,7 @@ var CSS=function(){return "@font-face{font-family:Cal;src:url("+F.r+") format('w
  "@page{size:A4;margin:0}*{box-sizing:border-box}html,body{margin:0;background:#e8e4ec;-webkit-print-color-adjust:exact;print-color-adjust:exact}"+
  ".bar{position:sticky;top:0;z-index:5;display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;padding:10px;background:#3a1840;color:#fff;font:15px system-ui,sans-serif}.bar button{font:inherit;background:#fff;color:#3a1840;border:0;border-radius:9px;padding:8px 16px;cursor:pointer}.bar span{opacity:.85;font-size:13px}"+
  ".pg{width:210mm;height:297mm;background:#fff;position:relative;margin:8mm auto;box-shadow:0 2px 14px rgba(0,0,0,.18);overflow:hidden;break-after:page;page-break-after:always}.pg:last-child{break-after:auto;page-break-after:auto}"+
- ".mb{position:absolute;left:1.1mm;top:2.1mm;width:207.4mm}.ct{position:absolute;left:30mm;right:30mm;top:31mm;bottom:25mm;font:12pt/1.42 Cal,Calibri,Carlito,sans-serif;color:#000}.num{position:absolute;bottom:11mm;left:0;right:0;text-align:center;font:10pt Cal,sans-serif;color:#333}"+
+ ".mb{position:absolute;left:1.1mm;top:2.1mm;width:207.4mm}.ct{position:absolute;left:30mm;right:30mm;top:37mm;bottom:25mm;font:12pt/1.42 Cal,Calibri,Carlito,sans-serif;color:#000}.num{position:absolute;bottom:11mm;left:0;right:0;text-align:center;font:10pt Cal,sans-serif;color:#333}"+
  ".tit{font:700 12.3pt/1.4 Ari,Arial,sans-serif;text-align:center;margin:0}.tit2{font:700 12.3pt/1.4 Ari,Arial,sans-serif;text-align:center;margin:6pt 0 8pt;white-space:pre}"+
  "p{margin:0 0 9pt;text-align:justify}h4{font-weight:700;font-size:12pt;margin:12pt 0 9pt}.li,.li2{position:relative;text-align:justify;margin:0 0 7pt;padding-left:22pt}.li2{padding-left:44pt}.li:before{content:'•';position:absolute;left:8pt}.li2:before{content:'◦';position:absolute;left:30pt}.numl:before{content:attr(data-n);left:26pt}.cont:before{content:''!important}p.cont{text-indent:0}"+
  ".firmas{display:grid;grid-template-columns:1fr 1fr;gap:34pt 24pt;margin-top:46pt}.firmas div{line-height:1.5}.firmas div:last-child:nth-child(odd){grid-column:1/-1;justify-self:center;text-align:center}"+
@@ -36,14 +36,27 @@ var SCRIPT=function(){/* se ejecuta en la pestaña nueva */
  var D=window.__D,M=D.membrete,pages=[],root=document.getElementById('pp');
  function nueva(extra){var p=document.createElement('div');p.className='pg';p.innerHTML='<img class="mb" src="'+M+'" alt="">'+(extra||'<div class="ct"></div>')+'<div class="num"></div>';root.appendChild(p);pages.push(p);return p}
  function cabe(ct){return ct.scrollHeight<=ct.clientHeight+1}
- function pon(acta){var p=nueva(),ct=p.querySelector('.ct');ct.innerHTML=acta.cab;
-  acta.bloques.forEach(function(b){var el=document.createElement('div');el.innerHTML=b.html0;var n=el.firstChild;ct.appendChild(n);if(cabe(ct))return;
-   if(b.firmas){ct.removeChild(n);p=nueva();ct=p.querySelector('.ct');ct.appendChild(n);return}
-   var tk=b.t,lo=0,hi=tk.length;ct.removeChild(n);
-   while(lo<hi){var mid=Math.ceil((lo+hi)/2);var e2=document.createElement('div');e2.innerHTML=b.render(tk.slice(0,mid),false);var x=e2.firstChild;ct.appendChild(x);var ok=cabe(ct);ct.removeChild(x);if(ok)lo=mid;else hi=mid-1}
-   if(lo>0&&lo<tk.length&&b.partible){var a=document.createElement('div');a.innerHTML=b.render(tk.slice(0,lo),false);ct.appendChild(a.firstChild)}else lo=0;
-   var resto=tk.slice(lo);p=nueva();ct=p.querySelector('.ct');var r=document.createElement('div');r.innerHTML=b.render(resto,lo>0);ct.appendChild(r.firstChild)})}
- function bloques(a){return a.bloques.map(function(b){if(b.k=='firmas')return{firmas:1,html0:b.h};return{t:b.t,partible:b.k!='h',html0:window.__html(b,false),render:function(t,c){return window.__html({k:b.k,n:b.n,t:t},c)}}})}
+ function mk(h){var d=document.createElement('div');d.innerHTML=h;return d.firstChild}
+ function salta(){var p=nueva();return p.querySelector('.ct')}
+ function esTitulo(x){return x&&x.tagName=='H4'}
+ function pon(acta){var ct=salta(),B=acta.bloques,MIN=20;ct.innerHTML=acta.cab;
+  function corte(b,tk,cont){var lo=0,hi=tk.length;while(lo<hi){var mid=Math.ceil((lo+hi)/2),x=mk(b.render(tk.slice(0,mid),cont));ct.appendChild(x);var cb=cabe(ct);ct.removeChild(x);if(cb)lo=mid;else hi=mid-1}return lo}
+  /* coloca un párrafo o viñeta; solo lo parte si quedan al menos dos líneas en cada página */
+  function parte(b,tk,cont,fresca){var n=mk(b.render(tk,cont));ct.appendChild(n);if(cabe(ct))return;ct.removeChild(n);
+   var lo=corte(b,tk,cont);
+   if(fresca){if(lo<1)lo=1}else if(!b.partible||lo<MIN)lo=0;else if(tk.length-lo<MIN){lo=tk.length-MIN;if(lo<MIN)lo=0}
+   if(lo==0){var h=esTitulo(ct.lastElementChild)?ct.lastElementChild:null;if(h)ct.removeChild(h);ct=salta();if(h)ct.appendChild(h);return parte(b,tk,cont,true)}
+   ct.appendChild(mk(b.render(tk.slice(0,lo),cont)));ct=salta();return parte(b,tk.slice(lo),true,true)}
+  for(var i=0;i<B.length;i++){var b=B[i];
+   /* un título solo se queda al final de una página si debajo caben al menos cinco líneas de su texto (o el párrafo entero) */
+   if(b.h){var n=mk(b.html0),nx=B[i+1];ct.appendChild(n);var ok=cabe(ct);
+    if(ok&&nx&&!nx.firmas&&nx.t){var lo=corte(nx,nx.t,false);if(lo<nx.t.length){if(lo==0)ok=false;else{var pr=mk(nx.render(nx.t.slice(0,lo),false));ct.appendChild(pr);var lh=parseFloat(getComputedStyle(pr).lineHeight)||17;ok=pr.offsetHeight/lh>=4.6;ct.removeChild(pr)}}}
+    if(!ok){ct.removeChild(n);ct=salta();ct.appendChild(n)}continue}
+   /* las firmas nunca van solas: se llevan el último párrafo (y su título) a la página nueva */
+   if(b.firmas){var f=mk(b.html0);ct.appendChild(f);if(cabe(ct))continue;ct.removeChild(f);var mv=[],u=ct.lastElementChild;if(u&&!/tit/.test(u.className)){mv.push(u);if(esTitulo(u.previousElementSibling))mv.unshift(u.previousElementSibling)}
+    mv.forEach(function(x){ct.removeChild(x)});ct=salta();mv.forEach(function(x){ct.appendChild(x)});ct.appendChild(f);continue}
+   parte(b,b.t,false,false)}}
+ function bloques(a){return a.bloques.map(function(b){if(b.k=='firmas')return{firmas:1,html0:b.h};return{h:b.k=='h',t:b.t,partible:b.k!='h',html0:window.__html(b,false),render:function(t,c){return window.__html({k:b.k,n:b.n,t:t},c)}}})}
  if(D.libro){var po=nueva('<div class="port" style="top:62mm;font-size:13pt">LIBRO DE ACTAS</div><div class="port" style="top:140mm;font-size:21pt;font-weight:700">DEPARTAMENTO DE MÚSICA</div><div class="port" style="top:228mm;font-size:21pt;font-weight:700">CURSO '+D.curso+'</div>');
   var dl=nueva('<div class="ct dil"><h1>Diligencia de apertura del libro de actas</h1><p>Diligencia de apertura del libro de actas del departamento de música IES Infanta Elena de Jumilla, provincia de Murcia, que se compone de <span class="tot"></span> páginas, selladas y numeradas correlativamente de la 1 a la <span class="tot"></span>, cuya primera anotación es el acta del departamento de '+D.dil.primera+', y la última es el acta del departamento de '+D.dil.ultima+'.</p>'+(D.dil.anterior?'<p>Este libro es continuación de otro con igual denominación, cuya última anotación fue el acta del departamento de '+D.dil.anterior+'.</p>':'')+'<p>Y para que así conste, firmo la presente en Jumilla.</p><div class="vb"><div><span>Vº Bº, LA DIRECTORA</span><span>Fdo: '+D.dil.directora+'</span></div><div><span>LA SECRETARIA DEL CENTRO,</span><span>Fdo: '+D.dil.secretaria+'</span></div></div></div>')}
  D.actas.forEach(function(a){a.bloques=bloques(a);pon(a)});
