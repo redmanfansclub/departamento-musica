@@ -18,17 +18,17 @@ function parsea(texto){var L=String(texto||'').replace(/\r/g,'').split('\n'),B=[
   if(m=l.match(/^[◦○▪]\s*(.*)$/)){B.push({k:'li2',t:toks(m[1],true)});return}
   if(m=l.match(/^[•\-\*·–]\s+(.*)$/)){B.push({k:ind?'li2':'li',t:toks(m[1],true)});return}
   if(m=lim.match(/^(\d+)\.\s+(.*)$/)){B.push({k:'num',n:m[1],t:toks(m[2],true)});return}
-  B.push({k:'p',t:toks(l,false)})});return B}
+  B.push({k:'p',t:toks(l,true)})});return B}
 function html(b,cont){var t=b.t.map(function(x){return x.b?'<b>'+esc(x.w)+'</b>':esc(x.w)}).join(' ').replace(/<\/b> <b>/g,' ');
  if(b.k=='h')return '<h4>'+t+'</h4>';if(b.k=='li'||b.k=='li2')return '<div class="'+b.k+(cont?' cont':'')+'">'+t+'</div>';if(b.k=='num')return '<div class="li2 numl'+(cont?' cont':'')+'" data-n="'+(cont?'':b.n+'.')+'">'+t+'</div>';
  if(b.k=='raw')return b.h;return '<p'+(cont?' class="cont"':'')+'>'+t+'</p>'}
 var CSS=function(){return "@font-face{font-family:Cal;src:url("+F.r+") format('woff');font-weight:400;font-style:normal}@font-face{font-family:Cal;src:url("+F.b+") format('woff');font-weight:700;font-style:normal}@font-face{font-family:Cal;src:url("+F.i+") format('woff');font-weight:400;font-style:italic}@font-face{font-family:Cal;src:url("+F.bi+") format('woff');font-weight:700;font-style:italic}@font-face{font-family:Ari;src:url("+F.ab+") format('woff');font-weight:700}"+
- "@page{size:A4;margin:0}*{box-sizing:border-box}html,body{margin:0;background:#e8e4ec;-webkit-print-color-adjust:exact;print-color-adjust:exact}"+
+ "@page{size:A4;margin:0}*{box-sizing:border-box;font-variant-ligatures:none;font-feature-settings:'liga' 0,'clig' 0}html,body{margin:0;background:#e8e4ec;-webkit-print-color-adjust:exact;print-color-adjust:exact}"+
  ".bar{position:sticky;top:0;z-index:5;display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;padding:10px;background:#3a1840;color:#fff;font:15px system-ui,sans-serif}.bar button{font:inherit;background:#fff;color:#3a1840;border:0;border-radius:9px;padding:8px 16px;cursor:pointer}.bar span{opacity:.85;font-size:13px}"+
  ".pg{width:210mm;height:297mm;background:#fff;position:relative;margin:8mm auto;box-shadow:0 2px 14px rgba(0,0,0,.18);overflow:hidden;break-after:page;page-break-after:always}.pg:last-child{break-after:auto;page-break-after:auto}"+
  ".mb{position:absolute;left:1.1mm;top:2.1mm;width:207.4mm}.ct{position:absolute;left:30mm;right:30mm;top:37mm;bottom:25mm;font:12pt/1.42 Cal,Calibri,Carlito,sans-serif;color:#000}.num{position:absolute;bottom:11mm;left:0;right:0;text-align:center;font:10pt Cal,sans-serif;color:#333}"+
  ".tit{font:700 12.3pt/1.4 Ari,Arial,sans-serif;text-align:center;margin:0}.tit2{font:700 12.3pt/1.4 Ari,Arial,sans-serif;text-align:center;margin:6pt 0 8pt;white-space:pre}"+
- "p{margin:0 0 9pt;text-align:justify}h4{font-weight:700;font-size:12pt;margin:12pt 0 9pt}.li,.li2{position:relative;text-align:justify;margin:0 0 7pt;padding-left:22pt}.li2{padding-left:44pt}.li:before{content:'•';position:absolute;left:8pt}.li2:before{content:'◦';position:absolute;left:30pt}.numl:before{content:attr(data-n);left:26pt}.cont:before{content:''!important}p.cont{text-indent:0}"+
+ "p{margin:0 0 9pt;text-align:justify}h4{font-weight:700;font-size:12pt;margin:12pt 0 9pt}.li,.li2{position:relative;text-align:justify;margin:0 0 7pt;padding-left:22pt}.li2{padding-left:44pt}.li:before{content:'•';position:absolute;left:8pt}.li2:before{content:'◦';position:absolute;left:30pt}.numl:before{content:attr(data-n);left:26pt}.cont:before{content:''!important}.sigue{text-align-last:justify;margin-bottom:0!important}p.cont{text-indent:0}"+
  ".firmas{display:grid;grid-template-columns:1fr 1fr;gap:34pt 24pt;margin-top:46pt}.firmas div{line-height:1.5}.firmas div:last-child:nth-child(odd){grid-column:1/-1;justify-self:center;text-align:center}"+
  ".port{position:absolute;left:30mm;right:30mm;font-family:Cal,sans-serif}.dil h1{font:700 17pt Cal,sans-serif;text-align:center;margin:30mm 0 18mm}.dil p{line-height:1.6;margin-bottom:14pt}.dil .vb{display:grid;grid-template-columns:1fr 1fr;gap:10pt;margin-top:34mm}.dil .vb div{min-height:40mm;display:flex;flex-direction:column;justify-content:space-between}"+
  "@media print{html,body{background:#fff}.bar{display:none}.pg{margin:0;box-shadow:none}}#mide{position:absolute;left:-9999px;top:0;width:150mm;visibility:hidden}"};
@@ -42,11 +42,18 @@ var SCRIPT=function(){/* se ejecuta en la pestaña nueva */
  function pon(acta){var ct=salta(),B=acta.bloques,MIN=20;ct.innerHTML=acta.cab;
   function corte(b,tk,cont){var lo=0,hi=tk.length;while(lo<hi){var mid=Math.ceil((lo+hi)/2),x=mk(b.render(tk.slice(0,mid),cont));ct.appendChild(x);var cb=cabe(ct);ct.removeChild(x);if(cb)lo=mid;else hi=mid-1}return lo}
   /* coloca un párrafo o viñeta; solo lo parte si quedan al menos dos líneas en cada página */
+  function lineas(b,tk,cont){var x=mk(b.render(tk,cont));ct.appendChild(x);var lh=parseFloat(getComputedStyle(x).lineHeight)||17,n=Math.round(x.offsetHeight/lh);ct.removeChild(x);return n}
+  /* coloca un párrafo o viñeta: solo lo parte si es largo y quedan al menos 3 líneas a cada lado; si no, pasa entero a la página siguiente */
   function parte(b,tk,cont,fresca){var n=mk(b.render(tk,cont));ct.appendChild(n);if(cabe(ct))return;ct.removeChild(n);
    var lo=corte(b,tk,cont);
-   if(fresca){if(lo<1)lo=1}else if(!b.partible||lo<MIN)lo=0;else if(tk.length-lo<MIN){lo=tk.length-MIN;if(lo<MIN)lo=0}
+   if(fresca){if(lo<1)lo=1}
+   else{var tot=lineas(b,tk,cont);
+    if(!b.partible||tot<7||lo<1)lo=0;
+    else{var tpl=tk.length/tot;
+     if(lineas(b,tk.slice(lo),true)<3)lo=Math.max(0,tk.length-Math.ceil(3.2*tpl));
+     if(lo>0&&lineas(b,tk.slice(0,lo),cont)<3)lo=0}}
    if(lo==0){var h=esTitulo(ct.lastElementChild)?ct.lastElementChild:null;if(h)ct.removeChild(h);ct=salta();if(h)ct.appendChild(h);return parte(b,tk,cont,true)}
-   ct.appendChild(mk(b.render(tk.slice(0,lo),cont)));ct=salta();return parte(b,tk.slice(lo),true,true)}
+   var sup=mk(b.render(tk.slice(0,lo),cont));sup.classList.add('sigue');ct.appendChild(sup);ct=salta();return parte(b,tk.slice(lo),true,true)}
   for(var i=0;i<B.length;i++){var b=B[i];
    /* un título solo se queda al final de una página si debajo caben al menos cinco líneas de su texto (o el párrafo entero) */
    if(b.h){var n=mk(b.html0),nx=B[i+1];ct.appendChild(n);var ok=cabe(ct);

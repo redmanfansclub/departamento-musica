@@ -401,7 +401,7 @@ ${tipo=='primera'?'- Es la primera reunión del curso: el punto de acuerdos empi
 - ${aus.length?'No asisten: '+aus.join('; ')+'. Indícalo en el párrafo de apertura («Asisten todos los miembros del departamento, excepto…»).':'Asisten todos los miembros del departamento.'}
 - Trata, si aparecen en las notas, los puntos del modelo oficial de acta del centro (RC01_PA5.03): seguimiento de la programación, atención a la diversidad (ACNEE y AACC) y enseñanza digital.
 - ${e.hora_fin?'La sesión termina a las '+e.hora_fin+': indícalo en la fórmula de cierre («…se levanta la sesión siendo las '+e.hora_fin+' horas»).':'No indiques hora de finalización.'}
-- FORMATO (la app genera el PDF oficial a partir de tu texto): solo texto, sin Markdown ni almohadillas. Puntos principales como «1. Título del punto.» en su propia línea; subapartados «3.1. Título:»; viñetas con «• » al principio y, dentro de cada viñeta, un título breve terminado en dos puntos («• Material de aula: …»); subviñetas con «◦ ». No escribas las firmas: la app las añade.
+- FORMATO (la app genera el PDF oficial a partir de tu texto): solo texto, sin Markdown ni almohadillas. Puntos principales como «1. Título del punto.» en su propia línea; subapartados «3.1. Título:»; viñetas con «• » al principio y, dentro de cada viñeta, un título breve terminado en dos puntos («• Material de aula: …»); subviñetas con «◦ ». Si un párrafo empieza con un subtítulo, márcalo en negrita con dos asteriscos: «**Coro escolar.** El coro escolar continúa…». No uses los asteriscos para nada más. No escribas las firmas: la app las añade.
 - Devuelve solo el texto del acta.
 
 ESTRUCTURA
@@ -467,6 +467,10 @@ function revisar(){const e=S.ed,t=e.texto_final||'',L=[],add=(n,m)=>L.push([n,m]
  /sin m[áa]s asuntos que tratar/i.test(t)?add('ok','Incluye la fórmula de cierre.'):add('er','Falta la fórmula de cierre («Sin más asuntos que tratar…»).');
  const sinR=/no habiendo ruegos ni preguntas/i.test(t);(e.ruegos||'').trim()&&sinR?add('er','Dice «no habiendo ruegos ni preguntas», pero hay ruegos anotados.'):!(e.ruegos||'').trim()&&!sinR&&add('wn','No hubo ruegos: el cierre suele decir «no habiendo ruegos ni preguntas».');
  /jefe de departamento/i.test(t)?add('ok','Aparece «(Jefe de Departamento)» en las firmas.'):add('wn','No aparece «(Jefe de Departamento)» en las firmas.');
+ /* puntos del modelo oficial (RC01_PA5.03) y su frecuencia */
+ const prevA=S.D.actas.filter(a=>a.id!=e.id&&a.fecha&&a.fecha<e.fecha).sort((a,b)=>b.fecha.localeCompare(a.fecha));
+ PUNTOS_RC.forEach(([k,nom,dias,re])=>{if(re.test(t))return add('ok','Modelo oficial: se trata «'+nom+'».');const u=prevA.find(a=>re.test((a.texto_final||'')+' '+(a.notas||''))),d=u?Math.round((new Date(e.fecha)-new Date(u.fecha))/864e5):null,fr=dias==15?'quincenal':'mensual';
+  if(d==null)add('wn','Modelo oficial: no se trata «'+nom+'» ('+fr+') y no consta en ningún acta anterior de este curso.');else if(d>=dias)add('wn','Modelo oficial: no se trata «'+nom+'» ('+fr+'); la última vez fue en el acta nº '+u.numero+', hace '+d+' días.');else add('ok','Modelo oficial: «'+nom+'» no aparece, pero está al día (acta nº '+u.numero+', hace '+d+' días).')});
  const nE=L.filter(x=>x[0]=='er').length,nW=L.filter(x=>x[0]=='wn').length;
  $('#chk').innerHTML=`<div class="card" style="margin-top:12px"><h3>${nE?nE+' error'+(nE>1?'es':''):'Sin errores'}${nW?' · '+nW+' aviso'+(nW>1?'s':''):''}</h3><ul class="chk">${L.sort((a,b)=>'erwnok'.indexOf(a[0])-'erwnok'.indexOf(b[0])).map(([k,m])=>`<li class="${k}">${k=='ok'?'✓':k=='wn'?'△':'✕'} ${esc(m)}</li>`).join('')}</ul></div>`}
 
