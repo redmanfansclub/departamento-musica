@@ -62,7 +62,20 @@ var SCRIPT=function(){/* se ejecuta en la pestaña nueva */
  D.actas.forEach(function(a){a.bloques=bloques(a);pon(a)});
  if(D.numerar){pages.forEach(function(p,i){p.querySelector('.num').textContent=(i+1)});document.querySelectorAll('.tot').forEach(function(s){s.textContent=pages.length})}
  document.getElementById('npag').textContent=pages.length+(pages.length==1?' página':' páginas');document.body.setAttribute('data-listo','1')};
+var CSS_INF=".fc{display:grid;grid-template-columns:24mm 1fr 26mm 26mm 26mm;gap:3mm;padding:2.2mm 1mm;border-bottom:0.3mm solid #ddd;font-size:11pt}.fc span:nth-child(4),.fc span:nth-child(5){text-align:right}.fc.th{font-weight:700;border-bottom:0.5mm solid #555}.firma1{margin-top:30pt;text-align:right}";
+function informeScript(){var D=window.__D,M=D.membrete,root=document.getElementById('pp'),pages=[];
+ function nueva(){var p=document.createElement('div');p.className='pg';p.innerHTML='<img class="mb" src="'+M+'" alt=""><div class="ct"></div><div class="num"></div>';root.appendChild(p);pages.push(p);return p.querySelector('.ct')}
+ function cabe(ct){return ct.scrollHeight<=ct.clientHeight+1}
+ function mk(h){var d=document.createElement('div');d.innerHTML=h;return d.firstChild}
+ var ct=nueva(),th=null;ct.innerHTML=D.cab;
+ D.bloques.forEach(function(h){var n=mk(h);if(n.classList&&n.classList.contains('th'))th=h;ct.appendChild(n);if(!cabe(ct)){ct.removeChild(n);ct=nueva();if(th&&!(n.classList&&n.classList.contains('th')))ct.appendChild(mk(th));ct.appendChild(n)}});
+ if(D.firma){var f=mk('<div class="firma1">Fdo. '+D.firma+'<br>(Jefe de Departamento)</div>');ct.appendChild(f);if(!cabe(ct)){ct.removeChild(f);ct=nueva();ct.appendChild(f)}}
+ if(pages.length>1)pages.forEach(function(p,i){p.querySelector('.num').textContent=(i+1)+' / '+pages.length});
+ document.getElementById('npag').textContent=pages.length+(pages.length==1?' página':' páginas');document.body.setAttribute('data-listo','1')}
 window.DMPDF={membrete:MEMB,larga:larga,
+ informe:function(o){var datos={membrete:o.membrete||MEMB,cab:'<p class="tit">'+esc(o.cab)+'</p><p class="tit2" style="font-size:11pt">'+esc(o.sub||'')+'</p>',bloques:o.bloques,firma:esc(o.firma||'')};
+  var doc='<!doctype html><html lang="es"><head><meta charset="utf-8"><title>'+esc(o.titulo)+'</title><style>'+CSS()+CSS_INF+'</style></head><body><div class="bar"><button onclick="window.print()">Descargar PDF</button><span>En la ventana de impresión elige «Guardar como PDF».</span><span id="npag"></span></div><div id="pp"></div><script>window.__D='+JSON.stringify(datos).replace(/</g,'\\u003c')+';document.fonts.load("12pt Cal").then(function(){return document.fonts.ready}).then(function(){('+informeScript.toString()+')()});<\/script></body></html>';
+  var w=o.ventana||window.open('','_blank');if(!w)return;w.document.open();w.document.write(doc);w.document.close();return w},
  abrir:function(o){/* o:{titulo,libro,curso,numerar,membrete,dil,actas:[{numero,fecha,hora,texto,firmas:[{nombre,jefe}]}]} */
   var actas=o.actas.map(function(a){var B=parsea(a.texto).map(function(b){return{k:b.k,n:b.n,t:b.t}});
    var f=a.firmas.map(function(x){return '<div>Fdo. '+esc(x.nombre)+(x.jefe?'<br>(Jefe de Departamento)':'')+'</div>'}).join('');B.push({k:'firmas',h:'<div class="firmas">'+f+'</div>'});
