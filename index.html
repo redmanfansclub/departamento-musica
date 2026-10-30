@@ -245,7 +245,7 @@ async function cargarCurso(){if(!S.cid){S.D=null;return}localStorage.setItem('dm
   q(sb.from('actas_pendientes').select('*').eq('curso_id',id).order('creado')),
   q(sb.from('actas_programacion').select('*').eq('curso_id',id).maybeSingle()),
   prev?q(sb.from('actas_pendientes').select('*').eq('curso_id',prev.id).order('creado')):[]]);
- S.D={actas,act,mat,pend,prog,pendPrev};S.prog=null}
+ S.D={actas,act,mat,pend,prog,pendPrev};S.prog=null;S.progDocs=null}
 function cursoPrev(){const i=S.cursos.findIndex(c=>c.id==S.cid);return i>=0?S.cursos[i+1]:null}
 async function cambiaCurso(id){S.cid=id;S.ed=null;await cargarCurso();render()}
 function ir(v){S.view=v;if(v!='actas')S.ed=null;render();scrollTo(0,0)}
@@ -256,7 +256,7 @@ function render(){
  ${S.cursos.length?`<select aria-label="Curso" onchange="cambiaCurso(this.value)">${S.cursos.map(c=>`<option value="${c.id}" ${c.id==S.cid?'selected':''}>${esc(c.nombre)}</option>`).join('')}</select>`:''}
  <nav>${nav.map(([k,t])=>`<button class="${v==k?'on':''}" onclick="ir('${k}')">${t}</button>`).join('')}<button onclick="modo()" aria-label="Modo claro u oscuro" title="Modo claro u oscuro"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button><button onclick="salir()">Salir</button></nav></header>
  <main>${!S.cursos.length&&v!='config'?'':({inicio:vInicio,actas:vActas,programacion:vProg,biblioteca:vBib,caja:vCaja,estadisticas:vStats,config:vConfig}[v])()}</main>`;
- if(v=='estadisticas')cargaStats();if(v=='biblioteca')cargaBib();if(v=='caja')cargaCaja();if(v=='programacion'&&S.progRef===null)cargaProgRef();if(v=='config'&&$('#autl')){listaAut();verMemb()}}
+ if(v=='estadisticas')cargaStats();if(v=='biblioteca')cargaBib();if(v=='caja')cargaCaja();if(v=='programacion'&&S.progRef===null)cargaProgRef();else if(v=='programacion'&&!S.progDocs)cargaProgDocs().then(()=>{if(S.view=='programacion')render()});if(v=='config'&&$('#autl')){listaAut();verMemb()}}
 
 /* ---------- Inicio ---------- */
 function trimestreActual(){const m=new Date().getMonth()+1;return m>=9&&m<=12?1:m<=3?2:3}
@@ -354,6 +354,9 @@ async function pdfLibro(){const A=S.D.actas.filter(a=>cerrada(a)).sort((a,b)=>a.
 async function cerrarActa(){const e=S.ed;if(!(e.texto_final||'').trim())return toast('Pega o redacta primero el acta',1);revisar();const nE=document.querySelectorAll('#chk li.er').length;
  if(!confirm((nE?'La revisión indica '+nE+' error(es). ':'')+'¿Cerrar el acta? Quedará bloqueada; podrás verla, descargarla en PDF o reabrirla.'))return;e.estado='cerrada';if(!await guardaActa()){e.estado='redactada';render()}}
 async function reabrir(){if(!confirm('¿Reabrir el acta para modificarla? Después tendrás que volver a cerrarla.'))return;S.ed.estado='redactada';if(!await guardaActa()){S.ed.estado='cerrada';render()}}
+async function leeDocxMarcado(f){if(!window.JSZip)await cargaScript('https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js');const z=await JSZip.loadAsync(await f.arrayBuffer()),xml=await z.file('word/document.xml').async('string'),d=new DOMParser().parseFromString(xml,'application/xml'),out=[];
+ for(const pp of d.getElementsByTagName('w:p')){let s='',hl=false;for(const r of pp.getElementsByTagName('w:r')){const h=r.getElementsByTagName('w:highlight')[0],am=h&&/yellow/i.test(h.getAttribute('w:val')||'');let tx='';for(const n of r.childNodes){if(n.nodeName=='w:t')tx+=n.textContent;else if(n.nodeName=='w:tab')tx+='\t';else if(n.nodeName=='w:br')tx+='\n'}if(!tx)continue;if(am&&!hl){s+='[COMPLETAR: ';hl=true}if(!am&&hl){s+=']';hl=false}s+=tx}if(hl)s+=']';out.push(s)}
+ return out.join('\n')}
 async function leeArchivo(f){const n=f.name.toLowerCase();
  if(n.endsWith('.docx')){if(!window.mammoth)await cargaScript(MAMMOTH);return (await mammoth.extractRawText({arrayBuffer:await f.arrayBuffer()})).value}
  if(n.endsWith('.pdf')){if(!window.pdfjsLib){await cargaScript(PDFJS);pdfjsLib.GlobalWorkerOptions.workerSrc=PDFJSW}const doc=await pdfjsLib.getDocument({data:await f.arrayBuffer()}).promise,out=[];for(let i=1;i<=doc.numPages;i++){const c=await (await doc.getPage(i)).getTextContent();let s='';c.items.forEach(it=>{s+=it.str+(it.hasEOL?'\n':'')});out.push(s)}return out.join('\n')}
@@ -495,6 +498,12 @@ async function progRefArchivo(f){if(!f)return;const st=$('#prefst');try{st.inner
  const det=detecta(tx,f.name),cu=(prompt('¿De qué curso es esta programación?',det.curso||cursoPrev()?.nombre||'')||'').trim();if(!cu){st.innerHTML='';return}if(!/^\d{4}-\d{2}$/.test(cu))throw new Error('Escribe el curso con el formato 2025-26.');
  if(S.progRef&&!confirm('Se sustituirá la programación guardada ('+S.progRef.curso+') por la de '+cu+'. ¿Continuar?')){st.innerHTML='';return}
  await q(sb.from('actas_biblioteca').delete().eq('tipo','programacion'));await q(sb.from('actas_biblioteca').insert({curso:cu,tipo:'programacion',titulo:'Programación '+cu,texto:tx}));S.progRef=null;await cargaProgRef();toast('Programación '+cu+' guardada');render()}catch(x){st.innerHTML='';toast(x.message||'No se pudo leer el archivo',1)}}
+async function progDocArchivo(files){files=[...(files||[])];for(const f of files){try{const n=f.name.toLowerCase();let tx=n.endsWith('.docx')?await leeDocxMarcado(f):await leeArchivo(f);tx=limpia(tx);if(tx.length<200)throw new Error(f.name+': no se ha encontrado texto.');
+ const esMod=/referente legal/i.test(tx)&&/situaciones de aprendizaje/i.test(tx)&&/anexo i/i.test(tx),tit=esMod?TIT_MOD:TIT_IND;
+ await q(sb.from('actas_biblioteca').delete().eq('tipo','documento').eq('curso',C().nombre).eq('titulo',tit));await q(sb.from('actas_biblioteca').insert({curso:C().nombre,tipo:'documento',titulo:tit,texto:tx}));toast(tit+' guardado')}catch(x){toast(x.message||'No se pudo leer el archivo',1)}}await cargaProgDocs();render()}
+function verProgDoc(k){const d=S.progDocs?.[k];if(d)modal(`<h3>${esc(d.titulo)} · ${esc(C().nombre)}</h3><textarea class="big" style="min-height:60vh" readonly>${esc(d.texto)}</textarea><div class="row"><button class="b" onclick="cerrar()">Cerrar</button></div>`)}
+async function quitaProgDoc(k){const d=S.progDocs?.[k];if(!d||!confirm('¿Quitar «'+d.titulo+'» de este curso?'))return;await q(sb.from('actas_biblioteca').delete().eq('id',d.id));await cargaProgDocs();render()}
+function secDoc(txt,k){if(!txt)return '';const t='\n'+txt,i=inicioSec(t,k);if(i<0)return '';const sig=APARTADOS.map(a=>inicioSec(t,a[0])).filter(x=>x>i).sort((a,b)=>a-b)[0];return t.slice(i,sig||i+15000).trim().slice(0,15000)}
 function verProgRef(){const r=S.progRef;if(r)modal(`<h3>Programación ${esc(r.curso)}</h3><p class="mu sm">${kb(r.texto.length)} de texto.</p><textarea class="big" style="min-height:60vh" readonly>${esc(r.texto)}</textarea><div class="row"><button class="b" onclick="cerrar()">Cerrar</button></div>`)}
 function vProg(){const p=pg(),c=CF(),D=S.D,prev=cursoPrev(),d=p.datos,ent=p.estado=='entregada',[ec,et]=estProg(p),nRev=APARTADOS.filter(([k])=>estAp(p.apartados[k])=='cerrada').length;
  return `<div class="card"><div class="row"><h2 style="margin:0;flex:1">Programación · ${esc(C().nombre)}</h2><span class="est ${ec}">${et}</span>${ent?'<button class="b s" onclick="reabrirProg()">Reabrir</button>':'<button class="b s" onclick="guardaProg()">Guardar</button><button class="b" onclick="entregar()">Marcar como entregada</button>'}</div>
@@ -503,6 +512,10 @@ function vProg(){const p=pg(),c=CF(),D=S.D,prev=cursoPrev(),d=p.datos,ent=p.esta
  <div class="row">${enl(L('programaciones'),'Abrir carpeta de programaciones')}${enl(prev?.config?.enlaces?.programacion,'Programación '+(prev?.nombre||''))}${enl(c.enlaces?.programacion,'Programación de este curso')}${enl(L('plantilla_prog'),'Plantilla de programación')}${enl(L('normativa'),'Carpeta de normativa')}</div></div>
  <div class="card"><h3>Programación del curso anterior</h3>${S.progRef?`<p class="sm">Guardada: <b>programación ${esc(S.progRef.curso)}</b> · ${kb(S.progRef.texto.length)} de texto. Se usa para comparar cada apartado y para «Preguntar a la programación». <button class="b s" onclick="verProgRef()">Ver texto</button></p>`:S.progRef===false?'<p class="sm mu">Aún no hay ninguna guardada. Arrastra aquí el PDF de la del curso pasado: la app guarda solo el texto.</p>':'<p class="mu sm">Cargando…</p>'}
  <label class="drop" ondragover="event.preventDefault();this.classList.add('on')" ondragleave="this.classList.remove('on')" ondrop="event.preventDefault();this.classList.remove('on');progRefArchivo(event.dataTransfer.files[0])"><b>${S.progRef?'Sustituir por otra programación':'Arrastra aquí la programación del curso anterior'}</b><span class="mu sm">PDF o Word (.docx) · o pulsa para elegirla</span><input type="file" accept=".pdf,.docx" hidden onchange="progRefArchivo(this.files[0])"></label><div id="prefst"></div></div>
+ <div class="card"><h3>Modelo e indicaciones del centro · ${esc(C().nombre)}</h3><p class="mu sm">Lo que se publica cada curso en el Classroom de la CCP: el modelo de programación (Word), las indicaciones de Inspección y las notas de la CCP. La app los usa al revisar cada apartado.</p>
+ <div class="grid2">${[['mod','Modelo de programación','Word con [corchetes] y textos en amarillo para completar'],['ind','Indicaciones de Inspección','PDF o Word']].map(([k,t,d])=>{const x=S.progDocs?.[k];return `<div class="opt"><b>${t}</b><p class="sm ${x?'':'mu'}" style="margin:4px 0 8px">${x?'✓ Guardado · '+kb(x.texto.length)+' de texto':'Sin subir · '+d}</p>${x?`<button class="b s" onclick="verProgDoc('${k}')">Ver</button> <button class="b s" onclick="quitaProgDoc('${k}')">Quitar</button>`:''}</div>`}).join('')}</div>
+ <label class="drop" ondragover="event.preventDefault();this.classList.add('on')" ondragleave="this.classList.remove('on')" ondrop="event.preventDefault();this.classList.remove('on');progDocArchivo(event.dataTransfer.files)"><b>Arrastra aquí el modelo y las indicaciones de este curso</b><span class="mu sm">La app distingue cuál es cada uno · Word (.docx) o PDF</span><input type="file" multiple accept=".pdf,.docx" hidden onchange="progDocArchivo(this.files)"></label>
+ <label class="f">Notas de la CCP sobre la programación</label><textarea oninput="pgSet('datos.notas_ccp',this.value)" placeholder="Por ejemplo: entre [corchetes] y en rojo van las aclaraciones de la Consejería; lo que va en negro vale, pero cada uno decide si lo deja; lo que va en amarillo lo completa cada departamento; quienes programen por aNota deben anexar el INFORME PGA…">${esc(d.notas_ccp||'')}</textarea></div>
  <fieldset ${ent?'disabled':''} style="border:0;padding:0;margin:0;min-width:0">
  <div class="card"><h3>¿Qué cambios hay este año?</h3><p class="mu sm">Explica los cambios indicando el apartado (por ejemplo, «apartado 3: SENDA pasa a Estrategia LIBRE»; «anexos: añadir Música 4º optativa en aNota»).</p>
  <textarea class="big" oninput="pgSet('cambios',this.value)">${esc(p.cambios)}</textarea>
@@ -528,16 +541,19 @@ function pPregunta(){return `Eres el jefe del Departamento de Música del IES In
 function copiarPregunta(){if(!S.progRef)return toast('Primero sube la programación en la Biblioteca',1);copiar(pPregunta(),'Copiado: pégalo en tu chat con Cmd+V')}
 async function guardaProg(){const p=pg();await q(sb.from('actas_programacion').upsert({curso_id:S.cid,cambios:p.cambios,normativa:p.normativa,apartados:p.apartados,datos:p.datos,estado:p.estado,actualizado:new Date().toISOString()},{onConflict:'curso_id'}));localStorage.removeItem('dm_prog_'+S.cid);await cargarCurso();toast(pg().estado=='entregada'?'Programación entregada':'Programación guardada');render()}
 async function pendHecho(id,v){await q(sb.from('actas_pendientes').update({hecho:v}).eq('id',id));const x=S.D.pendPrev.find(p=>p.id==id);if(x)x.hecho=v}
-async function cargaProgRef(){try{const{data}=await sb.from('actas_biblioteca').select('curso,texto').eq('tipo','programacion').order('creado',{ascending:false}).limit(1);S.progRef=data?.[0]||false}catch(x){S.progRef=false}}
+const TIT_MOD='Modelo de programación del centro',TIT_IND='Indicaciones para las programaciones';
+async function cargaProgDocs(){try{const{data}=await sb.from('actas_biblioteca').select('id,titulo,texto').eq('tipo','documento').eq('curso',C().nombre).in('titulo',[TIT_MOD,TIT_IND]);S.progDocs={mod:(data||[]).find(x=>x.titulo==TIT_MOD)||null,ind:(data||[]).find(x=>x.titulo==TIT_IND)||null}}catch(x){S.progDocs={}}}
+async function cargaProgRef(){cargaProgDocs().then(()=>{if(S.view=='programacion')render()});try{const{data}=await sb.from('actas_biblioteca').select('curso,texto').eq('tipo','programacion').order('creado',{ascending:false}).limit(1);S.progRef=data?.[0]||false}catch(x){S.progRef=false}}
 const PROG_RE={'1':'Referente','2':'Organizaci','3':'Decisiones','4':'Medidas de atenci','5':'Materiales','6':'Relaci[oó]n de actividades','7':'Concreci[oó]n','8':'Estrategias e instrumentos para la evaluaci[oó]n del aprendizaje','9':'Estrategias e instrumentos para la evaluaci[oó]n del proceso','10':'Medidas previstas','11':'Competencias digitales'};
 function inicioSec(t,k){if(k=='anexos'){const m=[...t.matchAll(/\n\s*ANEXO I\s*\n/g)];return m.length?m[m.length-1].index:-1}const m=[...t.matchAll(new RegExp('\\n\\s*'+k+'\\.\\s+'+PROG_RE[k],'gi'))];return m.length?m[m.length-1].index:-1}
 function seccionProg(k){const r=S.progRef;if(!r)return '';const t='\n'+r.texto,i=inicioSec(t,k);if(i<0)return '';const sig=APARTADOS.map(a=>inicioSec(t,a[0])).filter(x=>x>i).sort((a,b)=>a-b)[0];return t.slice(i,sig||i+15000).trim().slice(0,20000)}
 function pProg(k){const p=pg(),prev=cursoPrev(),d=p.datos,ap=k?APARTADOS.find(a=>a[0]==k):null,pend=S.D.pendPrev.filter(x=>!x.hecho).map(x=>'- '+x.texto).join('\n');
- const bloq=k?[[k,ap[1],p.apartados[k]||{}]]:APARTADOS.map(([kk,t])=>[kk,t,p.apartados[kk]||{}]).filter(x=>x[2].texto||x[2].notas||seccionProg(x[0]));
+ const bloq=k?[[k,ap[1],p.apartados[k]||{}]]:APARTADOS.map(([kk,t])=>[kk,t,p.apartados[kk]||{}]).filter(x=>x[2].texto||x[2].notas||seccionProg(x[0])||(S.progDocs?.mod&&secDoc(S.progDocs.mod.texto,x[0])));
  return `Actúa como jefe del Departamento de Música del IES Infanta Elena (Jumilla, Región de Murcia) y ayúdame a revisar ${k?'el apartado «'+(k=='anexos'?'':k+'. ')+ap[1]+'»':'la programación docente'} del curso ${C().nombre}. La programación es un único documento del departamento (ESO y Bachillerato) y sigue los apartados del artículo 37 del Decreto 235/2022 (ESO) y del artículo 30 del Decreto 251/2022 (Bachillerato), más «Competencias digitales del alumnado».
 
+${S.progDocs?.mod?'El centro proporciona un MODELO (abajo, el apartado correspondiente). En él, el texto entre [corchetes] son aclaraciones de la Consejería (no forman parte de la programación final), lo marcado como [COMPLETAR: …] debe completarlo el departamento, y el resto es texto común que el departamento puede mantener o quitar. Sigue la estructura del modelo.\n':''}
 QUÉ NECESITO
-1. Errores, incoherencias o datos desactualizados (normativa, programas del centro, nombres, porcentajes).
+1. Errores, incoherencias o datos desactualizados (normativa, programas del centro, nombres, porcentajes), y si se cumplen las indicaciones de Inspección.
 2. Qué hay que cambiar según los cambios de este año y la normativa indicada.
 3. Ideas concretas de mejora comparando con el curso anterior.
 4. La redacción propuesta del apartado, con el mismo estilo formal, lista para pegar.
@@ -545,6 +561,7 @@ No inventes normativa, datos ni actividades: si algo no está en lo que te doy, 
 
 CAMBIOS DE ESTE AÑO
 ${p.cambios.trim()||'(sin indicar)'}
+${S.progDocs?.ind?'\nINDICACIONES DE INSPECCIÓN (de obligado cumplimiento)\n'+S.progDocs.ind.texto.slice(0,12000)+'\n':''}${(d.notas_ccp||'').trim()?'\nNOTAS DE LA CCP SOBRE LA PROGRAMACIÓN\n'+d.notas_ccp.trim()+'\n':''}
 
 NORMATIVA Y DOCUMENTOS
 ${p.normativa.filter(n=>n.titulo||n.url).map(n=>'- '+n.titulo+(n.nota?': '+n.nota:'')).join('\n')||'(ninguno)'}
@@ -556,7 +573,7 @@ DATOS CLAVE
 - Profesorado: ${miembros().map(nomF).join('; ')||'(sin indicar)'}
 ${d.materias.length?'- Materias: '+d.materias.map(m=>m.nombre+(m.sa?' ('+m.sa+' SA)':'')).join('; '):''}
 
-${bloq.map(([kk,t,a])=>{const ref=seccionProg(kk);return `--- ${kk=='anexos'?'':kk+'. '}${t} ---\n${a.notas?'Notas: '+a.notas+'\n':''}${a.texto||'(sin texto nuevo todavía)'}${ref?'\n\n[Mismo apartado en la programación guardada, curso '+S.progRef.curso+']\n'+ref:''}`}).join('\n\n')||'(Aún no hay texto en ningún apartado: pídeme el que quieras revisar.)'}`}
+${bloq.map(([kk,t,a])=>{const ref=seccionProg(kk);return `--- ${kk=='anexos'?'':kk+'. '}${t} ---\n${a.notas?'Notas: '+a.notas+'\n':''}${a.texto||'(sin texto nuevo todavía)'}${ref?'\n\n[Mismo apartado en la programación guardada, curso '+S.progRef.curso+']\n'+ref:''}${S.progDocs?.mod&&secDoc(S.progDocs.mod.texto,kk)?'\n\n[Mismo apartado en el MODELO del centro, curso '+C().nombre+']\n'+secDoc(S.progDocs.mod.texto,kk):''}`}).join('\n\n')||'(Aún no hay texto en ningún apartado: pídeme el que quieras revisar.)'}`}
 function pGemProg(k){const c=CF(),prev=cursoPrev(),ap=k?APARTADOS.find(a=>a[0]==k):null;return `Abre en mi Google Drive la programación del Departamento de Música del IES Infanta Elena del curso ${prev?.nombre||'anterior'}${prev?.config?.enlaces?.programacion?' ('+prev.config.enlaces.programacion+')':L('programaciones')?' (está en '+L('programaciones')+sub(prev?.nombre||'anterior')+')':''}.
 ${k?'Copia el texto íntegro del apartado «'+(k=='anexos'?'':k+'. ')+ap[1]+'», sin resumir ni cambiar nada.':'Dime qué apartados tiene y en qué página empieza cada uno.'}${L('normativa')?'\nTen en cuenta también la normativa de esta carpeta: '+L('normativa')+sub(C().nombre):''}`}
 
