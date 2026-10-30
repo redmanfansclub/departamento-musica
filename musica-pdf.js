@@ -76,13 +76,13 @@ function informeScript(){var D=window.__D,M=D.membrete,root=document.getElementB
  function cabe(ct){return ct.scrollHeight<=ct.clientHeight+1}
  function mk(h){var d=document.createElement('div');d.innerHTML=h;return d.firstChild}
  var ct=nueva(),th=null;ct.innerHTML=D.cab;
- D.bloques.forEach(function(h){var n=mk(h);if(n.classList&&n.classList.contains('th'))th=h;ct.appendChild(n);if(!cabe(ct)){ct.removeChild(n);ct=nueva();if(th&&!(n.classList&&n.classList.contains('th')))ct.appendChild(mk(th));ct.appendChild(n)}});
+ D.bloques.forEach(function(h){var n=mk(h);if(n.classList&&n.classList.contains('th'))th=h;if(n.classList&&n.classList.contains('fh'))th=null;ct.appendChild(n);if(!cabe(ct)){ct.removeChild(n);ct=nueva();if(th&&!(n.classList&&n.classList.contains('th')))ct.appendChild(mk(th));ct.appendChild(n)}});
  if(D.firma){var f=mk('<div class="firma1">Fdo. '+D.firma+'<br>(Jefe de Departamento)</div>');ct.appendChild(f);if(!cabe(ct)){ct.removeChild(f);ct=nueva();ct.appendChild(f)}}
  if(pages.length>1)pages.forEach(function(p,i){p.querySelector('.num').textContent=(i+1)+' / '+pages.length});
  document.getElementById('npag').textContent=pages.length+(pages.length==1?' página':' páginas');document.body.setAttribute('data-listo','1')}
 window.DMPDF={membrete:MEMB,larga:larga,
  informe:function(o){var datos={membrete:o.membrete||MEMB,cab:'<p class="tit">'+esc(o.cab)+'</p><p class="tit2" style="font-size:11pt">'+esc(o.sub||'')+'</p>',bloques:o.bloques,firma:esc(o.firma||'')};
-  var doc='<!doctype html><html lang="es"><head><meta charset="utf-8"><title>'+esc(o.titulo)+'</title><style>'+CSS()+CSS_INF+'</style></head><body><div class="bar"><button onclick="window.print()">Descargar PDF</button><span>En la ventana de impresión elige «Guardar como PDF».</span><span id="npag"></span></div><div id="pp"></div><script>window.__D='+JSON.stringify(datos).replace(/</g,'\\u003c')+';document.fonts.load("12pt Cal").then(function(){return document.fonts.ready}).then(function(){('+informeScript.toString()+')()});<\/script></body></html>';
+  var doc='<!doctype html><html lang="es"><head><meta charset="utf-8"><title>'+esc(o.titulo)+'</title><style>'+CSS()+CSS_INF+(o.css||'')+'</style></head><body><div class="bar"><button onclick="window.print()">Descargar PDF</button><span>En la ventana de impresión elige «Guardar como PDF».</span><span id="npag"></span></div><div id="pp"></div><script>window.__D='+JSON.stringify(datos).replace(/</g,'\\u003c')+';document.fonts.load("12pt Cal").then(function(){return document.fonts.ready}).then(function(){('+informeScript.toString()+')()});<\/script></body></html>';
   var w=o.ventana||window.open('','_blank');if(!w)return;w.document.open();w.document.write(doc);w.document.close();return w},
  abrir:function(o){/* o:{titulo,libro,curso,numerar,membrete,dil,actas:[{numero,fecha,hora,texto,firmas:[{nombre,jefe}]}]} */
   var actas=o.actas.map(function(a){var B=parsea(a.texto).map(function(b){return{k:b.k,n:b.n,t:b.t}});
